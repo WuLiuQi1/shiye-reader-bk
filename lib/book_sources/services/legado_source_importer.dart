@@ -34,6 +34,17 @@ class LegadoSourceImporter {
     for (final raw in rawItems) {
       if (raw is! Map) continue;
       final json = Map<String, dynamic>.from(raw);
+      if (_isRegisteredSource(json)) {
+        try {
+          final source = RegisteredBookSource.fromJson(json);
+          if (_isHttpUrl(source.manifestUrl) && _isHttpUrl(source.apiBaseUrl)) {
+            sources.add(source);
+          }
+        } catch (_) {
+          // A damaged native record must not prevent valid records importing.
+        }
+        continue;
+      }
       final base = Uri.tryParse('${json['bookSourceUrl'] ?? ''}'.trim());
       final searchUrl = '${json['searchUrl'] ?? ''}'.trim();
       if (base == null ||
@@ -67,4 +78,14 @@ class LegadoSourceImporter {
     }
     return sources;
   }
+
+  bool _isRegisteredSource(Map<String, dynamic> json) =>
+      json['id'] is String &&
+      json['name'] is String &&
+      json['manifestUrl'] is String &&
+      json['apiBaseUrl'] is String &&
+      json['protocolVersion'] is String;
+
+  bool _isHttpUrl(Uri uri) =>
+      uri.hasAuthority && const {'http', 'https'}.contains(uri.scheme);
 }

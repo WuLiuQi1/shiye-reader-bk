@@ -40,6 +40,7 @@ import 'package:xxread/services/books/bookmark_dao.dart';
 import 'package:xxread/services/core/app_settings_service.dart';
 import 'package:xxread/services/reading/reading_resume_service.dart';
 import 'package:xxread/services/reading/reading_stats_dao.dart';
+import 'package:xxread/services/reading/content_filter_service.dart';
 import 'package:xxread/services/tts_service.dart';
 import 'package:xxread/services/reader_aloud_service.dart';
 import 'package:xxread/utils/book_open_transition.dart';
@@ -80,6 +81,7 @@ class BookSourceReaderPage extends StatefulWidget {
   final ReaderThemePalette? initialTheme;
   final String? initialChapterTitle;
   final double initialChapterProgress;
+  final int? initialShelfBookId;
 
   const BookSourceReaderPage({
     super.key,
@@ -91,6 +93,7 @@ class BookSourceReaderPage extends StatefulWidget {
     this.initialTheme,
     this.initialChapterTitle,
     this.initialChapterProgress = 0,
+    this.initialShelfBookId,
   });
 
   @override
@@ -188,7 +191,7 @@ class _BookSourceReaderPageState extends State<BookSourceReaderPage>
   Size _verticalViewportSize = Size.zero;
   bool _exitPromptVisible = false;
   bool _allowPop = false;
-  int? _shelfBookId;
+  late int? _shelfBookId = widget.initialShelfBookId;
   Timer? _progressSaveTimer;
   Timer? _controlsTimer;
   Timer? _pagedLayoutWarmTimer;
@@ -197,6 +200,16 @@ class _BookSourceReaderPageState extends State<BookSourceReaderPage>
   final BookmarkDao _bookmarkDao = BookmarkDao();
   final BookNoteDao _bookNoteDao = BookNoteDao();
   final ReaderSettingsStore _readerSettingsStore = const ReaderSettingsStore();
+  final ContentFilterService _contentFilterService = const ContentFilterService();
+  List<ContentFilterRule> _contentFilterRules = const [];
+
+  String _filteredChapterText(
+    BookSourceChapterContent content, {
+    String fallbackTitle = '',
+  }) => _contentFilterService.apply(
+    readableBookSourceChapterText(content, fallbackTitle: fallbackTitle),
+    _contentFilterRules,
+  );
   final ReaderCustomThemeStore _customThemeStore =
       const ReaderCustomThemeStore();
   final ReaderThemeOrderStore _themeOrderStore = const ReaderThemeOrderStore();
@@ -477,6 +490,7 @@ class _BookSourceReaderPageState extends State<BookSourceReaderPage>
         _customThemeStore.loadAll(),
         _themeOrderStore.load(),
         _readerSettingsStore.loadTapZones(),
+        _contentFilterService.load(),
       ]);
       final chapters = [...results[0]! as List<BookSourceChapter>]
         ..sort((a, b) => a.order.compareTo(b.order));
@@ -495,6 +509,7 @@ class _BookSourceReaderPageState extends State<BookSourceReaderPage>
       final customThemes = results[4] as List<ReaderCustomTheme>;
       final themeOrder = results[5] as List<String>;
       final tapZones = results[6] as ReaderTapZones;
+      _contentFilterRules = results[7] as List<ContentFilterRule>;
       var initialIndex = saved?.chapterIndex ?? 0;
       if (saved == null && widget.initialChapterTitle?.trim().isNotEmpty == true) {
         final normalized = _normalizedChapterTitle(widget.initialChapterTitle!);
@@ -937,11 +952,13 @@ class _BookSourceReaderPageState extends State<BookSourceReaderPage>
     future = contentFuture
         .then((content) async {
           _readableChapterText.remove(index);
-          _readableChapterText[index] =
-              await readableBookSourceChapterTextAsync(
-                content,
-                fallbackTitle: _chapters[index].title,
-              );
+          _readableChapterText[index] = _contentFilterService.apply(
+            await readableBookSourceChapterTextAsync(
+              content,
+              fallbackTitle: _chapters[index].title,
+            ),
+            _contentFilterRules,
+          );
           while (_readableChapterText.length > _readableChapterTextLimit) {
             _readableChapterText.remove(_readableChapterText.keys.first);
           }
@@ -1336,7 +1353,7 @@ class _BookSourceReaderPageState extends State<BookSourceReaderPage>
   String? get _currentBookmarkAnchorKey {
     final content = _content;
     if (content == null || _chapters.isEmpty) return null;
-    final text = readableBookSourceChapterText(
+    final text = _filteredChapterText(
       content,
       fallbackTitle: _chapters[_chapterIndex].title,
     );
@@ -1358,7 +1375,7 @@ class _BookSourceReaderPageState extends State<BookSourceReaderPage>
       );
       return;
     }
-    final text = readableBookSourceChapterText(
+    final text = _filteredChapterText(
       content,
       fallbackTitle: _chapters[_chapterIndex].title,
     );
@@ -1599,7 +1616,23 @@ class _BookSourceReaderPageState extends State<BookSourceReaderPage>
         title: widget.book.title,
         sources: sources,
         client: _client,
-        onSelected: (source, book) {
+        onSelected: (source, book) async {
+          final shelfBookId = _shelfBookId;
+          try {
+            await _saveProgress();
+            if (shelfBookId != null) {
+              await _shelfService.replaceOnlineSource(
+                shelfBookId: shelfBookId,
+                source: source,
+                book: book,
+              );
+            }
+          } catch (error) {
+            debugPrint('replace source shelf book failed: $error');
+            if (mounted) showSideToast(context, '换源失败，请稍后重试');
+            return;
+          }
+          if (!mounted || !sheetContext.mounted) return;
           Navigator.pop(sheetContext);
           Navigator.of(context).pushReplacement(
             MaterialPageRoute<void>(
@@ -1607,9 +1640,11 @@ class _BookSourceReaderPageState extends State<BookSourceReaderPage>
                 source: source,
                 book: book,
                 client: _client,
+                shelfService: _shelfService,
                 initialTheme: _readerTheme,
                 initialChapterTitle: currentChapterTitle,
                 initialChapterProgress: currentProgress.clamp(0.0, 1.0),
+                initialShelfBookId: shelfBookId,
               ),
             ),
           );
@@ -1967,7 +2002,7 @@ class _BookSourceReaderPageState extends State<BookSourceReaderPage>
     if (pageText.trim().isEmpty && content != null) {
       pageText =
           _readableChapterText[chapterIndex] ??
-          readableBookSourceChapterText(
+          _filteredChapterText(
             content,
             fallbackTitle: _chapters[chapterIndex].title,
           );
@@ -2583,7 +2618,7 @@ class _BookSourceReaderPageState extends State<BookSourceReaderPage>
     if (cached?.fingerprint == fingerprint) return cached!;
     final pages = paginateBookSourceText(
       _readableChapterText[chapterIndex] ??
-          readableBookSourceChapterText(
+          _filteredChapterText(
             content,
             fallbackTitle: _chapters[chapterIndex].title,
           ),
@@ -2728,7 +2763,7 @@ class _BookSourceReaderPageState extends State<BookSourceReaderPage>
         : content.title;
     final sourceText =
         _readableChapterText[chapterIndex] ??
-        readableBookSourceChapterText(
+        _filteredChapterText(
           content,
           fallbackTitle: _chapters[chapterIndex].title,
         );
@@ -2967,7 +3002,7 @@ class _BookSourceReaderPageState extends State<BookSourceReaderPage>
     if (cached?.fingerprint == key) return cached!;
     final pages = paginateBookSourceText(
       _readableChapterText[chapterIndex] ??
-          readableBookSourceChapterText(
+          _filteredChapterText(
             content,
             fallbackTitle: _chapters[chapterIndex].title,
           ),
@@ -3977,8 +4012,10 @@ class _BookSourceSwitchSheet extends StatefulWidget {
   final String title;
   final List<RegisteredBookSource> sources;
   final BookSourceClient client;
-  final void Function(RegisteredBookSource source, BookSourceBook book)
-  onSelected;
+  final Future<void> Function(
+    RegisteredBookSource source,
+    BookSourceBook book,
+  ) onSelected;
 
   @override
   State<_BookSourceSwitchSheet> createState() => _BookSourceSwitchSheetState();
@@ -4084,7 +4121,7 @@ class _BookSourceSwitchSheetState extends State<_BookSourceSwitchSheet> {
                         ),
                         trailing: const Icon(Icons.chevron_right_rounded),
                         onTap: () =>
-                            widget.onSelected(item.source, item.book),
+                            unawaited(widget.onSelected(item.source, item.book)),
                       );
                     },
                   ),

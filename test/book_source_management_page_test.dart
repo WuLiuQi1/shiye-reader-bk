@@ -82,6 +82,7 @@ void main() {
     );
     expect(find.text('categories'), findsOneWidget);
     expect(find.text('Enabled'), findsOneWidget);
+    expect(find.text('导出全部'), findsOneWidget);
     expect(tester.takeException(), isNull);
   });
 

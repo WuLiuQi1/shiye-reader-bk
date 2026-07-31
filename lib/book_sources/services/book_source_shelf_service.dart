@@ -72,6 +72,35 @@ class BookSourceShelfService {
     return shelfBook.copyWith(id: id);
   }
 
+  /// Rebinds an existing online shelf entry to another source/book identity.
+  ///
+  /// The row id is deliberately preserved so reading history, bookmarks and
+  /// annotations keep pointing at the same shelf book after a source switch.
+  Future<Book> replaceOnlineSource({
+    required int shelfBookId,
+    required RegisteredBookSource source,
+    required BookSourceBook book,
+  }) async {
+    final existing = await _bookDao.getBookById(shelfBookId);
+    if (existing == null) {
+      throw StateError('Shelf book $shelfBookId no longer exists.');
+    }
+    final rebound = existing.copyWith(
+      title: book.title,
+      author: book.author,
+      filePath: '',
+      format: 'source',
+      storageType: 'online',
+      sourceId: source.id,
+      sourceBookId: book.id,
+      sourceJson: jsonEncode(source.toJson()),
+      sourceBookJson: jsonEncode(book.toJson()),
+    );
+    await _bookDao.updateBook(rebound);
+    LibraryEventBus().notifyLibraryChanged();
+    return rebound;
+  }
+
   Future<void> updateShelfProgress({
     required int shelfBookId,
     required int chapterIndex,

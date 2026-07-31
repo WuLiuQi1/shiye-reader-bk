@@ -20,6 +20,7 @@ import 'package:xxread/pages/settings/about/changelog_page.dart';
 import 'package:xxread/pages/settings/about/open_source_licenses_page.dart';
 import 'package:xxread/pages/settings/ai_settings_page.dart';
 import 'package:xxread/pages/settings/cache_management_page.dart';
+import 'package:xxread/pages/settings/content_filter_rules_page.dart';
 import 'package:xxread/pages/settings/floating_navigation_settings_page.dart';
 import 'package:xxread/pages/settings/library_layout_settings_page.dart';
 import 'package:xxread/pages/settings/sync/webdav_sync_page.dart';
@@ -40,11 +41,8 @@ import 'package:xxread/utils/system_ui_helper.dart';
 import 'package:xxread/utils/ui_style.dart';
 import 'package:xxread/widgets/app_brand_icon.dart';
 import 'package:xxread/widgets/accent_color_picker_sheet.dart';
-import 'package:xxread/widgets/contributors_view.dart';
-import 'package:xxread/widgets/developer_support_card.dart';
 import 'package:xxread/widgets/reader_settings_controls.dart';
 import 'package:xxread/widgets/side_toast.dart';
-import 'package:xxread/widgets/update_check_gate.dart';
 
 import 'custom_fonts_page.dart';
 
@@ -90,45 +88,6 @@ class _GithubMarkPainter extends CustomPainter {
       ..quadraticBezierTo(4.4, 9.0, 6.1, 7.2)
       ..close();
     canvas.drawPath(mark, paint);
-    canvas.restore();
-  }
-
-  @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
-}
-
-class _QqMark extends StatelessWidget {
-  const _QqMark();
-
-  @override
-  Widget build(BuildContext context) {
-    return CustomPaint(painter: _QqMarkPainter());
-  }
-}
-
-class _QqMarkPainter extends CustomPainter {
-  @override
-  void paint(Canvas canvas, Size size) {
-    final white = Paint()..color = Colors.white;
-    final blue = Paint()..color = const Color(0xFF1677FF);
-    canvas.save();
-    canvas.scale(size.width / 24, size.height / 24);
-
-    canvas.drawOval(const Rect.fromLTWH(6.6, 2.2, 10.8, 17.8), white);
-    canvas.drawOval(const Rect.fromLTWH(4.2, 9.0, 4.6, 8.3), white);
-    canvas.drawOval(const Rect.fromLTWH(15.2, 9.0, 4.6, 8.3), white);
-    canvas.drawOval(const Rect.fromLTWH(5.0, 18.0, 6.8, 3.2), white);
-    canvas.drawOval(const Rect.fromLTWH(12.2, 18.0, 6.8, 3.2), white);
-    canvas.drawOval(const Rect.fromLTWH(8.8, 6.2, 2.1, 2.8), blue);
-    canvas.drawOval(const Rect.fromLTWH(13.1, 6.2, 2.1, 2.8), blue);
-    canvas.drawOval(const Rect.fromLTWH(10.3, 9.1, 3.4, 2.0), blue);
-    canvas.drawRRect(
-      RRect.fromRectAndRadius(
-        const Rect.fromLTWH(6.0, 13.1, 12.0, 2.25),
-        const Radius.circular(1.1),
-      ),
-      blue,
-    );
     canvas.restore();
   }
 
@@ -184,7 +143,6 @@ class _SettingsPageState extends State<SettingsPage> {
   bool _enableMemoryStats = false;
   bool _showFPS = false;
   String _appVersion = '0.9.1';
-  bool _isCheckingForUpdates = false;
   AIProviderSettings? _activeAiSettings;
   int _lastSupportRevealRequest = 0;
   AppCacheUsage? _cacheUsage;
@@ -565,6 +523,16 @@ class _SettingsPageState extends State<SettingsPage> {
                 icon: Icons.travel_explore_outlined,
               ),
               _buildActionSetting(
+                title: '内容过滤规则',
+                subtitle: '屏蔽正文中的网址、乱码和自定义内容',
+                onTap: () => Navigator.of(context).push(
+                  MaterialPageRoute<void>(
+                    builder: (_) => const ContentFilterRulesPage(),
+                  ),
+                ),
+                icon: Icons.filter_alt_outlined,
+              ),
+              _buildActionSetting(
                 title: l10n.settingsWebDavSyncTitle,
                 badge: l10n.webDavBetaBadge,
                 subtitle: _webDavSyncSubtitle(webDavSync),
@@ -631,28 +599,7 @@ class _SettingsPageState extends State<SettingsPage> {
             ],
           ),
           const SizedBox(height: 20),
-          KeyedSubtree(
-            key: _supportSectionKey,
-            child: _buildSectionCard(
-              title: l10n.settingsSectionAboutSupport,
-              icon: Icons.volunteer_activism_outlined,
-              children: [
-                DeveloperSupportCard(
-                  onWechatTap: () =>
-                      _showDonationDialog(DeveloperDonationMethod.wechat),
-                  onAlipayTap: () =>
-                      _showDonationDialog(DeveloperDonationMethod.alipay),
-                ),
-              ],
-            ),
-          ),
-          const SizedBox(height: 20),
           _buildAboutCard(),
-          const SizedBox(height: 20),
-          const ContributorsView(
-            repositoryOwner: 'miloquinn',
-            repositoryName: 'open-reading',
-          ),
           const SizedBox(height: 100),
         ],
       ),
@@ -1938,66 +1885,12 @@ class _SettingsPageState extends State<SettingsPage> {
           _buildChangelogLink(),
           const SizedBox(height: 14),
           _buildCommunityButton(
-            onPressed: _checkForUpdates,
-            backgroundColor: scheme.primary,
-            foregroundColor: scheme.onPrimary,
-            icon: _isCheckingForUpdates
-                ? SizedBox(
-                    width: 20,
-                    height: 20,
-                    child: CircularProgressIndicator(
-                      strokeWidth: 2,
-                      color: scheme.onPrimary,
-                    ),
-                  )
-                : const Icon(Icons.system_update_alt_rounded),
-            title: l10n.updateCheckNow,
-            subtitle: l10n.updateCheckNowSubtitle,
-          ),
-          const SizedBox(height: 10),
-          _buildCommunityButton(
-            onPressed: _openOfficialWebsite,
-            backgroundColor: const Color(0xFF2D6A4F),
-            foregroundColor: Colors.white,
-            icon: const Icon(Icons.language_rounded),
-            title: l10n.settingsOfficialWebsite,
-            subtitle: l10n.settingsOfficialWebsiteSubtitle,
-          ),
-          const SizedBox(height: 10),
-          _buildCommunityButton(
             onPressed: _openGithubRepo,
             backgroundColor: const Color(0xFF181717),
             foregroundColor: Colors.white,
             icon: const _GithubMark(),
             title: 'GitHub',
             subtitle: l10n.settingsViewSourceSubtitle,
-          ),
-          const SizedBox(height: 10),
-          _buildCommunityButton(
-            onPressed: _openTelegramChannel,
-            backgroundColor: const Color(0xFF229ED9),
-            foregroundColor: Colors.white,
-            icon: const Icon(Icons.send_rounded),
-            title: l10n.settingsTelegramChannel,
-            subtitle: l10n.settingsTelegramSubtitle,
-          ),
-          const SizedBox(height: 10),
-          _buildCommunityButton(
-            onPressed: _openQqChannel,
-            backgroundColor: const Color(0xFF12B7F5),
-            foregroundColor: Colors.white,
-            icon: const _QqMark(),
-            title: l10n.settingsQqChannel,
-            subtitle: l10n.settingsQqChannelSubtitle,
-          ),
-          const SizedBox(height: 10),
-          _buildCommunityButton(
-            onPressed: _openQqGroup,
-            backgroundColor: const Color(0xFF1677FF),
-            foregroundColor: Colors.white,
-            icon: const _QqMark(),
-            title: l10n.settingsJoinQqGroup,
-            subtitle: '1003560209',
           ),
         ],
       ),
@@ -2201,84 +2094,12 @@ class _SettingsPageState extends State<SettingsPage> {
   }
 
   Future<void> _openGithubRepo() async {
-    final uri = Uri.parse('https://github.com/miloquinn/open-reading');
+    final uri = Uri.parse('https://github.com/WuLiuQi1/shiye-reader');
     final ok = await launchUrl(uri, mode: LaunchMode.externalApplication);
     if (!ok && mounted) {
       showSideToast(
         context,
         context.l10n.settingsGithubOpenFailed,
-        icon: Icons.error_outline,
-        kind: SideToastKind.error,
-      );
-    }
-  }
-
-  Future<void> _openOfficialWebsite() async {
-    final ok = await launchUrl(
-      Uri.parse('https://open.xxread.top/'),
-      mode: LaunchMode.externalApplication,
-    );
-    if (!ok && mounted) {
-      showSideToast(
-        context,
-        context.l10n.settingsOfficialWebsiteOpenFailed,
-        icon: Icons.error_outline,
-        kind: SideToastKind.error,
-      );
-    }
-  }
-
-  void _showDonationDialog(DeveloperDonationMethod method) {
-    showDialog<void>(
-      context: context,
-      builder: (_) => DeveloperDonationDialog(method: method),
-    );
-  }
-
-  Future<void> _openTelegramChannel() async {
-    final uri = Uri.parse('https://t.me/origoreading');
-    final ok = await launchUrl(uri, mode: LaunchMode.externalApplication);
-    if (!ok && mounted) {
-      showSideToast(
-        context,
-        context.l10n.settingsTelegramOpenFailed,
-        icon: Icons.error_outline,
-        kind: SideToastKind.error,
-      );
-    }
-  }
-
-  Future<void> _openQqChannel() async {
-    final uri = Uri.parse('https://pd.qq.com/s/diin97dya?b=9');
-    final ok = await launchUrl(uri, mode: LaunchMode.externalApplication);
-    if (!ok && mounted) {
-      showSideToast(
-        context,
-        context.l10n.settingsQqChannelOpenFailed,
-        icon: Icons.error_outline,
-        kind: SideToastKind.error,
-      );
-    }
-  }
-
-  Future<void> _checkForUpdates() async {
-    if (_isCheckingForUpdates) return;
-    setState(() => _isCheckingForUpdates = true);
-    await UpdatePromptController.check(context, manual: true);
-    if (mounted) {
-      setState(() => _isCheckingForUpdates = false);
-    }
-  }
-
-  Future<void> _openQqGroup() async {
-    final uri = Uri.parse(
-      'mqqapi://card/show_pslcard?src_type=internal&version=1&uin=1003560209&card_type=group&source=qrcode',
-    );
-    final ok = await launchUrl(uri, mode: LaunchMode.externalApplication);
-    if (!ok && mounted) {
-      showSideToast(
-        context,
-        context.l10n.settingsQqOpenFailed,
         icon: Icons.error_outline,
         kind: SideToastKind.error,
       );

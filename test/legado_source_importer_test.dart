@@ -1,5 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:xxread/book_sources/services/legado_source_importer.dart';
+import 'package:xxread/book_sources/services/book_source_exporter.dart';
+import 'package:xxread/book_sources/models/registered_book_source.dart';
 
 void main() {
   test('imports Legado/阅读 source arrays and preserves rules', () {
@@ -42,5 +44,46 @@ void main() {
       ),
       throwsA(anything),
     );
+  });
+
+  test('exported native and Legado sources can be imported again', () {
+    final native = RegisteredBookSource(
+      id: 'org.example.native',
+      name: '原生书源',
+      description: '测试',
+      manifestUrl: Uri.parse('https://example.org/source.json'),
+      apiBaseUrl: Uri.parse('https://example.org/api/'),
+      protocolVersion: '1.0',
+      languages: const ['zh'],
+      capabilities: const {'search'},
+      enabled: false,
+      addedAt: DateTime.utc(2026, 7, 31),
+    );
+    final legado = RegisteredBookSource(
+      id: 'legado-test',
+      name: '阅读书源',
+      description: '测试',
+      manifestUrl: Uri.parse('https://books.example.com'),
+      apiBaseUrl: Uri.parse('https://books.example.com'),
+      protocolVersion: 'legado-v3',
+      languages: const ['zh'],
+      capabilities: const {'search'},
+      enabled: false,
+      addedAt: DateTime.utc(2026, 7, 31),
+      legadoConfig: const {
+        'bookSourceName': '阅读书源',
+        'bookSourceUrl': 'https://books.example.com',
+        'searchUrl': '/search?q={{key}}',
+        'enabled': true,
+      },
+    );
+
+    final json = const BookSourceExporter().encode([native, legado]);
+    final restored = const LegadoSourceImporter().parse(json);
+
+    expect(restored, hasLength(2));
+    expect(restored.first.id, native.id);
+    expect(restored.first.enabled, isFalse);
+    expect(restored.last.legadoConfig?['enabled'], isFalse);
   });
 }

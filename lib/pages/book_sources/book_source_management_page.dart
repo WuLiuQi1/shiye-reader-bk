@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:typed_data';
 
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
@@ -7,8 +8,10 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:xxread/book_sources/models/registered_book_source.dart';
 import 'package:xxread/book_sources/protocol/book_source_protocol.dart';
 import 'package:xxread/book_sources/services/book_source_client.dart';
+import 'package:xxread/book_sources/services/book_source_exporter.dart';
 import 'package:xxread/book_sources/services/book_source_registry.dart';
 import 'package:xxread/book_sources/services/legado_source_importer.dart';
+import 'package:xxread/book_sources/services/legado_source_url_importer.dart';
 import 'package:xxread/utils/layout_helper.dart';
 import 'package:xxread/utils/localization_extension.dart';
 import 'package:xxread/utils/page_style_helper.dart';
@@ -98,25 +101,44 @@ class _BookSourceManagementPageState extends State<BookSourceManagementPage> {
                         ),
                       ),
                       const SizedBox(height: 20),
-                      Row(
+                      Text(
+                        context.l10n.bookSourcesManageTitle,
+                        style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                          fontWeight: FontWeight.w800,
+                        ),
+                      ),
+                      const SizedBox(height: 10),
+                      Wrap(
+                        spacing: 8,
+                        runSpacing: 8,
                         children: [
-                          Expanded(
-                            child: Text(
-                              context.l10n.bookSourcesManageTitle,
-                              style: Theme.of(context).textTheme.titleLarge
-                                  ?.copyWith(fontWeight: FontWeight.w800),
-                            ),
-                          ),
                           FilledButton.icon(
                             onPressed: _showAddSourceDialog,
                             icon: const Icon(Icons.add_rounded),
                             label: Text(context.l10n.bookSourcesAdd),
                           ),
-                          const SizedBox(width: 8),
                           OutlinedButton.icon(
                             onPressed: _importLegadoSources,
                             icon: const Icon(Icons.file_download_outlined),
                             label: const Text('导入'),
+                          ),
+                          OutlinedButton.icon(
+                            key: const Key('bookSourceUrlImportButton'),
+                            onPressed: _importLegadoSourcesFromUrl,
+                            icon: const Icon(Icons.link_rounded),
+                            label: const Text('URL 导入'),
+                          ),
+                          OutlinedButton.icon(
+                            key: const Key('bookSourceExportButton'),
+                            onPressed: _sources.isEmpty
+                                ? null
+                                : _exportSources,
+                            icon: const Icon(Icons.file_upload_outlined),
+                            label: Text(
+                              _selectedSourceIds.isEmpty
+                                  ? '导出全部'
+                                  : '导出已选（${_selectedSourceIds.length}）',
+                            ),
                           ),
                         ],
                       ),
@@ -210,6 +232,84 @@ class _BookSourceManagementPageState extends State<BookSourceManagementPage> {
     } catch (error) {
       if (!mounted) return;
       showSideToast(context, '导入失败：$error', kind: SideToastKind.error);
+    }
+  }
+
+  Future<void> _exportSources() async {
+    final selected = _selectedSourceIds.isEmpty
+        ? _sources
+        : _sources
+              .where((source) => _selectedSourceIds.contains(source.id))
+              .toList(growable: false);
+    if (selected.isEmpty) return;
+    try {
+      final json = const BookSourceExporter().encode(selected);
+      final date = DateTime.now().toIso8601String().split('T').first;
+      final path = await FilePicker.saveFile(
+        dialogTitle: '导出书源',
+        fileName: '拾页书源-$date.json',
+        type: FileType.custom,
+        allowedExtensions: const ['json'],
+        bytes: Uint8List.fromList(utf8.encode(json)),
+        lockParentWindow: true,
+      );
+      if (!mounted || path == null) return;
+      showSideToast(
+        context,
+        '已导出 ${selected.length} 个书源',
+        kind: SideToastKind.success,
+      );
+    } catch (error) {
+      if (!mounted) return;
+      showSideToast(context, '导出失败：$error', kind: SideToastKind.error);
+    }
+  }
+
+  Future<void> _importLegadoSourcesFromUrl() async {
+    final controller = TextEditingController();
+    final value = await showDialog<String>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('通过 URL 导入书源'),
+        content: TextField(
+          key: const Key('bookSourceUrlImportField'),
+          controller: controller,
+          autofocus: true,
+          keyboardType: TextInputType.url,
+          decoration: const InputDecoration(
+            labelText: 'JSON 下载地址',
+            hintText: 'https://example.com/sources.json',
+          ),
+        ),
+        actions: [
+          TextButton(onPressed: () => Navigator.pop(context), child: const Text('取消')),
+          FilledButton(
+            onPressed: () => Navigator.pop(context, controller.text.trim()),
+            child: const Text('导入'),
+          ),
+        ],
+      ),
+    );
+    if (value == null || value.isEmpty || !mounted) return;
+    final uri = Uri.tryParse(value);
+    if (uri == null) {
+      showSideToast(context, '请输入有效的网址', kind: SideToastKind.error);
+      return;
+    }
+    showSideToast(context, '正在下载书源…');
+    try {
+      final imported = await LegadoSourceUrlImporter().load(uri);
+      final sources = await _registry.upsertAll(imported);
+      if (!mounted) return;
+      setState(() => _sources = sources);
+      showSideToast(
+        context,
+        '已从 URL 导入 ${imported.length} 个书源',
+        kind: SideToastKind.success,
+      );
+    } catch (error) {
+      if (!mounted) return;
+      showSideToast(context, 'URL 导入失败：$error', kind: SideToastKind.error);
     }
   }
 

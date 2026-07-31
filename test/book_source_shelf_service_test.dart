@@ -42,6 +42,46 @@ void main() {
     },
   );
 
+  test('replaces the source on the same shelf row and keeps progress', () async {
+    final dao = _MemoryBookDao();
+    final service = BookSourceShelfService(bookDao: dao);
+    final added = await service.addOnline(source: _source, book: _sourceBook);
+    final replacementSource = RegisteredBookSource(
+      id: 'replacement-source',
+      name: '备用书源',
+      description: '',
+      manifestUrl: Uri.parse('https://replacement.example/source.json'),
+      apiBaseUrl: Uri.parse('https://replacement.example/api/'),
+      protocolVersion: '1.0',
+      languages: const ['zh-CN'],
+      capabilities: const {'search', 'catalog', 'content'},
+      enabled: true,
+      addedAt: DateTime.utc(2026, 7, 31),
+    );
+    const replacementBook = BookSourceBook(
+      id: 'replacement-book',
+      title: '测试书籍',
+      author: '作者',
+      description: '新简介',
+      categories: [],
+    );
+    dao.stored = added.copyWith(currentPage: 4321, totalPages: 12000);
+
+    final replaced = await service.replaceOnlineSource(
+      shelfBookId: added.id!,
+      source: replacementSource,
+      book: replacementBook,
+    );
+
+    expect(replaced.id, added.id);
+    expect(replaced.sourceId, replacementSource.id);
+    expect(replaced.sourceBookId, replacementBook.id);
+    expect(replaced.currentPage, 4321);
+    expect(replaced.totalPages, 12000);
+    expect(dao.updateCount, 1);
+    expect(dao.insertCount, 1);
+  });
+
   test(
     'large downloads use bounded workers and report every chapter',
     () async {
@@ -224,6 +264,11 @@ final _sourceBookWithCover = BookSourceBook(
 class _MemoryBookDao extends BookDao {
   Book? stored;
   int insertCount = 0;
+  int updateCount = 0;
+
+  @override
+  Future<Book?> getBookById(int bookId) async =>
+      stored?.id == bookId ? stored : null;
 
   @override
   Future<Book?> getBookBySource({
@@ -236,6 +281,12 @@ class _MemoryBookDao extends BookDao {
     insertCount++;
     stored = book.copyWith(id: 7);
     return 7;
+  }
+
+  @override
+  Future<void> updateBook(Book book) async {
+    updateCount++;
+    stored = book;
   }
 }
 
