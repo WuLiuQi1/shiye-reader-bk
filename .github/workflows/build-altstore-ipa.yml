@@ -1,0 +1,66 @@
+name: Build AltStore IPA
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: altstore-ipa-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  FLUTTER_VERSION: "3.44.4"
+
+jobs:
+  build:
+    name: Unsigned iOS IPA
+    runs-on: macos-15
+    timeout-minutes: 45
+
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v4
+
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: ${{ env.FLUTTER_VERSION }}
+          channel: stable
+          cache: true
+
+      - name: Resolve Flutter dependencies
+        run: flutter pub get --enforce-lockfile
+
+      - name: Generate localizations
+        run: flutter gen-l10n
+
+      - name: Install iOS pods
+        run: pod install --project-directory=ios
+
+      - name: Build without Apple signing
+        run: flutter build ios --release --no-codesign
+
+      - name: Package IPA for AltStore
+        shell: bash
+        run: |
+          set -euo pipefail
+          app_path="build/ios/iphoneos/Runner.app"
+          test -d "$app_path"
+          mkdir -p build/altstore/Payload
+          cp -R "$app_path" build/altstore/Payload/
+          (
+            cd build/altstore
+            /usr/bin/zip -qry OpenReading-AltStore-unsigned.ipa Payload
+          )
+          test -s build/altstore/OpenReading-AltStore-unsigned.ipa
+
+      - name: Upload IPA
+        uses: actions/upload-artifact@v4
+        with:
+          name: OpenReading-AltStore-IPA
+          path: build/altstore/OpenReading-AltStore-unsigned.ipa
+          if-no-files-found: error
+          retention-days: 7
+

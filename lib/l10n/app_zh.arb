@@ -1,0 +1,2131 @@
+{
+  "@@locale": "zh",
+  "appTitle": "拾页",
+  "@appTitle": {
+    "description": "应用标题"
+  },
+  "home": "首页",
+  "@home": {
+    "description": "首页标签"
+  },
+  "library": "书架",
+  "@library": {
+    "description": "书库标签"
+  },
+  "bookSources": "书源",
+  "@bookSources": {
+    "description": "书源标签"
+  },
+  "discover": "发现",
+  "discoverRecommended": "推荐",
+  "discoverCategories": "分类",
+  "discoverLatest": "最新",
+  "discoverLoadFailed": "发现内容加载失败",
+  "discoverRetry": "重新加载",
+  "discoverEmptyTitle": "暂无内容",
+  "discoverEmptyMessage": "这个栏目暂时没有可展示的内容。",
+  "discoverUnsupportedTitle": "当前书源暂不支持此栏目",
+  "discoverUnsupportedMessage": "需要书源提供 {capability} 能力；现有书源仍可继续用于搜索。",
+  "@discoverUnsupportedMessage": {
+    "placeholders": {
+      "capability": {
+        "type": "String"
+      }
+    }
+  },
+  "discoverCategoryEmpty": "这个分类暂时没有可展示的书籍。",
+  "bookSourceManagementTitle": "书源管理",
+  "bookSourceManagementSubtitle": "管理内容来源的添加、启停与协议信息。发现页只保留找书体验。",
+  "settingsContentSourcesTitle": "内容来源",
+  "settingsContentSourcesSubtitle": "添加、启用或移除开放书源",
+  "bookSourcesSubtitle": "连接开放书源，跨来源搜索可阅读内容",
+  "bookSourcesAdd": "添加书源",
+  "bookSourcesSearchHint": "输入书名或作者，搜索已启用书源",
+  "bookSourcesSearch": "搜索",
+  "bookSourcesLoadMore": "加载更多",
+  "bookSourcesFailedCount": "{count} 个书源请求失败",
+  "@bookSourcesFailedCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "bookSourcesSearchPrompt": "添加并启用书源后，即可在这里统一搜索",
+  "bookSourcesNoResults": "没有找到匹配的书籍",
+  "bookSourcesNoSourcesTitle": "还没有书源",
+  "bookSourcesNoSourcesDescription": "粘贴兼容 Open Reading Source Protocol 的服务地址即可接入。",
+  "bookSourcesManageTitle": "已接入书源",
+  "bookSourcesEnabled": "已启用",
+  "bookSourcesDisabled": "已停用",
+  "bookSourcesRemove": "移除",
+  "bookSourcesRemoveTitle": "移除书源",
+  "bookSourcesRemoveMessage": "此操作只移除书源配置，不会删除本地书籍。",
+  "bookSourcesCancel": "取消",
+  "bookSourcesConfirm": "确认",
+  "bookSourcesAddTitle": "添加开放书源",
+  "bookSourcesUrlLabel": "书源地址",
+  "bookSourcesUrlHint": "https://example.com 或发现文档 URL",
+  "bookSourcesNoOfficialSourcesNotice": "开元阅读不预装任何书源，也不运营、推荐或背书第三方书源服务。每个书源地址都由你主动添加。",
+  "bookSourcesResponsibilityAck": "我确认自己有权访问相关内容，且不会利用书源绕过登录、付费、DRM 或其他访问控制。",
+  "bookSourcesConnect": "连接并校验",
+  "bookSourcesConnecting": "正在校验协议…",
+  "bookSourcesAdded": "书源已添加",
+  "bookSourcesRefresh": "刷新书源",
+  "bookSourcesRefreshed": "书源已刷新",
+  "bookSourcesRefreshFailed": "无法刷新该书源",
+  "bookSourcesProtocolTitle": "Open Reading Source Protocol",
+  "bookSourcesProtocolDescription": "统一发现、搜索、书籍详情、目录与章节正文接口。开发者可搭建原生书源，也可为已有合法内容服务编写适配网关。",
+  "bookSourcesProtocolDetails": "查看协议",
+  "bookSourcesProtocolRepository": "协议开源仓库",
+  "bookSourcesProtocolRepositoryOpen": "在 GitHub 查看",
+  "bookSourcesProtocolRepositoryOpenFailed": "无法打开书源协议仓库",
+  "bookSourcesProtocolDialogTitle": "开放书源协议 v1.4",
+  "bookSourcesProtocolDialogBody": "服务在 /.well-known/open-reading-source.json 发布发现文档，并实现核心阅读能力：搜索、书籍详情、分页章节目录与章节正文接口。v1.4 保留完整目录分页，要求书源声明这些核心能力，并保留公开、无需登录的 HTTP(S) 书源运营者、联系方式、内容许可与权利声明元数据。",
+  "bookSourcesRightsDetails": "运营者与权利信息",
+  "bookSourcesOperator": "书源运营者",
+  "bookSourcesContentLicense": "内容许可",
+  "bookSourcesRightsStatement": "权利声明",
+  "bookSourcesRightsNotProvided": "该书源未提供",
+  "bookSourcesRightsUnverifiedNotice": "上述信息由独立书源运营者自行声明。开元阅读仅为提高透明度而展示，不负责核验，也不构成推荐或背书。",
+  "bookSourcesContactOperator": "联系运营者",
+  "bookSourcesRightsReport": "权利投诉",
+  "bookSourcesRightsReportOpenFailed": "无法打开权利投诉表单",
+  "bookSourcesClose": "关闭",
+  "settings": "设置",
+  "@settings": {
+    "description": "设置标签"
+  },
+  "statistics": "统计",
+  "@statistics": {
+    "description": "统计标签"
+  },
+  "reading": "阅读",
+  "@reading": {
+    "description": "阅读页面标题"
+  },
+  "importBooks": "导入书籍",
+  "@importBooks": {
+    "description": "导入书籍按钮"
+  },
+  "darkMode": "深色模式",
+  "@darkMode": {
+    "description": "深色模式设置"
+  },
+  "lightMode": "浅色模式",
+  "@lightMode": {
+    "description": "浅色模式设置"
+  },
+  "systemMode": "跟随系统",
+  "@systemMode": {
+    "description": "跟随系统主题"
+  },
+  "theme": "主题",
+  "@theme": {
+    "description": "主题设置"
+  },
+  "accent": "强调色",
+  "@accent": {
+    "description": "强调色设置"
+  },
+  "bookmarks": "书签",
+  "@bookmarks": {
+    "description": "书签功能"
+  },
+  "notes": "笔记",
+  "@notes": {
+    "description": "笔记功能"
+  },
+  "highlights": "高亮",
+  "@highlights": {
+    "description": "高亮功能"
+  },
+  "ttsReading": "语音朗读",
+  "@ttsReading": {
+    "description": "TTS朗读功能"
+  },
+  "share": "分享",
+  "@share": {
+    "description": "分享按钮"
+  },
+  "shareContent": "分享内容",
+  "@shareContent": {
+    "description": "分享内容对话框标题"
+  },
+  "shareCurrentPage": "分享当前页面",
+  "@shareCurrentPage": {
+    "description": "分享当前页面选项"
+  },
+  "shareSelectedText": "分享选中文本",
+  "@shareSelectedText": {
+    "description": "分享选中文本选项"
+  },
+  "shareProgress": "分享阅读进度",
+  "@shareProgress": {
+    "description": "分享阅读进度选项"
+  },
+  "play": "播放",
+  "@play": {
+    "description": "播放按钮"
+  },
+  "pause": "暂停",
+  "@pause": {
+    "description": "暂停按钮"
+  },
+  "stop": "停止",
+  "@stop": {
+    "description": "停止按钮"
+  },
+  "speed": "语速",
+  "@speed": {
+    "description": "语速设置"
+  },
+  "pitch": "音调",
+  "@pitch": {
+    "description": "音调设置"
+  },
+  "language": "语言",
+  "@language": {
+    "description": "语言设置"
+  },
+  "fontSize": "字体大小",
+  "@fontSize": {
+    "description": "字体大小设置"
+  },
+  "readingProgress": "阅读进度",
+  "@readingProgress": {
+    "description": "阅读进度指示"
+  },
+  "totalPages": "总页数",
+  "@totalPages": {
+    "description": "总页数标签"
+  },
+  "currentPage": "当前页",
+  "@currentPage": {
+    "description": "当前页标签"
+  },
+  "readingTime": "阅读时长",
+  "@readingTime": {
+    "description": "阅读时长统计"
+  },
+  "booksRead": "已读书籍",
+  "@booksRead": {
+    "description": "已读书籍统计"
+  },
+  "todayReading": "今日阅读",
+  "@todayReading": {
+    "description": "今日阅读时长"
+  },
+  "cancel": "取消",
+  "@cancel": {
+    "description": "取消按钮"
+  },
+  "confirm": "确认",
+  "@confirm": {
+    "description": "确认按钮"
+  },
+  "delete": "删除",
+  "@delete": {
+    "description": "删除按钮"
+  },
+  "edit": "编辑",
+  "@edit": {
+    "description": "编辑按钮"
+  },
+  "save": "保存",
+  "@save": {
+    "description": "保存按钮"
+  },
+  "back": "返回",
+  "@back": {
+    "description": "返回按钮"
+  },
+  "next": "下一页",
+  "@next": {
+    "description": "下一页按钮"
+  },
+  "previous": "上一页",
+  "@previous": {
+    "description": "上一页按钮"
+  },
+  "search": "搜索",
+  "@search": {
+    "description": "搜索功能"
+  },
+  "noResults": "未找到结果",
+  "@noResults": {
+    "description": "无搜索结果"
+  },
+  "loading": "加载中...",
+  "@loading": {
+    "description": "加载中提示"
+  },
+  "error": "错误",
+  "@error": {
+    "description": "错误信息"
+  },
+  "initializationFailed": "初始化失败",
+  "@initializationFailed": {
+    "description": "初始化失败消息"
+  },
+  "unknownError": "未知错误",
+  "@unknownError": {
+    "description": "未知错误消息"
+  },
+  "retry": "重试",
+  "@retry": {
+    "description": "重试按钮"
+  },
+  "appearanceSettings": "外观设置",
+  "@appearanceSettings": {
+    "description": "外观设置部分"
+  },
+  "readingTips": "阅读提示",
+  "@readingTips": {
+    "description": "阅读提示部分"
+  },
+  "readingFontSettingsMoved": "阅读字体设置已移至阅读界面",
+  "@readingFontSettingsMoved": {
+    "description": "字体设置迁移消息"
+  },
+  "readingFontSettingsHint": "打开任意书籍，点击屏幕中央，在底部控制栏中点击「设置」按钮，即可调整字体大小、行间距、字符间距、页面边距与阅读字体。",
+  "@readingFontSettingsHint": {
+    "description": "字体设置位置提示"
+  },
+  "readingSettings": "阅读设置",
+  "@readingSettings": {
+    "description": "阅读设置部分"
+  },
+  "enableTts": "启用朗读功能",
+  "@enableTts": {
+    "description": "启用TTS选项"
+  },
+  "enableTtsHint": "开启文本转语音朗读",
+  "@enableTtsHint": {
+    "description": "启用TTS提示"
+  },
+  "ttsSpeedLabel": "朗读速度",
+  "@ttsSpeedLabel": {
+    "description": "TTS语速标签"
+  },
+  "ttsSpeedHint": "调整朗读的快慢",
+  "@ttsSpeedHint": {
+    "description": "语速调整提示"
+  },
+  "ttsVolumeLabel": "朗读音量",
+  "@ttsVolumeLabel": {
+    "description": "TTS音量标签"
+  },
+  "ttsVolumeHint": "调整朗读音量大小",
+  "@ttsVolumeHint": {
+    "description": "音量调整提示"
+  },
+  "ttsPitchLabel": "音调高低",
+  "@ttsPitchLabel": {
+    "description": "TTS音调标签"
+  },
+  "ttsPitchHint": "调整朗读音调",
+  "@ttsPitchHint": {
+    "description": "音调调整提示"
+  },
+  "appSettings": "应用设置",
+  "@appSettings": {
+    "description": "应用设置部分"
+  },
+  "appFont": "App 字体",
+  "@appFont": {
+    "description": "应用字体设置"
+  },
+  "appFontDescription": "用于导航、按钮、设置等界面文字，不影响书籍正文。",
+  "@appFontDescription": {
+    "description": "说明 App 字体的作用范围"
+  },
+  "readerFont": "阅读字体",
+  "@readerFont": {
+    "description": "阅读正文的字体设置"
+  },
+  "readerFontDescription": "仅用于书籍正文和章节标题，不影响 App 界面。",
+  "@readerFontDescription": {
+    "description": "说明阅读字体的作用范围"
+  },
+  "fontSystem": "系统默认",
+  "@fontSystem": {
+    "description": "系统默认字体"
+  },
+  "fontSourceHanSerif": "思源宋体",
+  "@fontSourceHanSerif": {
+    "description": "思源宋体"
+  },
+  "fontSourceHanSans": "思源黑体",
+  "@fontSourceHanSans": {
+    "description": "思源黑体"
+  },
+  "fontJetBrainsMono": "JetBrains Mono",
+  "@fontJetBrainsMono": {
+    "description": "JetBrains Mono字体"
+  },
+  "fontInstrumentSans": "Instrument Sans",
+  "@fontInstrumentSans": {
+    "description": "Instrument Sans 字体"
+  },
+  "fontNewsreader": "Newsreader",
+  "@fontNewsreader": {
+    "description": "Newsreader 字体"
+  },
+  "fontSystemDescription": "跟随当前设备和操作系统的原生字体。",
+  "@fontSystemDescription": {
+    "description": "系统字体选项说明"
+  },
+  "fontSerifDescription": "沉静、有出版物气质的衬线字体，适合长时间阅读。",
+  "@fontSerifDescription": {
+    "description": "衬线字体选项说明"
+  },
+  "fontSansSerifDescription": "清晰简洁的无衬线字体，适合紧凑界面和日常阅读。",
+  "@fontSansSerifDescription": {
+    "description": "无衬线字体选项说明"
+  },
+  "fontMonospaceDescription": "等宽字体，适合代码、技术内容和专注排版。",
+  "@fontMonospaceDescription": {
+    "description": "等宽字体选项说明"
+  },
+  "fontPreviewText": "Open Reading · 自由阅读，开卷有益",
+  "@fontPreviewText": {
+    "description": "中英文字体预览文本"
+  },
+  "customFonts": "我的字体",
+  "customFontsEmpty": "还没有导入字体",
+  "customFontsEmptyHint": "导入一次 TTF 或 OTF 文件，即可用于 App 界面或阅读正文。",
+  "customFontsCount": "已导入 {count} 款字体",
+  "@customFontsCount": {
+    "placeholders": {
+      "count": {"type": "int"}
+    }
+  },
+  "customFontsLocalOnly": "导入的字体只保存在当前设备，不会自动同步。",
+  "builtInFonts": "内置字体",
+  "onlineFonts": "在线字体",
+  "fontDownload": "下载",
+  "fontDownloading": "下载中…",
+  "fontDownloaded": "已下载",
+  "fontDownloadFailed": "下载失败，点此重试",
+  "fontDownloadHint": "首次使用需从 GitHub 下载",
+  "fontDeleteDownload": "删除下载",
+  "fontDeleteDownloadTitle": "删除已下载的“{name}”？",
+  "@fontDeleteDownloadTitle": {
+    "placeholders": {
+      "name": {"type": "String"}
+    }
+  },
+  "fontDeleteDownloadMessage": "将释放 {size} 存储空间。下次使用时会重新下载。",
+  "@fontDeleteDownloadMessage": {
+    "placeholders": {
+      "size": {"type": "String"}
+    }
+  },
+  "fontDownloadCancelled": "下载已取消",
+  "fontDownloadNetworkFailed": "网络错误，下载失败",
+  "fontDownloadInvalid": "下载的字体文件无效",
+  "fontDownloadUnsupported": "当前平台暂不支持在线下载字体",
+  "importFont": "导入字体",
+  "importingFont": "正在导入字体…",
+  "customFontImported": "字体已导入",
+  "customFontAlreadyImported": "该字体已经导入，可以直接使用",
+  "customFontApplied": "字体设置已更新",
+  "customFontAppliedToApp": "已导入并设为 App 字体",
+  "customFontAppliedToReader": "已导入并设为阅读字体",
+  "customFontImportUnsupported": "当前平台暂不支持持久化导入字体。",
+  "customFontUnsupportedFormat": "请选择 TTF 或 OTF 字体文件。",
+  "customFontInvalid": "该文件不是有效或受支持的字体。",
+  "customFontTooLarge": "字体文件不能超过 50 MB。",
+  "customFontReadFailed": "无法读取字体文件。",
+  "customFontLoadFailed": "无法加载该字体。",
+  "customFontStorageFailed": "无法将字体保存到当前设备。",
+  "customFontUnavailable": "字体文件不可用，请删除后重新导入。",
+  "setAsAppFont": "设为 App 字体",
+  "setAsReaderFont": "设为阅读字体",
+  "setAsBothFonts": "同时用于两者",
+  "renameFont": "重命名字体",
+  "deleteCustomFontTitle": "删除“{name}”？",
+  "@deleteCustomFontTitle": {
+    "placeholders": {
+      "name": {"type": "String"}
+    }
+  },
+  "deleteCustomFontMessage": "字体文件将从当前设备删除。",
+  "deleteCustomFontInUse": "该字体正在使用。删除后，受影响的字体设置将恢复为默认值。",
+  "deleteAndReset": "删除并恢复默认",
+  "settingsTelegramChannel": "Telegram",
+  "settingsTelegramSubtitle": "Telegram 官方频道",
+  "settingsTelegramOpenFailed": "无法打开 Telegram 链接",
+  "settingsQqChannel": "QQ 频道",
+  "settingsQqChannelSubtitle": "开元阅读 · OpenReading6",
+  "settingsQqChannelOpenFailed": "无法打开 QQ 频道邀请链接",
+  "languageSystem": "跟随系统",
+  "@languageSystem": {
+    "description": "跟随系统语言"
+  },
+  "languageChinese": "简体中文",
+  "@languageChinese": {
+    "description": "简体中文"
+  },
+  "languageEnglish": "English",
+  "@languageEnglish": {
+    "description": "英语"
+  },
+  "languageJapanese": "日本語",
+  "@languageJapanese": {
+    "description": "日语（原生名称）"
+  },
+  "languageTraditionalChinese": "繁體中文",
+  "@languageTraditionalChinese": {
+    "description": "繁体中文（原生名称）"
+  },
+  "typographySettings": "排版设置",
+  "@typographySettings": {
+    "description": "排版设置部分"
+  },
+  "fontFamilyLabel": "字体",
+  "@fontFamilyLabel": {
+    "description": "字体标签"
+  },
+  "fontSizeLabel": "字体大小",
+  "@fontSizeLabel": {
+    "description": "字体大小标签"
+  },
+  "lineSpacingLabel": "行距",
+  "@lineSpacingLabel": {
+    "description": "行距标签"
+  },
+  "letterSpacingLabel": "字间距",
+  "@letterSpacingLabel": {
+    "description": "字间距标签"
+  },
+  "textAlignmentLabel": "对齐方式",
+  "@textAlignmentLabel": {
+    "description": "阅读正文对齐方式标签"
+  },
+  "textAlignmentNatural": "自然对齐",
+  "@textAlignmentNatural": {
+    "description": "阅读正文自然对齐"
+  },
+  "textAlignmentJustified": "两端对齐",
+  "@textAlignmentJustified": {
+    "description": "阅读正文两端对齐"
+  },
+  "firstLineIndentLabel": "首行缩进",
+  "@firstLineIndentLabel": {
+    "description": "首行缩进标签"
+  },
+  "paragraphSpacingLabel": "段落间距",
+  "@paragraphSpacingLabel": {
+    "description": "阅读正文段落之间的附加间距"
+  },
+  "pageMarginLabel": "页边距",
+  "@pageMarginLabel": {
+    "description": "页边距标签"
+  },
+  "resetDefault": "恢复默认",
+  "@resetDefault": {
+    "description": "恢复默认按钮"
+  },
+  "ttsPanelTitle": "语音朗读",
+  "@ttsPanelTitle": {
+    "description": "TTS面板标题"
+  },
+  "ttsPreviewEffect": "预览效果",
+  "@ttsPreviewEffect": {
+    "description": "预览效果标签"
+  },
+  "ttsVolume": "音量",
+  "@ttsVolume": {
+    "description": "TTS音量"
+  },
+  "ttsPitch": "音调",
+  "@ttsPitch": {
+    "description": "TTS音调"
+  },
+  "ttsSpeed": "语速",
+  "@ttsSpeed": {
+    "description": "TTS语速"
+  },
+  "ttsPreviousSentence": "上一句",
+  "@ttsPreviousSentence": {
+    "description": "上一句按钮"
+  },
+  "ttsNextSentence": "下一句",
+  "@ttsNextSentence": {
+    "description": "下一句按钮"
+  },
+  "ttsTimerStop": "定时停止",
+  "@ttsTimerStop": {
+    "description": "定时停止标签"
+  },
+  "ttsTimerOff": "不限时",
+  "@ttsTimerOff": {
+    "description": "不限时选项"
+  },
+  "ttsTimerMinutes": "{minutes} 分钟后停止",
+  "@ttsTimerMinutes": {
+    "description": "定时分钟选项",
+    "placeholders": {
+      "minutes": {}
+    }
+  },
+  "ttsPlaying": "正在播放",
+  "@ttsPlaying": {
+    "description": "TTS播放状态"
+  },
+  "ttsPaused": "已暂停",
+  "@ttsPaused": {
+    "description": "TTS暂停状态"
+  },
+  "ttsStopped": "已停止",
+  "@ttsStopped": {
+    "description": "TTS停止状态"
+  },
+  "ttsPreviousSentenceFailed": "上一句失败",
+  "@ttsPreviousSentenceFailed": {
+    "description": "上一句失败消息"
+  },
+  "ttsNextSentenceFailed": "下一句失败",
+  "@ttsNextSentenceFailed": {
+    "description": "下一句失败消息"
+  },
+  "ttsEmptyContentError": "当前页面内容为空",
+  "@ttsEmptyContentError": {
+    "description": "空内容错误"
+  },
+  "ttsPlaybackFailed": "播放失败",
+  "@ttsPlaybackFailed": {
+    "description": "播放失败消息"
+  },
+  "ttsOperationFailed": "操作失败",
+  "@ttsOperationFailed": {
+    "description": "操作失败消息"
+  },
+  "pageTurningMode": "翻页模式",
+  "@pageTurningMode": {
+    "description": "翻页模式"
+  },
+  "pageTurningSlide": "水平滑动",
+  "@pageTurningSlide": {
+    "description": "滑动翻页"
+  },
+  "pageTurningScroll": "上下翻页",
+  "@pageTurningScroll": {
+    "description": "滚动翻页"
+  },
+  "tapZoneSettings": "点击区域设置",
+  "@tapZoneSettings": {
+    "description": "点击区域设置"
+  },
+  "tapZoneNextPage": "下一页",
+  "@tapZoneNextPage": {
+    "description": "下一页点击区域"
+  },
+  "tapZonePreviousPage": "上一页",
+  "@tapZonePreviousPage": {
+    "description": "上一页点击区域"
+  },
+  "tapZoneMenu": "菜单",
+  "@tapZoneMenu": {
+    "description": "菜单点击区域"
+  },
+  "tapZoneLegend": "图例",
+  "@tapZoneLegend": {
+    "description": "点击区域图例"
+  },
+  "tapZoneNextChapter": "下一章",
+  "@tapZoneNextChapter": {
+    "description": "下一章点击区域"
+  },
+  "tapZonePreviousChapter": "上一章",
+  "@tapZonePreviousChapter": {
+    "description": "上一章点击区域"
+  },
+  "tapZoneNone": "无操作",
+  "@tapZoneNone": {
+    "description": "无动作点击区域"
+  },
+  "tapZoneSettingsHint": "自定义九宫格每个区域的点击动作",
+  "@tapZoneSettingsHint": {
+    "description": "点击区域设置入口提示"
+  },
+  "tapZoneChooseAction": "选择操作",
+  "@tapZoneChooseAction": {
+    "description": "点击区域动作选择标题"
+  },
+  "tapZoneMenuRequiredHint": "点击任意区域修改动作。至少保留一个菜单区域；全部移除时，中间区域会自动恢复为菜单。",
+  "@tapZoneMenuRequiredHint": {
+    "description": "点击区域编辑器菜单保留提示"
+  },
+  "tapZoneReset": "恢复默认",
+  "@tapZoneReset": {
+    "description": "点击区域恢复默认按钮"
+  },
+  "highlightColor": "荧光笔颜色",
+  "@highlightColor": {
+    "description": "高亮颜色标签"
+  },
+  "highlightPreview": "预览效果",
+  "@highlightPreview": {
+    "description": "高亮预览"
+  },
+  "highlightSampleText": "这是一段示例文本，",
+  "@highlightSampleText": {
+    "description": "示例文本"
+  },
+  "highlightSampleText2": "这部分将被高亮显示，",
+  "@highlightSampleText2": {
+    "description": "示例文本2"
+  },
+  "highlightSampleText3": "展示荧光笔效果。",
+  "@highlightSampleText3": {
+    "description": "示例文本3"
+  },
+  "colorLightBlue": "浅蓝色",
+  "@colorLightBlue": {
+    "description": "浅蓝色"
+  },
+  "colorRed": "红色",
+  "@colorRed": {
+    "description": "红色"
+  },
+  "colorGreen": "绿色",
+  "@colorGreen": {
+    "description": "绿色"
+  },
+  "colorPurple": "紫色",
+  "@colorPurple": {
+    "description": "紫色"
+  },
+  "colorGold": "金色",
+  "@colorGold": {
+    "description": "金色"
+  },
+  "colorOrange": "橙色",
+  "@colorOrange": {
+    "description": "橙色"
+  },
+  "colorYellow": "黄色",
+  "@colorYellow": {
+    "description": "黄色"
+  },
+  "colorDarkGreen": "深绿色",
+  "@colorDarkGreen": {
+    "description": "深绿色"
+  },
+  "colorCustom": "自定义",
+  "@colorCustom": {
+    "description": "自定义"
+  },
+  "noteTypeHighlight": "高亮",
+  "@noteTypeHighlight": {
+    "description": "高亮类型"
+  },
+  "noteTypeUnderline": "下划线",
+  "@noteTypeUnderline": {
+    "description": "下划线类型"
+  },
+  "noteTypeNote": "笔记",
+  "@noteTypeNote": {
+    "description": "笔记类型"
+  },
+  "noteTypeUnknown": "未知",
+  "@noteTypeUnknown": {
+    "description": "未知类型"
+  },
+  "bookFormatTXT": "TXT",
+  "@bookFormatTXT": {
+    "description": "TXT书籍格式"
+  },
+  "bookFormatEPUB": "EPUB",
+  "@bookFormatEPUB": {
+    "description": "EPUB书籍格式"
+  },
+  "bookFormatPDF": "PDF",
+  "@bookFormatPDF": {
+    "description": "PDF书籍格式"
+  },
+  "importBook": "导入书籍",
+  "@importBook": {
+    "description": "导入书籍动作"
+  },
+  "importFromFiles": "从文件导入",
+  "@importFromFiles": {
+    "description": "从文件导入"
+  },
+  "importNoBooks": "还没有导入任何书籍",
+  "@importNoBooks": {
+    "description": "无书籍消息"
+  },
+  "importSuccess": "书籍导入成功",
+  "@importSuccess": {
+    "description": "导入成功消息"
+  },
+  "importFailed": "导入失败",
+  "@importFailed": {
+    "description": "导入失败消息"
+  },
+  "importProcessing": "正在处理书籍...",
+  "@importProcessing": {
+    "description": "导入处理中消息"
+  },
+  "author": "作者",
+  "@author": {
+    "description": "作者标签"
+  },
+  "progress": "进度",
+  "@progress": {
+    "description": "进度标签"
+  },
+  "continueReading": "继续阅读",
+  "@continueReading": {
+    "description": "继续阅读按钮"
+  },
+  "recentBooks": "最近阅读",
+  "@recentBooks": {
+    "description": "最近阅读部分"
+  },
+  "allBooks": "全部书籍",
+  "@allBooks": {
+    "description": "全部书籍部分"
+  },
+  "emptyLibrary": "书库是空的",
+  "@emptyLibrary": {
+    "description": "空书库消息"
+  },
+  "deleteBook": "删除书籍",
+  "@deleteBook": {
+    "description": "删除书籍动作"
+  },
+  "deleteBookConfirm": "确定要删除这本书吗？",
+  "@deleteBookConfirm": {
+    "description": "删除书籍确认"
+  },
+  "bookDeleted": "书籍已删除",
+  "@bookDeleted": {
+    "description": "书籍删除消息"
+  },
+  "userAgreement": "用户协议",
+  "@userAgreement": {
+    "description": "用户协议标题"
+  },
+  "acceptAgreement": "我已阅读并同意",
+  "@acceptAgreement": {
+    "description": "同意协议复选框"
+  },
+  "declineAgreement": "不同意",
+  "@declineAgreement": {
+    "description": "不同意按钮"
+  },
+  "statsToday": "今日",
+  "@statsToday": {
+    "description": "今日统计"
+  },
+  "statsThisWeek": "本周",
+  "@statsThisWeek": {
+    "description": "本周统计"
+  },
+  "statsTotal": "总计",
+  "@statsTotal": {
+    "description": "总计统计"
+  },
+  "statsMinutes": "{minutes} 分钟",
+  "@statsMinutes": {
+    "description": "阅读分钟数",
+    "placeholders": {
+      "minutes": {}
+    }
+  },
+  "statsHours": "{hours} 小时",
+  "@statsHours": {
+    "description": "阅读小时数",
+    "placeholders": {
+      "hours": {}
+    }
+  },
+  "statsBooks": "{count} 本",
+  "@statsBooks": {
+    "description": "书籍数量",
+    "placeholders": {
+      "count": {}
+    }
+  },
+  "statsConsecutiveDays": "连续阅读",
+  "@statsConsecutiveDays": {
+    "description": "连续阅读天数"
+  },
+  "statsFocusTime": "专注时长",
+  "@statsFocusTime": {
+    "description": "专注时间"
+  },
+  "statsThisWeekTotal": "本周总计",
+  "@statsThisWeekTotal": {
+    "description": "本周总计"
+  },
+  "statsKeepReading": "坚持每日阅读",
+  "@statsKeepReading": {
+    "description": "保持阅读提示"
+  },
+  "statsMaxSession": "最长单次",
+  "@statsMaxSession": {
+    "description": "最长单次阅读"
+  },
+  "statsWeeklyTrend": "周阅读趋势",
+  "@statsWeeklyTrend": {
+    "description": "周阅读趋势"
+  },
+  "statsAchievements": "阅读成就",
+  "@statsAchievements": {
+    "description": "阅读成就"
+  },
+  "readerToolbarMenu": "菜单",
+  "@readerToolbarMenu": {
+    "description": "阅读器工具栏菜单"
+  },
+  "readerToolbarTOC": "目录",
+  "@readerToolbarTOC": {
+    "description": "目录"
+  },
+  "readerToolbarSettings": "设置",
+  "@readerToolbarSettings": {
+    "description": "阅读器设置"
+  },
+  "readerAddBookmark": "添加书签",
+  "@readerAddBookmark": {
+    "description": "添加书签"
+  },
+  "readerAddNote": "添加笔记",
+  "@readerAddNote": {
+    "description": "添加笔记"
+  },
+  "readerShare": "分享",
+  "@readerShare": {
+    "description": "分享内容"
+  },
+  "bookmarkAdded": "已添加书签",
+  "@bookmarkAdded": {
+    "description": "添加书签消息"
+  },
+  "bookmarkRemoved": "已移除书签",
+  "@bookmarkRemoved": {
+    "description": "移除书签消息"
+  },
+  "readerNavigationTitle": "阅读导航",
+  "readerNavigationPosition": "第 {current}/{total} 章",
+  "@readerNavigationPosition": {
+    "placeholders": {
+      "current": {"type": "int"},
+      "total": {"type": "int"}
+    }
+  },
+  "readerSearchChapters": "搜索章节",
+  "readerBackToCurrentChapter": "回到当前章节",
+  "readerCurrentChapter": "当前",
+  "readerCurrentPosition": "当前位置",
+  "readerNoChapterResults": "没有找到相关章节",
+  "readerNoChapterResultsHint": "尝试使用章节标题中的其他关键词。",
+  "readerNoBookmarks": "还没有书签",
+  "readerNoBookmarksHint": "阅读时点击右上角的书签按钮，即可保存当前位置。",
+  "readerBookmarkRequiresShelf": "加入书架后才能保存书签",
+  "themeBlue": "海洋蓝",
+  "@themeBlue": {
+    "description": "蓝色主题"
+  },
+  "themePurple": "神秘紫",
+  "@themePurple": {
+    "description": "紫色主题"
+  },
+  "themeGreen": "森林绿",
+  "@themeGreen": {
+    "description": "绿色主题"
+  },
+  "themeOrange": "活力橙",
+  "@themeOrange": {
+    "description": "橙色主题"
+  },
+  "themeRed": "热情红",
+  "@themeRed": {
+    "description": "红色主题"
+  },
+  "themeCustom": "自定义",
+  "@themeCustom": {
+    "description": "自定义主题"
+  },
+  "tapZoneLeftRight": "左/右",
+  "@tapZoneLeftRight": {
+    "description": "左右点击区域"
+  },
+  "tapZoneLeftCenterRight": "左/中/右",
+  "@tapZoneLeftCenterRight": {
+    "description": "左中右点击区域"
+  },
+  "homeTagline": "优雅阅读",
+  "@homeTagline": {
+    "description": "Homepage app tagline under title"
+  },
+  "homeReadingStatsTitle": "阅读统计",
+  "@homeReadingStatsTitle": {
+    "description": "Home dashboard page title"
+  },
+  "homeTodayReadingMoment": "今日阅读时光",
+  "@homeTodayReadingMoment": {
+    "description": "Hero card title for today reading"
+  },
+  "homeReadMinutesKeepGoing": "已阅读 {minutes} 分钟，继续保持",
+  "@homeReadMinutesKeepGoing": {
+    "description": "Encouragement text with today minutes",
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "homeTodayReadingJourneyStart": "开始今天的阅读之旅吧",
+  "@homeTodayReadingJourneyStart": {
+    "description": "Prompt when there is no reading today"
+  },
+  "homeTodayReadingKeepRhythm": "已完成今日阅读，保持节奏",
+  "@homeTodayReadingKeepRhythm": {
+    "description": "Prompt when today reading is positive"
+  },
+  "homeTodayReadingPrompt": "今天也要留点时间给阅读",
+  "@homeTodayReadingPrompt": {
+    "description": "Generic reading prompt text"
+  },
+  "homeTotalReadingHours": "累计阅读 {hours} 小时",
+  "@homeTotalReadingHours": {
+    "description": "Total reading hours text with value",
+    "placeholders": {
+      "hours": {
+        "type": "String"
+      }
+    }
+  },
+  "homeWeeklyReading": "本周阅读",
+  "@homeWeeklyReading": {
+    "description": "Weekly reading label"
+  },
+  "homeTotalReading": "累计阅读",
+  "@homeTotalReading": {
+    "description": "Total reading label"
+  },
+  "homeLibraryCount": "书架藏书",
+  "@homeLibraryCount": {
+    "description": "Library books count label"
+  },
+  "homeCollectionCount": "藏书",
+  "@homeCollectionCount": {
+    "description": "Short label for collection count"
+  },
+  "homeKeyMetrics": "关键指标",
+  "@homeKeyMetrics": {
+    "description": "Section title for key metrics"
+  },
+  "homeReadingRhythm": "阅读节奏",
+  "@homeReadingRhythm": {
+    "description": "Section title for reading rhythm"
+  },
+  "homeAchievements": "阅读成就",
+  "@homeAchievements": {
+    "description": "Section title for achievements"
+  },
+  "homeConsecutiveReading": "连续阅读",
+  "@homeConsecutiveReading": {
+    "description": "Achievement title consecutive reading"
+  },
+  "homeConsecutiveReadingDesc": "保持每日阅读习惯",
+  "@homeConsecutiveReadingDesc": {
+    "description": "Achievement description for consecutive reading"
+  },
+  "homeFocusDuration": "专注时长",
+  "@homeFocusDuration": {
+    "description": "Achievement title for focus duration"
+  },
+  "homeFocusDurationDesc": "单次最长阅读时间",
+  "@homeFocusDurationDesc": {
+    "description": "Achievement description for focus duration"
+  },
+  "homeWeeklyTotal": "本周总计",
+  "@homeWeeklyTotal": {
+    "description": "Achievement title for weekly total"
+  },
+  "homeWeeklyTotalDesc": "本周阅读时长",
+  "@homeWeeklyTotalDesc": {
+    "description": "Achievement description for weekly total"
+  },
+  "homeRecentReading": "最近阅读",
+  "@homeRecentReading": {
+    "description": "Section title for recent reading books"
+  },
+  "homeWeeklyTrend": "本周阅读趋势",
+  "@homeWeeklyTrend": {
+    "description": "Chart title for weekly trend"
+  },
+  "homeBarTooltipMinutes": "{minutes} 分钟",
+  "@homeBarTooltipMinutes": {
+    "description": "Bar chart tooltip text for minutes",
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "unitMinute": "分钟",
+  "@unitMinute": {
+    "description": "Minute unit label"
+  },
+  "unitHour": "小时",
+  "@unitHour": {
+    "description": "Hour unit label"
+  },
+  "unitBook": "本",
+  "@unitBook": {
+    "description": "Book unit label"
+  },
+  "unitDay": "天",
+  "@unitDay": {
+    "description": "Day unit label"
+  },
+  "weekdayMonShort": "一",
+  "@weekdayMonShort": {
+    "description": "Short label for Monday"
+  },
+  "weekdayTueShort": "二",
+  "@weekdayTueShort": {
+    "description": "Short label for Tuesday"
+  },
+  "weekdayWedShort": "三",
+  "@weekdayWedShort": {
+    "description": "Short label for Wednesday"
+  },
+  "weekdayThuShort": "四",
+  "@weekdayThuShort": {
+    "description": "Short label for Thursday"
+  },
+  "weekdayFriShort": "五",
+  "@weekdayFriShort": {
+    "description": "Short label for Friday"
+  },
+  "weekdaySatShort": "六",
+  "@weekdaySatShort": {
+    "description": "Short label for Saturday"
+  },
+  "weekdaySunShort": "日",
+  "@weekdaySunShort": {
+    "description": "Short label for Sunday"
+  },
+  "agreementTagline": "沉浸阅读 · AI 助手 · 本地优先",
+  "agreementCardTitle": "用户服务协议",
+  "agreementCardSubtitle": "请仔细阅读以下内容",
+  "agreementWelcomeTitle": "欢迎使用开元阅读",
+  "agreementWelcomeBody": "为保证你获得稳定、可预期的阅读体验，请先阅读并同意以下协议内容。",
+  "agreementFeatureFormatsTitle": "多格式支持",
+  "agreementFeatureFormatsBody": "EPUB、PDF、TXT、MOBI等多种格式",
+  "agreementFeatureCustomizationTitle": "个性化阅读",
+  "agreementFeatureCustomizationBody": "自定义字体、颜色、排版等阅读体验",
+  "agreementFeatureSyncTitle": "本地优先",
+  "agreementFeatureSyncBody": "书籍、进度与笔记保存在当前设备，由你掌控",
+  "agreementFeatureTtsTitle": "TTS朗读",
+  "agreementFeatureTtsBody": "智能语音朗读，解放双眼，听书更自由",
+  "agreementTapToAgreeHint": "点击\"同意并继续\"即表示您已阅读并同意使用该应用",
+  "agreementExitApp": "退出应用",
+  "agreementAgreeAndContinue": "同意并继续",
+  "agreementExitDialogContent": "如果您不同意用户协议，将无法使用本应用。确定要退出吗？",
+  "agreementConfirmExit": "确定退出",
+  "readerFileMissing": "书籍文件不存在，请重新导入",
+  "readerUnsupportedFormat": "该文件格式暂不支持阅读",
+  "readerKindleDrmProtected": "这本 Kindle 书籍受 DRM 加密保护，无法阅读，仅支持无 DRM 的书籍",
+  "readerComicNoPages": "这本漫画压缩包里没有找到图片页",
+  "readerComicCbrUnsupported": "这本 CBR 漫画使用真实 RAR 压缩，暂不支持阅读，请先转换为 CBZ 格式",
+  "readerComicArchiveUnsupported": "这本漫画的压缩格式暂不支持阅读，请先转换为 CBZ 格式",
+  "imageReaderSettings": "阅读设置",
+  "imageReaderDirectionTitle": "阅读方向",
+  "imageReaderDirectionLtr": "从左到右",
+  "imageReaderDirectionRtl": "从右到左（漫画）",
+  "imageReaderJumpToPage": "跳转页码",
+  "imageReaderBackgroundTitle": "页面背景",
+  "imageReaderBackgroundBlack": "黑色",
+  "imageReaderBackgroundGray": "灰色",
+  "imageReaderBackgroundWhite": "白色",
+  "readerPdfLinuxUnsupported": "Linux 平台暂不支持 PDF 阅读",
+  "bootstrapDataServiceFailed": "数据系统初始化失败",
+  "bootstrapImageManagerFailed": "图片管理器初始化失败",
+  "homeFocusCompleted": "{minutes} 分钟专注已完成，做得很好。",
+  "homeDailyReadingGoal": "每日阅读目标",
+  "homeAiAdviceSection": "AI 阅读建议",
+  "homeTodayGlance": "今日速览",
+  "homeTodayReadingPlan": "今日阅读计划",
+  "homeViewAll": "查看全部",
+  "homeSyncingReadingPlan": "正在同步你的阅读计划",
+  "homeGoalDoneSuggestReview": "今日目标已完成，建议做一次阅读复盘",
+  "homeRemainingToGoal": "还差 {minutes} 分钟即可完成今日目标",
+  "homePickBookHint": "从书架选一本想继续的书，先完成 1 个专注番茄。",
+  "homeContinueBookHint": "优先继续《{title}》，完成后再切换其他书籍。",
+  "homeTodayActionAdvice": "今日行动建议",
+  "homeProgressPercent": "{percent}% 进度",
+  "homeStreakDays": "连读 {days} 天",
+  "homeWeekMinutes": "本周 {minutes} 分钟",
+  "homePlanLoading": "计划加载中",
+  "homeGoalMinutesPerDay": "目标 {minutes} 分钟/天",
+  "homeAiAdviceForYou": "AI 给你的阅读建议",
+  "homeBasedOnBook": "基于《{title}》",
+  "homeTodayReadingMinutesLabel": "今日阅读（分钟）",
+  "homeTotalReadingMinutesLabel": "累计阅读（分钟）",
+  "homeGeneratingPlan": "正在生成今日阅读计划...",
+  "homeCompletedLabel": "完成",
+  "homeTodayGoalAchieved": "今日目标已达成",
+  "homeMinutesRemaining": "还差 {minutes} 分钟",
+  "homeReadOfGoalMinutes": "已读 {read} / {goal} 分钟",
+  "homeSessionsToFinishGoal": "约 {sessions} 次专注可完成今日目标",
+  "homeStreakLabel": "连击",
+  "homeWeekAchievedLabel": "周达标",
+  "homeFocusLabel": "专注",
+  "homeDaysCount": "{days}天",
+  "homeTimesCount": "{times}次",
+  "homeFocusCountdown": "专注倒计时 {time}",
+  "homeGoLibraryRead": "去书库阅读",
+  "homeEndFocus": "结束专注",
+  "homeFocusMinutesButton": "专注{minutes}分钟",
+  "homeAdjustGoalMinutes": "调整目标：{minutes} 分钟",
+  "homeNoRecentReading": "暂无最近阅读记录，去书库打开一本书开始阅读吧。",
+  "homeReadingProgressPercent": "阅读进度 {percent}%",
+  "librarySearchHint": "搜索书名、作者",
+  "libraryFilterAll": "全部 {count}",
+  "libraryFilterReading": "在读 {count}",
+  "libraryFilterFinished": "已读 {count}",
+  "libraryFilterTooltip": "按阅读状态筛选",
+  "libraryNoMatchingBooks": "没有匹配的书籍",
+  "libraryNoReadingBooks": "当前没有在读书籍",
+  "libraryNoFinishedBooks": "当前没有已读书籍",
+  "libraryNoBooks": "暂无书籍",
+  "libraryProgressContinue": "{percent}% · 继续阅读",
+  "libraryPageNumber": "第 {page} 页",
+  "libraryStartFromBeginning": "从头开始",
+  "libraryBookInfo": "书籍信息",
+  "libraryFormatAndPages": "{format} · {pages} 页",
+  "libraryFormatAndChapters": "{format} · 共 {chapters} 章",
+  "libraryRenameBook": "重命名",
+  "libraryRenameBookHint": "修改书名，本地文件将同步重命名",
+  "libraryRenameBookSuccess": "已重命名",
+  "libraryRenameBookFailed": "重命名失败",
+  "libraryCustomCover": "自定义封面",
+  "libraryCustomCoverHint": "选择一张图片作为这本书的封面",
+  "libraryCustomCoverSuccess": "封面已更新",
+  "libraryCoverUnsupportedFormat": "不支持的图片格式",
+  "libraryCoverFileTooLarge": "图片超过 20 MB 大小限制",
+  "libraryCoverReadFailed": "无法读取所选图片",
+  "libraryCoverSaveFailed": "封面保存失败",
+  "libraryResetCover": "恢复默认封面",
+  "libraryResetCoverHint": "移除自定义封面，恢复原来的封面",
+  "libraryResetCoverSuccess": "已恢复默认封面",
+  "libraryExportBook": "导出书籍",
+  "libraryExportOriginalHint": "复制原文件到设备上的其他位置",
+  "libraryExportDownloadedTxtHint": "导出下载后生成的 TXT 文件",
+  "bookExportSuccess": "已导出到 {location}",
+  "@bookExportSuccess": {"placeholders": {"location": {"type": "String"}}},
+  "bookExportSourceMissing": "书籍文件不存在，无法导出",
+  "bookExportUnsupported": "当前平台暂不支持导出书籍",
+  "bookExportFailed": "书籍导出失败",
+  "bookExportInProgress": "正在导出书籍…",
+  "incomingBooksImporting": "正在从其他应用导入书籍…",
+  "incomingBooksNoBookFile": "分享内容中没有可导入的书籍文件",
+  "incomingBooksPermissionExpired": "文件访问权限已失效，请重新分享或打开文件",
+  "incomingBooksUnsupportedFormat": "暂不支持这种书籍格式",
+  "incomingBooksFileTooLarge": "文件超过 100 MB 导入限制",
+  "incomingBooksTooManyFiles": "一次分享的书籍文件过多，请分批添加",
+  "incomingBooksSomeFilesSkipped": "部分文件无法识别，已继续处理其余书籍",
+  "incomingBooksContentMismatch": "文件格式与实际内容不匹配",
+  "incomingBooksImportFailed": "从其他应用导入书籍失败",
+  "libraryDeleteBookHint": "将永久删除此书籍",
+  "libraryBookTitle": "书名",
+  "libraryFormat": "格式",
+  "libraryPagesCount": "{pages} 页",
+  "totalChapters": "总章节数",
+  "currentChapter": "当前章节",
+  "libraryChaptersCount": "{chapters} 章",
+  "libraryClose": "关闭",
+  "libraryConfirmDeleteTitle": "确认删除",
+  "libraryDeleteBookMessage": "确定要删除《{title}》吗？文件将从设备中永久移除。",
+  "libraryDeletingBook": "正在删除《{title}》...",
+  "libraryBookDeletedToast": "《{title}》已删除",
+  "libraryDeleteFailed": "删除失败: {error}",
+  "libraryReadingBadge": "在读",
+  "libraryDeletingBookFile": "删除书籍文件...",
+  "libraryDeletingCoverImage": "删除封面图片...",
+  "libraryCleaningDatabase": "清理数据库记录...",
+  "libraryDeleteComplete": "删除完成",
+  "readerPrefaceTitle": "正文前",
+  "readerModeHorizontalPage": "无动画",
+  "readerModeVerticalScrollHint": "预分页内容上下连续滑动，左右滑动切换章节",
+  "readerModeWholeBookScrollHint": "全书预分页后组成可定位的纵向列表",
+  "readerScrollByChapterTitle": "按章节滚动",
+  "readerScrollByChapterOnHint": "单章内按页上下滑动，左右滑动切换章节",
+  "readerScrollByChapterOffHint": "所有章节按页连接为可定位的纵向列表",
+  "readerModeHorizontalPageHint": "点击左侧上一页，点击右侧下一页",
+  "readerModeHorizontalSlideHint": "页面跟随手指横向移动并吸附翻页",
+  "readerModeCoverSlide": "覆盖翻页",
+  "readerModeCoverSlideHint": "当前页向左划出，底下的下一页逐渐露出",
+  "readerModePageCurl": "仿真翻页",
+  "readerModePageCurlHint": "左右拖动卷起页面，松手后完成翻页或回弹",
+  "readerFontSizeValue": "字体大小  {size}",
+  "readerHorizontalMarginValue": "左右页边距  {margin}",
+  "readerHorizontalMarginLabel": "左右页边距",
+  "readerTopMarginLabel": "上页边距",
+  "readerBottomMarginLabel": "下页边距",
+  "readerVerticalMarginLabel": "上下页边距",
+  "readerVerticalMarginValue": "上下页边距  {margin}",
+  "readerChapterCount": "{count} 章",
+  "readerChapterFallback": "第 {number} 章",
+  "readerOpenFailed": "打开失败：{error}",
+  "readerNoContent": "书籍没有可显示的正文",
+  "readerStatusPaged": "第 {chapter}/{chapterCount} 章 · {page}/{pageCount} 页",
+  "readerStatusScroll": "第 {chapter}/{chapterCount} 章 · 纵向滚动",
+  "importPreparing": "准备导入...",
+  "importFailedWithError": "导入失败: {error}",
+  "importLocalFile": "本地文件",
+  "settingsAiTempHintMinimax": "Temperature: MiniMax 建议 0.01 ~ 1.00",
+  "settingsAiCustomConfigTitle": "自定义 AI 配置",
+  "settingsAiCurrentProvider": "当前服务商：{provider}",
+  "settingsAiTempErrorMinimax": "MiniMax 的 Temperature 必须在 0.01 ~ 1.00 之间",
+  "settingsAiTempErrorOutOfRange": "Temperature 超出范围，请按提示填写",
+  "settingsApply": "应用",
+  "settingsAiCustomApplied": "已应用自定义参数，记得保存配置",
+  "settingsAiApiKeyRequired": "API Key 不能为空",
+  "settingsAiModelRequired": "Model 不能为空",
+  "settingsAiBaseUrlInvalid": "Base URL 必须是合法的 http/https 地址",
+  "settingsAiSettingsSaved": "AI 设置已保存",
+  "settingsSaveFailed": "保存失败: {error}",
+  "settingsVolumeKeyTurnTitle": "音量键翻页",
+  "settingsVolumeKeyTurnSubtitle": "在非滚动翻页模式下使用音量键翻页",
+  "settingsAutoResumeReadingTitle": "启动时回到上次阅读",
+  "settingsAutoResumeReadingSubtitle": "阅读中退出应用后，下次启动自动回到上次阅读位置",
+  "settingsShowStatusBarTitle": "阅读时显示系统状态栏",
+  "settingsShowStatusBarOnSubtitle": "已隐藏阅读页电量/时间 UI",
+  "settingsShowStatusBarOffSubtitle": "使用阅读页电量/时间 UI",
+  "readerTopBarStyleTitle": "顶部信息",
+  "readerTopBarStyleSystem": "系统状态栏",
+  "readerTopBarStyleSystemHint": "显示系统时间、信号与电量",
+  "readerTopBarStyleReader": "阅读信息栏",
+  "readerTopBarStyleReaderHint": "显示时间、章节标题与电量",
+  "readerTopBarStyleFloating": "灵动信息栏",
+  "readerTopBarStyleFloatingHint": "在状态栏位置显示时间与电量，不占用正文空间",
+  "readerTopBarStyleHidden": "完全沉浸",
+  "readerTopBarStyleHiddenHint": "顶部不显示任何信息",
+  "settingsAiAssistantTitle": "AI 阅读助手",
+  "settingsSystemSettingsTitle": "系统设置",
+  "settingsSectionAppearanceFonts": "外观与字体",
+  "settingsSectionDataServices": "数据与服务",
+  "settingsSectionGeneral": "通用",
+  "settingsSectionAboutSupport": "关于与支持",
+  "settingsKeepScreenOnTitle": "保持屏幕常亮",
+  "settingsKeepScreenOnSubtitle": "阅读时防止屏幕自动关闭",
+  "settingsAutoSaveTitle": "自动保存",
+  "settingsAutoSaveSubtitle": "自动保存阅读进度",
+  "settingsHelpPlaceholder": "这里可以放帮助说明",
+  "settingsAiConfigured": "AI 已配置",
+  "settingsAiNotConfigured": "尚未配置 API Key",
+  "settingsAiReadyToUse": "可直接使用",
+  "settingsAiPendingConfig": "待配置",
+  "settingsAiCurrentPreset": "当前预设：{preset}",
+  "settingsAiCurrentCustom": "当前配置：自定义 · {model}",
+  "settingsAiPresetIntro": "已内置常用服务商和模型，通常只需要选择预设并输入 API Key。",
+  "settingsAiProviderLabel": "服务商",
+  "settingsAiPresetHint": "选择预设模型",
+  "settingsAiPresetLabel": "预设模型",
+  "settingsAiCustomButton": "自定义",
+  "settingsAiPresetSelectedHint": "选择预设后只需输入 API Key 即可使用。",
+  "settingsAiCustomActiveHint": "当前使用自定义参数，可随时切回预设。",
+  "settingsAiApiKeyHint": "输入后即可启用当前预设",
+  "settingsShow": "显示",
+  "settingsHide": "隐藏",
+  "settingsAiSaving": "保存中...",
+  "settingsAiSaveConfig": "保存 AI 配置",
+  "settingsPageIntro": "只保留真正影响阅读体验的选项。",
+  "settingsSupportDevelopmentTitle": "支持开发",
+  "firstHomeSupportNow": "立即支持",
+  "firstHomeSupportLater": "再说吧",
+  "firstHomeSupportPaperSemanticLabel": "开元阅读开发者的自愿支持说明",
+  "settingsSupportDevelopmentCardTitle": "支持持续开发",
+  "settingsSupportDevelopmentCardSubtitle": "开发和维护投入了大量时间与精力。如果开元阅读对你有帮助，欢迎自愿捐赠支持。",
+  "settingsDonationAction": "微信捐赠",
+  "settingsAlipayDonationAction": "支付宝捐赠",
+  "settingsDonationDialogTitle": "微信捐赠",
+  "settingsDonationDialogHint": "请使用微信扫描二维码。感谢你对持续开发的支持。",
+  "settingsAlipayDonationDialogTitle": "支付宝捐赠",
+  "settingsAlipayDonationDialogHint": "请使用支付宝扫描二维码。感谢你对持续开发的支持。",
+  "settingsDonationVoluntaryNotice": "捐赠完全自愿，不影响任何功能，也不构成购买或服务承诺。",
+  "settingsDonationQrCodeLabel": "微信捐赠二维码",
+  "settingsAlipayDonationQrCodeLabel": "支付宝捐赠二维码",
+  "settingsAiSwipeHint": "左右滑动选择模型，点击切换，长按编辑或删除。",
+  "settingsAiLegacyIntro": "选择服务商和模型，填写 API Key 即可。其余参数保持默认。",
+  "settingsAiModelLabel": "模型",
+  "settingsAiUsingCustomParams": "正在使用自定义模型参数",
+  "settingsAiApiKeyStoredLocally": "仅保存在当前设备",
+  "settingsAiSaveAndEnable": "保存并启用",
+  "settingsAboutTagline": "开源、跨平台、专注阅读",
+  "settingsVersionLabel": "版本",
+  "changelogHistoryTitle": "历史更新日志",
+  "changelogHistorySubtitle": "查看各版本更新内容",
+  "openSourceLicensesTitle": "开源许可",
+  "openSourceLicensesSubtitle": "查看应用、内置字体与第三方组件的许可",
+  "openSourceLicensesIntro": "以下许可文本随应用离线提供。Open Reading、内置字体及第三方软件分别遵循各自的许可条款。",
+  "openSourceProjectSection": "项目许可",
+  "openSourceLegacyLicenseTitle": "历史版本",
+  "openSourceFontsSection": "内置字体",
+  "openSourceDependenciesSection": "第三方软件",
+  "openSourceDependenciesTitle": "Flutter 与 Dart 依赖",
+  "openSourceDependenciesSubtitle": "查看由 Flutter 自动收集的第三方软件许可",
+  "openSourceLicenseLegalese": "Open Reading 与第三方组件分别遵循各自的许可条款。",
+  "openSourceLicenseLoadFailed": "无法加载许可文本。",
+  "changelogPageTitle": "版本更新记录",
+  "changelogCurrentVersion": "当前版本",
+  "changelogLoadFailed": "更新日志加载失败",
+  "settingsMaintainerLabel": "维护者",
+  "settingsLicenseLabel": "许可证",
+  "settingsViewSourceSubtitle": "查看开源项目",
+  "settingsJoinQqGroup": "加入 QQ 群",
+  "settingsQqOpenFailed": "无法打开 QQ，请确认已安装 QQ",
+  "contributorsTitle": "贡献者",
+  "contributorsSubtitle": "感谢每一位让 Open Reading 变得更好的人",
+  "contributorsOpenProfileFailed": "无法打开贡献者主页",
+  "contributorsEmpty": "暂时没有可展示的贡献者",
+  "contributorsLoadFailed": "贡献者加载失败，请检查网络后重试",
+  "settingsDarkModeTitle": "夜间模式",
+  "settingsCurrentValue": "当前：{value}",
+  "settingsUiStyleTitle": "玻璃效果",
+  "settingsGlassEffectSubtitle": "开启半透明、背景模糊和悬浮层次效果",
+  "settingsHideNavigationLabelsTitle": "隐藏底部导航文字",
+  "settingsHideNavigationLabelsSubtitle": "开启后，手机底部导航栏仅显示图标",
+  "settingsFloatingNavigationTitle": "悬浮导航栏",
+  "settingsFloatingNavigationSubtitle": "调整显示方式与入口顺序",
+  "floatingNavigationPreviewTitle": "预览",
+  "floatingNavigationDisplayModeTitle": "显示方式",
+  "floatingNavigationIconsOnly": "仅图标",
+  "floatingNavigationIconsAndLabels": "图标和文字",
+  "floatingNavigationOrderTitle": "导航顺序",
+  "floatingNavigationOrderHint": "按住右侧拖动柄调整顺序",
+  "floatingNavigationSyncHint": "排序会同步到横滑页面和宽屏侧边导航",
+  "floatingNavigationResetOrder": "恢复默认顺序",
+  "floatingNavigationResetDone": "已恢复默认顺序",
+  "settingsLibraryLayoutTitle": "书库布局",
+  "settingsLibraryLayoutSubtitle": "选择卡片或紧凑网格，并按需调整网格信息",
+  "settingsLibraryLayoutCard": "卡片",
+  "settingsLibraryLayoutGrid": "网格",
+  "settingsLibraryGridColumnsTitle": "手机每行封面数量",
+  "settingsLibraryGridTwoColumns": "2 列",
+  "settingsLibraryGridThreeColumns": "3 列",
+  "settingsLibraryGridShowDetailsTitle": "显示书名和进度",
+  "settingsLibraryGridShowDetailsSubtitle": "在每本封面下显示单行书名和精简进度条",
+  "settingsAccentFollowTheme": "强调色：跟随主题",
+  "settingsAccentValue": "强调色：{name}",
+  "settingsAppThemeTitle": "应用主题",
+  "settingsCurrentThemeSummary": "当前: {theme} · {accent}",
+  "settingsFollowAppTheme": "跟随应用主题",
+  "settingsAccentColorTitle": "强调色",
+  "settingsThemeModeSystemHint": "跟随系统外观自动切换",
+  "settingsThemeModeLightHint": "始终使用浅色外观",
+  "settingsThemeModeDarkHint": "始终使用深色外观",
+  "settingsSelectAppTheme": "选择应用主题",
+  "settingsDone": "完成",
+  "settingsAccentColorAdvice": "强调色会同时生成整套 Material 3 浅色与深色色板。",
+  "settingsAccentPresetColors": "快捷颜色",
+  "settingsAccentCustomColor": "自定义颜色",
+  "settingsAccentSaturationBrightness": "饱和度与亮度色盘",
+  "settingsAccentHue": "色相",
+  "settingsAccentPreview": "主题色板预览",
+  "settingsAccentFollowThemeOption": "跟随主题",
+  "settingsAccentFollowThemeDesc": "使用当前应用主题默认强调色",
+  "settingsAboutTitle": "关于应用",
+  "settingsAppName": "拾页",
+  "settingsAuthor": "维护者：小元Niki",
+  "settingsGithubRepo": "GitHub 仓库",
+  "settingsNewYearGreeting": "一个专注、克制、可自由修改的跨平台阅读器。",
+  "settingsGithubOpenFailed": "无法打开 GitHub 链接",
+  "settingsOfficialWebsite": "官网",
+  "settingsOfficialWebsiteSubtitle": "从 open.xxread.top 下载并安装",
+  "settingsOfficialWebsiteOpenFailed": "无法打开官网",
+  "updateCheckNow": "检查更新",
+  "updateCheckNowSubtitle": "从 GitHub 或官网获取最新版本",
+  "updateAvailableTitle": "发现新版本",
+  "updateVersionSummary": "当前版本：{currentVersion}\n最新版本：{latestVersion}",
+  "updateNotesTitle": "更新说明",
+  "updateNotesEmpty": "此版本暂未提供更新说明。",
+  "updateLater": "稍后",
+  "updateSkipVersion": "跳过此版本",
+  "updateGoToDownload": "前往更新",
+  "updateFromGithub": "从 GitHub 更新",
+  "updateFromWebsite": "前往官网更新",
+  "updateFromWebsiteInstall": "从官网下载并安装",
+  "updateWebsiteUnavailable": "官网暂未提供适用于此设备的安装包",
+  "updateDownloadingTitle": "正在下载更新",
+  "updateDownloadProgress": "已下载 {percent}%",
+  "@updateDownloadProgress": {
+    "placeholders": {
+      "percent": {"type": "int"}
+    }
+  },
+  "updatePreparingInstaller": "正在校验安装包并准备系统安装程序…",
+  "updateDownloadFailed": "无法从官网下载更新，请稍后重试",
+  "updateIntegrityFailed": "安装包完整性校验失败，已删除此次下载",
+  "updateInstallFailed": "无法安装更新，请检查安装未知应用权限后重试",
+  "updateAlreadyLatest": "当前已是最新版本",
+  "updateCheckFailed": "检查更新失败，请稍后重试",
+  "updateOpenFailed": "无法打开链接",
+  "settingsIosOnlyFeature": "该功能仅支持 iOS",
+  "settingsIosSyncResult": "已同步到{storage}\n书籍 {books} 本，文件复制 {files} 个",
+  "settingsRestartRequiredReason": "该设置变更需要重启应用才能完全生效。",
+  "settingsRestartRequiredTitle": "需要重启应用",
+  "settingsRestartPrompt": "{reason}\n\n是否现在重启应用？",
+  "settingsRestartLater": "稍后",
+  "settingsRestartNow": "重启",
+  "statsDetailedTitle": "详细统计",
+  "statsRange7Days": "7天",
+  "statsRange30Days": "30天",
+  "statsRange90Days": "90天",
+  "statsRange1Year": "1年",
+  "statsRangeAll": "全部",
+  "statsTabOverview": "总览",
+  "statsTabCharts": "图表",
+  "statsTabBooks": "书籍",
+  "statsTabAchievements": "成就",
+  "statsReadingOverview": "阅读总览",
+  "statsCumulativeHours": "累计 {hours} 小时",
+  "statsStreakEncouragement": "保持节奏，你已经连续阅读 {days} 天",
+  "statsTotalDuration": "总时长",
+  "statsAvgSession": "平均单次",
+  "statsDaysCount": "{count} 天",
+  "statsNoData": "暂无数据",
+  "statsPeriodEarlyMorning": "清晨 05:00-08:59",
+  "statsPeriodMorning": "上午 09:00-11:59",
+  "statsPeriodAfternoon": "下午 12:00-17:59",
+  "statsPeriodEvening": "晚上 18:00-21:59",
+  "statsPeriodLateNight": "深夜 22:00-04:59",
+  "statsTotalReadingTime": "总阅读时长",
+  "statsTotalPagesRead": "总阅读页数",
+  "statsBooksReadCount": "阅读书籍数",
+  "statsUnitPage": "页",
+  "statsTodayProgress": "今日阅读进度",
+  "statsMinutesOfTarget": "{current} / {target} 分钟",
+  "statsPagesRead": "阅读页数",
+  "statsPagesOfTarget": "{current} / {target} 页",
+  "statsReadingHabits": "阅读习惯分析",
+  "statsBestReadingPeriod": "最佳阅读时段",
+  "statsAvgSessionReading": "平均单次阅读",
+  "statsMaxStreakDays": "最高连读天数",
+  "statsFocusScore": "阅读专注度",
+  "statsBookCount": "书籍数量",
+  "statsTrendAnalysis": "阅读趋势分析",
+  "statsAxisMinutes": "{value}分",
+  "statsAxisPages": "{value}页",
+  "statsAxisBooks": "{value}本",
+  "statsAxisHour": "{hour}时",
+  "statsTimeDistribution": "阅读时间分布",
+  "statsFormatDistribution": "书籍格式分布",
+  "statsCompleted": "已完成",
+  "statsInProgress": "阅读中",
+  "statsDurationRanking": "阅读时长排行",
+  "statsProgressRanking": "阅读进度排行",
+  "statsPagesCount": "{count}页",
+  "statsSessionCount": "{count} 次会话",
+  "statsAchievementsSummary": "已获得 {achieved} 个成就，还有 {remaining} 个等待解锁",
+  "statsAchievementFirstReadTitle": "初次阅读",
+  "statsAchievementFirstReadDesc": "完成第一次阅读记录",
+  "statsAchievementNoviceTitle": "阅读新手",
+  "statsAchievementNoviceDesc": "累计阅读时长达到10小时",
+  "statsAchievementBookwormTitle": "书虫",
+  "statsAchievementBookwormDesc": "累计阅读时长达到100小时",
+  "statsAchievementExpertTitle": "阅读达人",
+  "statsAchievementExpertDesc": "连续阅读7天",
+  "statsAchievementOceanTitle": "知识海洋",
+  "statsAchievementOceanDesc": "阅读页数达到10000页",
+  "statsAchievementScholarTitle": "博学者",
+  "statsAchievementScholarDesc": "阅读10本不同的书籍",
+  "statsAchievementMarathonTitle": "阅读马拉松",
+  "statsAchievementMarathonDesc": "连续阅读30天",
+  "statsAchievementFocusTitle": "专注达人",
+  "statsAchievementFocusDesc": "累计阅读时长达到500小时",
+  "statsProgressPercent": "进度: {percent}%",
+  "statsGoalProgress": "阅读目标进度",
+  "statsMonthlyReadingTime": "本月阅读时长",
+  "statsWeeklyReadingTime": "本周阅读时长",
+  "statsAvgDailyPages7d": "近7天日均页数",
+  "statsHoursCount": "{count}小时",
+  "statsSpeedTrend": "阅读速度趋势",
+  "statsAvgSpeed": "平均: {speed}页/分钟",
+  "statsReadingContinuity": "阅读连续性",
+  "statsCurrentStreak": "当前连读: {days}天",
+  "statsHeatmapLess": "少",
+  "statsHeatmapMore": "多",
+  "statsWeekNumber": "第{week}周",
+  "bookSourceAddToShelf": "加入书架",
+  "bookSourceAddOnline": "在线加入书架",
+  "bookSourceAddOnlineHint": "不下载全书，阅读时从书源获取并缓存章节",
+  "bookSourceDownloadLocal": "下载到本地",
+  "bookSourceDownloadLocalHint": "下载全部章节并作为本地 TXT 加入书架",
+  "bookSourceAddedOnline": "已在线加入书架",
+  "bookSourceAlreadyOnShelf": "这本书已在书架中",
+  "bookSourceDownloading": "正在下载到本地",
+  "bookSourceFetchingCatalog": "正在获取章节目录…",
+  "bookSourceDownloadProgress": "{completed}/{total} 章",
+  "bookSourceDownloadComplete": "下载完成，已加入本地书架",
+  "bookSourceDownloadConverted": "下载完成，已转为本地书籍",
+  "bookSourceDownloadFailed": "下载失败：{error}",
+  "downloadTasksTitle": "下载任务",
+  "downloadTasksEmpty": "没有下载任务",
+  "downloadTaskQueued": "等待下载",
+  "downloadTaskDownloading": "正在后台下载",
+  "downloadTaskCompleted": "下载完成",
+  "downloadTaskFailed": "下载失败",
+  "downloadTaskCancelled": "已取消",
+  "downloadTaskCancel": "取消任务",
+  "downloadContinueInBackground": "后台继续下载",
+  "downloadRunningInBackground": "下载任务已在后台继续",
+  "bookSourceExitAddTitle": "加入书架？",
+  "bookSourceExitAddMessage": "要把《{title}》作为在线书籍加入书架吗？阅读进度会继续保留。",
+  "bookSourceNotNow": "暂不",
+  "bookSourceOnlineBadge": "在线",
+  "bookSourceOnlineDataBroken": "在线书籍信息损坏：{error}",
+  "readerThemeTitle": "阅读主题",
+  "readerThemeDescription": "仅改变阅读页面与阅读控制栏，不影响应用主题",
+  "readerSettingsTabTheme": "主题",
+  "readerSettingsTabText": "文字",
+  "readerSettingsTabLayout": "版式",
+  "readerSettingsTabPaging": "翻页",
+  "readerSettingsAdvancedTypography": "高级排版",
+  "readerThemeDay": "白天",
+  "readerThemeFollowSystem": "跟随系统",
+  "readerThemeMist": "晨雾",
+  "readerThemeGreen": "护眼",
+  "readerThemeRose": "豆沙",
+  "readerThemeNavy": "深蓝",
+  "readerThemeNight": "黑夜",
+  "readerThemePureBlack": "纯黑",
+  "readerThemeParchment": "牛皮纸",
+  "readerThemeCustom": "自定义",
+  "readerPullBookmarkTitle": "下拉书签",
+  "readerPullBookmarkHint": "从屏幕顶部向下拉，松手即可添加或移除当前页书签",
+  "readerPullBookmarkAddHint": "继续下拉以添加书签",
+  "readerPullBookmarkRemoveHint": "继续下拉以移除书签",
+  "readerPullBookmarkReleaseHint": "松开完成",
+  "readerTapAnimationTitle": "点击动画",
+  "readerTapAnimationHint": "左右点击时使用当前翻页模式的动画；关闭后立即刷新页面",
+  "readerTabletTwoPageTitle": "平板双页布局",
+  "readerTabletTwoPageHint": "横屏时并排显示左右两页；关闭后始终使用单页布局",
+  "readerCustomThemeTitle": "自定义阅读主题",
+  "readerCustomThemeReset": "重置",
+  "readerCustomThemeColors": "主题颜色",
+  "readerCustomThemeTextColor": "字体颜色",
+  "readerCustomThemeTextColorHint": "正文、标题与主要图标",
+  "readerCustomThemeBackground": "阅读背景",
+  "readerCustomThemeBackgroundHint": "纸张与阅读画布的底色",
+  "readerCustomThemeControlBar": "控制栏颜色",
+  "readerCustomThemeControlBarHint": "顶部、底部控制栏与设置面板",
+  "readerCustomThemeContrastGood": "正文与背景对比清晰，适合长时间阅读",
+  "readerCustomThemeContrastLow": "正文与背景对比较低，可能容易疲劳",
+  "readerCustomThemeSave": "保存并使用",
+  "readerCustomThemePreview": "实时预览",
+  "readerCustomThemePreviewChapter": "第一章 · 风从书页间吹过",
+  "readerCustomThemePreviewBody": "这是你的阅读空间。调整字体、纸张和控制栏的颜色，让每一页都更贴近自己的阅读习惯。",
+  "readerCustomThemeHexInvalid": "请输入 6 位十六进制颜色，例如 #F6F0E4",
+  "readerCustomThemeHexLabel": "十六进制颜色",
+  "readerCustomThemesTitle": "自定义阅读主题",
+  "readerCustomThemeAdd": "添加主题",
+  "readerCustomThemeReorderHint": "长按右侧拖动柄调整顺序，排序会同步到阅读设置的主题列表。",
+  "readerCustomThemeUse": "使用选中的主题",
+  "readerCustomThemeDeleteTitle": "删除阅读主题？",
+  "readerCustomThemeDeleteMessage": "“{name}”将从主题列表中删除，已保存的背景图片也会一并清理。",
+  "readerCustomThemeEmptyTitle": "还没有自定义主题",
+  "readerCustomThemeEmptyHint": "添加一套属于自己的文字、纸张与背景图片组合。",
+  "readerCustomThemeNewTitle": "新建阅读主题",
+  "readerCustomThemeEditTitle": "编辑阅读主题",
+  "readerCustomThemeName": "主题名称",
+  "readerCustomThemeNameHint": "例如：雨夜、午后纸张",
+  "readerCustomThemeBackgroundImage": "背景图片",
+  "readerCustomThemeBackgroundImageHint": "支持 JPG、PNG、WebP，图片会复制到应用存储中。",
+  "readerCustomThemeChooseImage": "上传图片",
+  "readerCustomThemeReplaceImage": "更换图片",
+  "readerCustomThemeRemoveImage": "移除图片",
+  "readerCustomThemeImageStrength": "背景图片强度",
+  "readerCustomThemeImageUnsupported": "当前平台暂不支持导入背景图片",
+  "readerCustomThemeImageTooLarge": "图片不能超过 20 MB",
+  "readerCustomThemeImageFormat": "请选择 JPG、PNG 或 WebP 图片",
+  "readerCustomThemeImageFailed": "背景图片导入失败，请重试",
+  "importSourceTitle": "添加书籍",
+  "importSourceDescription": "可以一次选择多本书，确认队列后再开始导入。",
+  "importSelectFiles": "选择文件",
+  "importIosSharedDocuments": "我的 iPhone · Open Reading",
+  "importICloudDrive": "iCloud Drive · Open Reading",
+  "importICloudUnavailable": "iCloud Drive 当前不可用",
+  "importAndroidFolder": "授权书籍目录",
+  "importAndroidRescan": "扫描已授权目录",
+  "importFolderPermissionAvailable": "已授权 · 点击扫描",
+  "importFolderPermissionLost": "权限已失效 · 请重新授权",
+  "importRemoveFolder": "移除目录",
+  "importQueueTitle": "导入队列（{count}）",
+  "importQueueHint": "可先删除误选项，导入时将逐本处理。",
+  "importQueueEmptyTitle": "还没有选择书籍",
+  "importQueueEmptyBody": "请选择 EPUB、PDF、TXT、MOBI 或其他支持的书籍文件。",
+  "importAction": "导入 {count} 本",
+  "importRetryFailed": "重试失败的 {count} 本",
+  "importStatusQueued": "等待中",
+  "importStatusPreparing": "正在准备文件",
+  "importStatusChecking": "正在检查",
+  "importStatusCopying": "正在复制",
+  "importStatusAnalyzing": "正在解析",
+  "importStatusSaving": "正在保存",
+  "importStatusImported": "导入成功",
+  "importStatusSkipped": "已存在，已跳过",
+  "importStatusFailed": "导入失败",
+  "importRemove": "移除",
+  "importRetry": "重试",
+  "importClearCompleted": "清除已完成",
+  "importDone": "完成",
+  "importSummary": "成功 {succeeded} 本 · 跳过 {skipped} 本 · 失败 {failed} 本",
+  "importNoSupportedFiles": "没有发现支持的书籍文件",
+  "importScanning": "正在扫描文件…",
+  "settingsAiApiKeyConfigured": "API Key 已配置",
+  "settingsAiApiKeyTapToConfigure": "点击完成配置",
+  "settingsAiAddModel": "添加模型",
+  "settingsAiSwitchedToModel": "已切换到 {model}",
+  "@settingsAiSwitchedToModel": {
+    "placeholders": {
+        "model": {"type": "String"}
+    }
+  },
+  "settingsAiFillBaseUrlAndApiKey": "请先填写 Base URL 和 API Key",
+  "settingsAiEditModelTitle": "配置模型",
+  "settingsAiQuickCardSubtitle": "每张快捷卡片只绑定一个模型",
+  "settingsAiPresetModel": "预设模型",
+  "settingsAiBaseUrlLabel": "Base URL",
+  "settingsAiApiKeyLabel": "API Key",
+  "settingsAiModelNameLabel": "模型型号",
+  "settingsAiFetchModelsTooltip": "自动获取模型",
+  "settingsAiFetchModelsList": "自动获取模型列表",
+  "settingsAiSelectModel": "选择一个模型",
+  "settingsAiTemperatureLabel": "Temperature",
+  "settingsAiAddAndEnable": "添加并启用",
+  "settingsAiModelMismatchClaude": "Claude 服务商的模型名通常应以 claude 开头，请检查 provider 和 model 是否匹配",
+  "settingsAiModelMismatchGemini": "Gemini 服务商的模型名通常应包含 gemini，请检查 provider 和 model 是否匹配",
+  "settingsAiModelMismatchGlm": "GLM 服务商的模型名通常应以 glm 开头，请检查 provider 和 model 是否匹配",
+  "settingsAiModelMismatchMinimax": "MiniMax 服务商的模型名通常应包含 MiniMax，请检查 provider 和 model 是否匹配",
+  "settingsAiModelListFormatUnrecognized": "模型列表返回格式无法识别",
+  "settingsAiNoModelsReturned": "服务端没有返回可用模型列表",
+  "settingsAiNoModelsAvailable": "没有获取到可用模型",
+  "settingsAiFetchModelsFailed": "获取模型失败：{error}",
+  "@settingsAiFetchModelsFailed": {
+    "placeholders": {
+        "error": {"type": "String"}
+    }
+  },
+  "settingsAiPreprocessTitle": "AI 预处理书籍",
+  "settingsAiPreprocessSubtitle": "导入书籍后自动让 AI 通读并生成本地摘要知识库",
+  "settingsAiPreprocessWarning": "预处理会把整本书分段发送给 AI 模型，消耗大量 token，且耗时较长。确定开启？",
+  "settingsAiPreprocessNeedModel": "请先配置可用的 AI 模型和 API Key",
+  "libraryAiPreprocess": "AI 预处理",
+  "libraryAiPreprocessConfirm": "让 AI 通读《{title}》并生成摘要知识库？将消耗大量 token。",
+  "libraryAiPreprocessProgress": "AI 正在通读本书…（第 {done}/{total} 步）",
+  "libraryAiPreprocessDone": "AI 知识库已生成",
+  "libraryAiPreprocessFailed": "AI 预处理失败：{error}",
+  "libraryAiPreprocessUnsupported": "该书格式暂不支持 AI 预处理",
+  "libraryAiPreprocessQueued": "已加入 AI 预处理队列，可在下载任务页查看进度。",
+  "downloadTasksTabDownloads": "下载",
+  "aiPreprocessTaskRunning": "AI 通读中…",
+  "aiPreprocessTasksEmpty": "暂无 AI 预处理任务",
+  "aiPreprocessClearFinished": "清除已完成",
+  "aiChatNewChat": "新对话",
+  "aiChatSelectBook": "关联书籍",
+  "aiChatNoBook": "不关联书籍",
+  "navAi": "AI",
+  "aiHistoryTitle": "AI 对话记录",
+  "aiHistoryEmpty": "还没有 AI 对话。\n阅读时点击“问AI”发起第一次对话。",
+  "aiHistoryMessageCount": "{count} 条消息",
+  "aiHistoryClearAll": "清空全部",
+  "aiHistoryClearAllConfirm": "删除全部 AI 对话记录？此操作不可恢复。",
+  "aiHistoryDeleteConfirm": "删除这条对话记录？",
+  "floatingNavigationVisibilityHint": "关闭开关即可隐藏对应页面；设置不可隐藏。",
+  "readerAskAi": "问AI",
+  "readerAiInputHint": "就本书内容提问…",
+  "readerAiSendButton": "发送",
+  "readerAiThinking": "思考中…",
+  "readerAiNotConfiguredHint": "尚未配置 AI 模型。请前往 设置 → AI 阅读助手 添加模型与 API Key。",
+  "readerAiEmptyHint": "可以向 AI 询问当前页或本书的任何内容。",
+  "readerAiSelectionQuestionLabel": "解释这段选中内容",
+  "readerAiSelectionPrompt": "请解释下面这段选中文本，并给出 3 条要点。\n\n【选中文本】\n{selection}\n\n【上文】\n{before}\n\n【下文】\n{after}",
+  "readerAiEnterQuestionFirst": "请输入问题后再发送",
+  "readerAiEmptyResponse": "模型返回为空，请重试",
+  "readerAiRequestFailed": "请求失败：{error}",
+  "@readerAiRequestFailed": {
+    "placeholders": {
+        "error": {"type": "String"}
+    }
+  },
+  "readerAiUnknownError": "未知错误",
+  "readerAiEmptyResponseError": "服务端返回为空，通常是 Base URL 配置错误、网关没有转发到模型接口，或服务端提前断开连接。\n请求地址：{endpoint}",
+  "@readerAiEmptyResponseError": {
+    "placeholders": {
+        "endpoint": {"type": "String"}
+    }
+  },
+  "readerAiInvalidJsonError": "服务端返回的不是合法 JSON，当前接口可能与 {provider} 配置不兼容。\n请求地址：{endpoint}\n返回片段：{snippet}",
+  "@readerAiInvalidJsonError": {
+    "placeholders": {
+        "provider": {"type": "String"},
+        "endpoint": {"type": "String"},
+        "snippet": {"type": "String"}
+    }
+  },
+  "readerAiFailedReadBody": "请求失败{status}：未能读取服务端返回的数据，通常是 Base URL 配错、接口返回空内容，或网络把响应截断了。\n请求地址：{endpoint}",
+  "@readerAiFailedReadBody": {
+    "placeholders": {
+        "status": {"type": "String"},
+        "endpoint": {"type": "String"}
+    }
+  },
+  "readerAiNetworkRequestFailed": "网络请求失败{status}：{error}\n请求地址：{endpoint}",
+  "@readerAiNetworkRequestFailed": {
+    "placeholders": {
+        "status": {"type": "String"},
+        "error": {"type": "String"},
+        "endpoint": {"type": "String"}
+    }
+  },
+  "readerAiRequestFailedMinimaxHint": "请求失败({status})：{text}\n建议检查：1) MiniMax 温度需在 (0,1]；2) 模型名与接口是否匹配；3) 仅使用单条 system 指令。\n请求地址：{endpoint}",
+  "@readerAiRequestFailedMinimaxHint": {
+    "placeholders": {
+        "status": {"type": "String"},
+        "text": {"type": "String"},
+        "endpoint": {"type": "String"}
+    }
+  },
+  "readerAiRequestFailedClaudeHint": "请求失败({status})：{text}\n提示：Claude 必须携带 anthropic-version 请求头。\n请求地址：{endpoint}",
+  "@readerAiRequestFailedClaudeHint": {
+    "placeholders": {
+        "status": {"type": "String"},
+        "text": {"type": "String"},
+        "endpoint": {"type": "String"}
+    }
+  },
+  "readerAiRequestFailedProviderMismatchHint": "请求失败({status})：{text}\n提示：请确认服务商与 API Key 对应，不可混用。\n请求地址：{endpoint}",
+  "@readerAiRequestFailedProviderMismatchHint": {
+    "placeholders": {
+        "status": {"type": "String"},
+        "text": {"type": "String"},
+        "endpoint": {"type": "String"}
+    }
+  },
+  "readerAiRequestFailedGeneric": "请求失败({status})：{text}\n请求地址：{endpoint}",
+  "@readerAiRequestFailedGeneric": {
+    "placeholders": {
+        "status": {"type": "String"},
+        "text": {"type": "String"},
+        "endpoint": {"type": "String"}
+    }
+  },
+  "readerAiMockSelectionResponse": "AI(模拟): 你选择的内容是\"{selectedText}\"。\n\n上文: {before}\n下文: {after}",
+  "@readerAiMockSelectionResponse": {
+    "placeholders": {
+        "selectedText": {"type": "String"},
+        "before": {"type": "String"},
+        "after": {"type": "String"}
+    }
+  },
+  "readerAiMockPageAnalysis": "AI(模拟): 本页共 {chars} 字，建议重点关注段落开头与结尾处的论点。",
+  "@readerAiMockPageAnalysis": {
+    "placeholders": {
+        "chars": {"type": "int"}
+    }
+  },
+  "readerAiMockGreeting": "你好",
+  "readerAiMockChatResponse": "AI(模拟): 你问的是「{question}」。\n\n我已读取当前页（{chars} 字），你可以继续追问。",
+  "@readerAiMockChatResponse": {
+    "placeholders": {
+        "question": {"type": "String"},
+        "chars": {"type": "int"}
+    }
+  },
+  "readerAiMemorySummaryHeading": "【本书记忆摘要】",
+  "readerAiReadingAdviceHeading": "【针对用户的阅读建议】",
+  "readerAiIndexedSnippetsHeading": "【索引命中片段】",
+  "readerAiLocalFallbackIntro": "当前未配置在线 AI Key，先基于本地记忆和索引给你一个答案：",
+  "readerAiRelatedContentHeading": "【相关内容】",
+  "readerAiNoRelatedContent": "【相关内容】暂未命中可用片段。",
+  "readerAiRelatedContentLocationHeading": "【相关内容定位】",
+  "readerAiSnippetLocation": "- 位置：{chapterId} ({startOffset}-{endOffset})",
+  "@readerAiSnippetLocation": {
+    "placeholders": {
+        "chapterId": {"type": "String"},
+        "startOffset": {"type": "int"},
+        "endOffset": {"type": "int"}
+    }
+  },
+  "readerAiReadingSuggestionHeading": "【建议怎么读】",
+  "readerAiNextStepHeading": "【下一步】",
+  "readerAiNextStepReadSnippet": "1) 先读上面命中的片段。",
+  "readerAiNextStepAskFollowUp": "2) 用\"为什么/如何/例子\"再追问一次，我会继续按索引定位。",
+  "ttsSystemDefault": "系统默认",
+  "ttsUnavailable": "系统 TTS 不可用",
+  "ttsUnsupportedLanguage": "系统不支持语言: {language}",
+  "@ttsUnsupportedLanguage": {
+    "placeholders": {
+        "language": {"type": "String"}
+    }
+  },
+  "ttsCallFailed": "系统 TTS 调用失败",
+  "importErrorSourceMissing": "源文件不存在",
+  "importErrorHashFailed": "无法校验文件内容",
+  "importErrorTargetNameExhausted": "无法为导入文件分配可用名称",
+  "importErrorSourceNotMaterialized": "源文件尚未准备到本地",
+  "importErrorCopyVerificationFailed": "复制后的文件与源文件不一致",
+  "importErrorFileTooLarge": "文件超过 100 MB 导入限制",
+  "importErrorSourcePrepareFailed": "无法准备导入文件",
+  "importErrorFailed": "书籍导入失败",
+  "importUnknownTitle": "未知标题",
+  "importUnknownAuthor": "未知作者",
+  "bookUntitled": "未命名",
+  "homePlanTaskCompleteDailyGoal": "完成今日目标",
+  "homePlanTaskReadMinutes": "阅读 {minutes} 分钟",
+  "@homePlanTaskReadMinutes": {
+    "placeholders": {
+        "minutes": {"type": "int"}
+    }
+  },
+  "homePlanTaskCompleteFocusReading": "完成专注阅读",
+  "homePlanTaskFocusSession": "至少 1 次 {minutes} 分钟专注会话",
+  "@homePlanTaskFocusSession": {
+    "placeholders": {
+        "minutes": {"type": "int"}
+    }
+  },
+  "homePlanTaskKeepRhythm": "保持节奏",
+  "homePlanTaskWeekAchievedDays": "本周达标天数 ≥ 5 天",
+  "noteColorLightBlue": "浅蓝色",
+  "noteColorRed": "红色",
+  "noteColorGreen": "绿色",
+  "noteColorPurple": "紫色",
+  "noteColorGold": "金色",
+  "noteColorOrange": "橙色",
+  "noteColorYellow": "黄色",
+  "noteColorDarkGreen": "深绿色",
+  "noteColorCustom": "自定义",
+  "noteShareBookHeader": "📖 《{title}》- {author}",
+  "@noteShareBookHeader": {
+    "placeholders": {
+        "title": {"type": "String"},
+        "author": {"type": "String"}
+    }
+  },
+  "noteShareNoteLabel": "💭 笔记：{note}",
+  "@noteShareNoteLabel": {
+    "placeholders": {
+        "note": {"type": "String"}
+    }
+  },
+  "noteShareChapterLabel": "📍 {chapter}",
+  "@noteShareChapterLabel": {
+    "placeholders": {
+        "chapter": {"type": "String"}
+    }
+  },
+  "noteSharePageLabel": "📄 第{page}页",
+  "@noteSharePageLabel": {
+    "placeholders": {
+        "page": {"type": "int"}
+    }
+  },
+  "noteShareHashtags": "#读书笔记 #{type}",
+  "@noteShareHashtags": {
+    "placeholders": {
+        "type": {"type": "String"}
+    }
+  },
+  "accentPurple": "优雅紫",
+  "accentPink": "樱花粉",
+  "accentCyan": "清新青",
+  "accentBrown": "古典棕",
+  "accentGrey": "优雅灰",
+  "accentDeepPurple": "魅力紫",
+  "accentAmber": "琥珀金",
+  "accentLightGreen": "生机绿",
+  "accentYellow": "阳光黄",
+  "accentNeutralGrey": "简约灰",
+  "accentIndigo": "深邃蓝",
+  "accentDeepOrange": "火焰橙",
+  "glassPresetClear": "清晰模式",
+  "glassPresetStandard": "标准模式",
+  "glassPresetDreamy": "朦胧模式",
+  "agreementV2HeroTitle": "把阅读，留在自己的设备里。",
+  "agreementV2HeroBody": "开元阅读是一款开源、跨平台、本地优先的电子书阅读工具。它提供阅读能力，但不提供、托管或审核你导入的书籍。",
+  "agreementV2LocalTitle": "本地优先",
+  "agreementV2LocalBody": "书籍、进度与笔记原则上保存在你的设备中，由你自行管理与备份。",
+  "agreementV2OpenSourceTitle": "AGPL-3.0 开源",
+  "agreementV2OpenSourceBody": "源代码按 GNU AGPL v3.0 提供；软件按“原样”交付，不附带任何明示或默示担保。",
+  "agreementV2VersionLabel": "条款版本 {version}",
+  "@agreementV2VersionLabel": {
+    "placeholders": {
+        "version": {"type": "String"}
+    }
+  },
+  "agreementV2Title": "使用条款与隐私说明",
+  "agreementV2Subtitle": "使用前请完整阅读，重点条款已直接说明",
+  "agreementV2ImportantNotice": "特别提示：开元阅读官方版本不预装、不内置、不推荐任何第三方书源，也不运营、代理或托管书源内容。你导入的文件和主动添加的书源均由你自行选择；请仅访问和使用你有权使用的内容。",
+  "agreementV2SourceBoundaryTitle": "第三方书源责任边界",
+  "agreementV2SourceBoundaryPoint1": "官方只提供开源阅读软件和 Open Reading Source Protocol，不提供书源地址或官方书源目录。",
+  "agreementV2SourceBoundaryPoint2": "每个书源地址都必须由你主动输入添加；App 直接连接该独立第三方服务，不经过开发者内容服务器。",
+  "agreementV2SourceBoundaryPoint3": "协议兼容只代表接口可连接，不代表内容合法或获得授权。书源运营者负责其内容，你负责添加前审查并合法使用。",
+  "agreementV2Section1Title": "协议范围与接受",
+  "agreementV2Section1Body": "本协议适用于你对开元阅读软件及其附带功能的下载、安装和使用。点击“同意并继续”即表示你已阅读、理解并同意本协议；如你不同意，请停止使用并退出应用。若你未达到所在地法律规定的独立同意年龄，应由监护人阅读并同意。",
+  "agreementV2Section2Title": "开源软件与许可",
+  "agreementV2Section2Body": "开源阅读后续版本按 GNU Affero General Public License v3.0 发布。你可以依许可证使用、复制、修改、分发或销售软件；分发修改版时必须按 AGPL-3.0 提供完整对应源代码，修改版通过网络向用户提供服务时也必须按许可证向这些用户提供对应源代码。v1.0.0 及更早版本已经获得的 MIT 授权继续有效且不会撤回。本协议不限制开源许可证已经授予的权利；第三方组件仍适用各自许可证。",
+  "agreementV2Section3Title": "用户内容与版权责任",
+  "agreementV2Section3Body": "“用户内容”包括你导入、下载、打开、转换、缓存、标注、朗读或以其他方式处理的书籍、文档、图片、元数据及链接。你须确保自己对用户内容拥有合法权利或已取得必要授权，并自行承担因内容引起的版权、商标、隐私、名誉、违法信息、恶意文件及其他争议或损失。软件和开发者不上传、出售、授权、背书或审核你的用户内容，也不因软件能够读取某种格式而表示该内容可以被合法使用。",
+  "agreementV2Section4Title": "禁止使用",
+  "agreementV2Section4Body": "你不得利用本软件侵犯知识产权或其他合法权益，不得传播违法、有害或恶意内容，不得绕过数字版权保护、访问控制或付费限制，不得攻击、干扰第三方系统，亦不得将本软件用于任何违反适用法律的活动。因你的使用行为导致的投诉、索赔、处罚或损失由你自行承担。",
+  "agreementV2Section5Title": "书源、链接与第三方服务",
+  "agreementV2Section5Body": "官方版本不预装、不分发、不推荐书源，也不运营官方书源目录。你添加的书源、网络接口、外部链接、在线内容、系统 TTS、AI 服务及其他第三方能力均由独立第三方提供和控制，与开发者不存在运营、代理、授权、背书或内容审核关系。书源运营者依法负责其提供的内容；你须在添加前审查来源、内容授权、隐私政策和使用条款，并对自己的访问、下载、缓存、传播及其他使用行为负责。在适用法律允许的最大范围内，开发者不对第三方内容、收费、数据处理、服务中断或侵权争议承担责任。",
+  "agreementV2Section6Title": "数据与隐私",
+  "agreementV2Section6Body": "本软件采用本地优先设计，书籍、阅读进度、笔记和设置通常保存在你的设备。除非你主动启用联网书源、AI、同步或其他联网功能，本软件不会为了提供本地阅读而主动将书籍正文发送给开发者。应用自动或手动检查更新时，会访问 GitHub 和官方站点 open.xxread.top，并发送平台、处理器架构、发布渠道等必要技术参数；服务器和网络服务会按正常通信处理你的 IP 地址与 User-Agent。你从官方站点下载安装包时，后台会记录版本、架构、下载时间、IP 和 User-Agent，用于下载次数统计、安全防护和故障排查；原始 IP 下载明细最多保留 30 天，之后删除，长期仅保留不含原始 IP 的汇总统计。上述更新请求不包含书籍正文、书架、笔记、账户或设备唯一标识；访问 GitHub 时还适用 GitHub 的隐私规则。启用其他联网功能时，相关查询、文本片段、设备网络信息或必要参数可能发送给你选择的第三方服务，具体以该服务规则为准。你应自行保护设备、访问密钥和备份；卸载、清理数据、设备故障或误操作可能导致数据永久丢失。",
+  "agreementV2Section7Title": "AI 与自动化输出",
+  "agreementV2Section7Body": "AI 摘要、问答、翻译、推荐或其他自动生成结果可能不准确、不完整、过时或具有误导性，仅供辅助阅读，不构成法律、医疗、投资、学术或其他专业意见。你应独立核验后再使用，不应依赖其作出高风险决定。你提交给 AI 服务的内容还受对应服务商条款约束。",
+  "agreementV2Section8Title": "无担保声明",
+  "agreementV2Section8Body": "在适用法律允许的最大范围内，本软件及相关资料均按“原样”和“可用”状态提供，不作任何明示、默示或法定担保，包括但不限于适销性、特定用途适用性、权利完整、不侵权、准确性、兼容性、安全性、无错误、不中断或数据不丢失。开源贡献者没有义务提供维护、更新、技术支持或缺陷修复。",
+  "agreementV2Section9Title": "责任限制",
+  "agreementV2Section9Body": "在适用法律允许的最大范围内，开发者、版权人及贡献者不对因安装、使用或无法使用本软件，用户内容，第三方服务，数据丢失，设备异常，业务中断或安全事件产生的任何直接、间接、附带、特殊、惩罚性或后果性损失承担责任，无论该责任基于合同、侵权或其他理论。法律不得排除的责任不受本条排除，但应限制在法律允许的最低范围。",
+  "agreementV2Section10Title": "赔偿与责任承担",
+  "agreementV2Section10Body": "如因你的用户内容、违法使用、侵权行为、违反本协议或使用第三方服务，导致开发者、版权人或贡献者遭受第三方索赔、行政调查、处罚、损失或合理费用，你应在适用法律允许的范围内承担相应责任并使其免受损害。",
+  "agreementV2Section11Title": "变更、停止与适用规则",
+  "agreementV2Section11Body": "软件功能、项目维护状态和本协议可能因开源项目发展、法律变化或风险控制需要而调整。重大条款更新时，应用可要求你重新确认；不同意新条款的，你应停止使用。你可随时卸载软件。争议优先友好协商；在不影响你依法享有的强制性消费者权益前提下，适用开发者所在地法律并由有管辖权的法院处理。若部分条款无效，其余条款仍然有效。",
+  "agreementV2ConfirmLabel": "我已完整阅读并同意以上使用条款与隐私说明。",
+  "agreementV2SourceConfirmLabel": "我已知悉官方不提供任何书源；我添加的书源及其内容由独立第三方提供，我会自行确认授权并对自己的使用行为负责。",
+  "agreementV2ExitLabel": "不同意",
+  "agreementV2ContinueLabel": "同意并继续",
+  "agreementV2ExitDialogTitle": "不同意条款？",
+  "agreementV2ExitDialogBody": "你需要同意使用条款后才能继续使用开元阅读。若不同意，请退出应用。",
+  "agreementV2CancelLabel": "返回阅读",
+  "agreementV2ConfirmExitLabel": "确认退出",
+  "agreementV2SaveFailed": "无法保存同意状态，请稍后重试。",
+  "settingsDataSyncTitle": "数据与同步",
+  "settingsCacheManagementTitle": "缓存管理",
+  "settingsCacheManagementSubtitle": "共占用 {size}，查看分类并清理",
+  "settingsCacheUsageTitle": "缓存占用",
+  "settingsCacheTotalUsage": "总占用",
+  "settingsCacheSafeHint": "这里只统计可安全清理的缓存，不包含书籍、阅读进度和设置。",
+  "settingsCacheSourceCovers": "书源封面缓存",
+  "settingsCacheSourceCoversSubtitle": "已下载的书源封面 · {size}",
+  "settingsCacheSourceData": "书源章节缓存",
+  "settingsCacheSourceDataSubtitle": "可安全删除的在线章节缓存 · {size}",
+  "settingsCacheTemporaryFiles": "临时文件",
+  "settingsCacheTemporaryFilesSubtitle": "可丢弃的更新与临时文件 · {size}",
+  "settingsCacheClearAll": "清理全部安全缓存",
+  "settingsCacheClearAllSubtitle": "只清理以上类别 · {size}",
+  "settingsCacheCalculating": "正在计算…",
+  "settingsCacheClearConfirm": "只会删除临时缓存数据，不会删除书籍、已保存封面、阅读进度、数据库、设置或凭据。",
+  "settingsCacheClearAction": "清理",
+  "settingsCacheCleared": "缓存已清理",
+  "settingsCacheClearFailed": "缓存清理失败",
+  "settingsWebDavSyncTitle": "WebDAV 同步",
+  "webDavNotConfigured": "尚未配置",
+  "webDavConfigureSubtitle": "将阅读数据同步到你自己的 WebDAV 空间",
+  "webDavBetaBadge": "Beta · 可能不稳定",
+  "webDavPageTitle": "WebDAV 同步",
+  "webDavConnected": "已连接",
+  "webDavSyncing": "正在同步",
+  "webDavPartialFailure": "部分内容需要处理",
+  "webDavSyncFailed": "同步失败",
+  "webDavPendingChanges": "{count} 项变更等待同步",
+  "webDavLastSync": "上次同步：{time}",
+  "webDavNeverSynced": "尚未同步",
+  "webDavSyncNow": "立即同步",
+  "webDavSetUp": "设置 WebDAV",
+  "webDavConnectionTitle": "连接信息",
+  "webDavServerUrl": "WebDAV 地址",
+  "webDavUsername": "用户名",
+  "webDavPassword": "应用密码",
+  "webDavPasswordHint": "仅安全保存在当前设备",
+  "webDavRootPath": "远端目录",
+  "webDavTestConnection": "测试连接",
+  "webDavTestingConnection": "正在测试连接…",
+  "webDavConnectionSuccess": "连接与写入权限验证成功",
+  "webDavConnectionFailed": "连接测试失败：{reason}",
+  "webDavSaveConfiguration": "保存配置",
+  "webDavAutomaticSync": "自动同步",
+  "webDavAutomaticSyncHint": "启动应用或回到前台时自动同步",
+  "webDavSyncContent": "同步内容",
+  "webDavScopeBookSources": "书源",
+  "webDavScopeBooks": "书架与在线书籍",
+  "webDavScopeProgress": "阅读进度",
+  "webDavScopeBookmarks": "书签",
+  "webDavScopeReadingSessions": "阅读统计",
+  "webDavScopeBookFiles": "书籍原文件",
+  "webDavBookFilesHint": "选择需要上传或下载的书籍",
+  "webDavBookFilesUnavailable": "书籍文件传输将在元数据同步稳定后开放",
+  "webDavSecurityNotice": "数据通过 HTTPS 传输，但 WebDAV 服务提供方仍可读取未加密的远端内容。",
+  "webDavConnectionDetails": "连接配置",
+  "webDavClearConfiguration": "清除本机配置",
+  "webDavClearConfigurationTitle": "清除 WebDAV 配置？",
+  "webDavClearConfigurationMessage": "这会删除当前设备保存的 WebDAV 地址和登录信息，不会删除本机阅读数据或远端文件。",
+  "webDavClearConfigurationConfirm": "从本机清除",
+  "webDavActivityTitle": "同步活动",
+  "webDavActivityEmpty": "还没有同步记录",
+  "webDavSyncCompleteSummary": "上传 {uploaded} 项，下载 {downloaded} 项",
+  "webDavErrorAuthentication": "用户名、密码或目录权限不正确。",
+  "webDavErrorInvalidConfiguration": "WebDAV 配置不完整或无效。",
+  "webDavErrorInsecureConnection": "当前连接不符合安全要求。",
+  "webDavErrorCertificate": "无法验证服务器证书。",
+  "webDavErrorPermission": "远端目录没有写入权限。",
+  "webDavErrorNotFound": "远端同步目录或必需文件不存在。",
+  "webDavErrorConflict": "远端数据发生冲突，请重试同步。",
+  "webDavErrorStorageFull": "WebDAV 空间已满。",
+  "webDavErrorRateLimited": "WebDAV 请求过于频繁，请稍后重试。",
+  "webDavErrorTimeout": "服务器没有及时响应。",
+  "webDavErrorUnsupported": "这个 WebDAV 服务不支持安全同步所需的能力。",
+  "webDavErrorNetwork": "当前网络不可用，变更仍已保存在本机。",
+  "webDavErrorCorruptData": "部分远端同步数据已损坏，因此没有应用。",
+  "webDavErrorClockSkew": "本机时间与 WebDAV 服务器相差过大。",
+  "webDavErrorSecureStorage": "无法从系统安全存储读取 WebDAV 密码。",
+  "webDavErrorUnknown": "WebDAV 无法完成本次操作。",
+  "webDavErrorPhase": "失败阶段：{phase}",
+  "webDavPhaseConnecting": "连接远端",
+  "webDavPhaseScanningLocal": "扫描本机数据",
+  "webDavPhaseReadingRemote": "读取远端数据",
+  "webDavPhaseApplyingRemote": "合并远端数据",
+  "webDavPhaseUploadingLocal": "上传本机变更",
+  "webDavPhaseFinishing": "完成同步",
+  "webDavPhaseUnknown": "未知",
+  "webDavBookFilesTitle": "书籍文件",
+  "webDavFilesPendingUpload": "待上传",
+  "webDavFilesAvailableDownload": "可下载",
+  "webDavFilesSynced": "已同步",
+  "webDavFilesUploadSelected": "上传所选",
+  "webDavFilesDownloadSelected": "下载所选",
+  "webDavFilesSelectedSummary": "已选择 {count} 本 · {size}",
+  "webDavFilesOnlyLocal": "仅在本机",
+  "webDavFilesOnlyRemote": "文件尚未下载到本机",
+  "webDavFilesUploadPermission": "允许上传书籍原文件",
+  "webDavFilesUploadPermissionHint": "只会上传你明确选中的书籍；WebDAV 保留原文件名和原始内容，不另行加密",
+  "webDavLegacyBookDirectoryTitle": "旧版 WebDAV 书籍仍兼容",
+  "webDavLegacyBookDirectoryMessage": "无需重新同步。新上传书籍将使用“书名 - 作者/原文件名”的可读目录。",
+  "webDavNewBookPolicyTitle": "新书文件处理",
+  "webDavNewBookPolicyAsk": "每次询问（推荐）",
+  "webDavNewBookPolicyAskHint": "导入完成后选择本次要上传的书籍",
+  "webDavNewBookPolicyAutomatic": "自动上传新书",
+  "webDavNewBookPolicyAutomaticHint": "导入完成后立即上传，可能使用移动网络",
+  "webDavNewBookPolicyManual": "始终手动选择",
+  "webDavNewBookPolicyManualHint": "只在书籍文件页中手动发起上传",
+  "webDavNewBooksPromptTitle": "同步本次导入的 {count} 本书？",
+  "webDavNewBooksPromptBody": "阅读数据会自动同步。请选择要上传到 WebDAV 的书籍原文件。",
+  "webDavNewBooksSkip": "暂不上传",
+  "webDavNewBooksUploading": "正在上传 {count} 本新书…",
+  "webDavNewBooksUploadResult": "新书上传完成：成功 {success} 本，失败 {failed} 本",
+  "webDavFilesTooLarge": "当前版本暂不支持超过 100 MiB 的书籍文件",
+  "webDavFilesEmpty": "这个分类中没有书籍",
+  "webDavFilesTransferComplete": "书籍文件传输完成",
+  "readerAddAnnotation": "添加批注",
+  "readerAnnotationHint": "写下你对这段文字的想法…",
+  "readerAnnotationSaved": "批注已保存",
+  "readerAnnotationDeleted": "批注已删除",
+  "readerAnnotationShelfRequired": "请先将本书加入书架，再保存高亮和批注",
+  "readerNoAnnotations": "还没有批注",
+  "readerNoAnnotationsHint": "选中文字即可高亮或添加文字批注；点击带下划线的批注文字可再次查看笔记。"
+}

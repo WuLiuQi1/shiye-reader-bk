@@ -1,0 +1,378 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_test/flutter_test.dart';
+import 'package:xxread/core/reader/reader_leaf_status.dart';
+import 'package:xxread/core/reader/reader_safe_area.dart';
+import 'package:xxread/utils/reader_themes.dart';
+import 'package:xxread/widgets/reader_paper_page_leaf.dart';
+import 'package:xxread/widgets/reader_top_information_bar.dart';
+
+void main() {
+  testWidgets('page leaf paints only the page number in its footer', (
+    tester,
+  ) async {
+    final captureKey = GlobalKey();
+    const metadata = ReaderPaperPageMetadata(
+      pageIdentity: 'chapter-1:3',
+      layoutFingerprint: 'layout-v4',
+      themeId: 'day',
+      chapterTitle: 'Chapter 3',
+      pageNumber: 4,
+      pageCount: 12,
+    );
+
+    await tester.pumpWidget(
+      MaterialApp(
+        home: RepaintBoundary(
+          key: captureKey,
+          child: const ReaderPaperPageLeaf(
+            palette: ReaderThemes.day,
+            safeArea: ReaderSafeAreaMetrics(
+              viewPadding: EdgeInsets.only(top: 24, bottom: 24),
+              topMargin: 4,
+              bottomMargin: 0,
+            ),
+            metadata: metadata,
+            child: Padding(padding: EdgeInsets.all(24), child: Text('Body')),
+          ),
+        ),
+      ),
+    );
+
+    expect(find.text('Chapter 3'), findsNothing);
+    expect(find.text('4 / 12'), findsOneWidget);
+    expect(
+      find.ancestor(of: find.text('4 / 12'), matching: find.byKey(captureKey)),
+      findsOneWidget,
+    );
+    expect(
+      tester.getCenter(find.text('4 / 12')).dx,
+      greaterThan(tester.getSize(find.byKey(captureKey)).width / 2),
+    );
+    final leafRect = tester.getRect(find.byKey(captureKey));
+    final pageNumberRect = tester.getRect(find.text('4 / 12'));
+    expect(leafRect.right - pageNumberRect.right, greaterThanOrEqualTo(23));
+  });
+
+  testWidgets('reader information is painted inside the paper leaf', (
+    tester,
+  ) async {
+    final captureKey = GlobalKey();
+    const metadata = ReaderPaperPageMetadata(
+      pageIdentity: 'chapter-1:5',
+      layoutFingerprint: 'layout-v4',
+      themeId: 'day',
+      chapterTitle: 'Chapter 3',
+      pageNumber: 6,
+      pageCount: 12,
+    );
+    final status = ReaderLeafStatusData(
+      time: DateTime(2026, 7, 19, 9, 5),
+      battery: const ReaderBatteryStatus(level: 73, charging: false),
+      revision: 2,
+    );
+
+    await tester.pumpWidget(
+      MaterialApp(
+        home: MediaQuery(
+          data: const MediaQueryData(alwaysUse24HourFormat: true),
+          child: RepaintBoundary(
+            key: captureKey,
+            child: ReaderPaperPageLeaf(
+              palette: ReaderThemes.day,
+              safeArea: const ReaderSafeAreaMetrics(
+                viewPadding: EdgeInsets.only(top: 24, bottom: 24),
+                topMargin: 4,
+                bottomMargin: 0,
+                topChromeReserve: ReaderSafeAreaMetrics.readerTopBarReserve,
+              ),
+              metadata: metadata,
+              showTopInformation: true,
+              status: status,
+              child: const SizedBox.expand(),
+            ),
+          ),
+        ),
+      ),
+    );
+
+    for (final text in ['09:05', 'Chapter 3', '73%']) {
+      expect(find.text(text), findsOneWidget);
+      expect(
+        find.ancestor(of: find.text(text), matching: find.byKey(captureKey)),
+        findsOneWidget,
+      );
+    }
+  });
+
+  testWidgets('left page places its page number in the outer bottom corner', (
+    tester,
+  ) async {
+    const metadata = ReaderPaperPageMetadata(
+      pageIdentity: 'chapter-1:4',
+      layoutFingerprint: 'layout-v4',
+      themeId: 'day',
+      chapterTitle: 'Chapter 3',
+      pageNumber: 5,
+      pageCount: 12,
+    );
+
+    await tester.pumpWidget(
+      const MaterialApp(
+        home: ReaderPaperPageLeaf(
+          palette: ReaderThemes.day,
+          safeArea: ReaderSafeAreaMetrics(
+            viewPadding: EdgeInsets.only(top: 24, bottom: 24),
+            topMargin: 4,
+            bottomMargin: 0,
+          ),
+          metadata: metadata,
+          pageNumberPlacement: ReaderPageNumberPlacement.bottomLeft,
+          child: SizedBox.expand(),
+        ),
+      ),
+    );
+
+    final pageNumber = find.text('5 / 12');
+    expect(pageNumber, findsOneWidget);
+    expect(
+      tester.getCenter(pageNumber).dx,
+      lessThan(MediaQuery.sizeOf(tester.element(pageNumber)).width / 2),
+    );
+  });
+
+  testWidgets('tablet spread splits chapter and device status across leaves', (
+    tester,
+  ) async {
+    await tester.binding.setSurfaceSize(const Size(1200, 800));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+    final status = ReaderLeafStatusData(
+      time: DateTime(2026, 7, 19, 9, 5),
+      battery: const ReaderBatteryStatus(level: 73, charging: false),
+      revision: 2,
+    );
+
+    ReaderPaperPageLeaf leaf(
+      String id,
+      ReaderTopInformationLayout layout,
+      ReaderPageNumberPlacement pageNumberPlacement,
+    ) => ReaderPaperPageLeaf(
+      palette: ReaderThemes.day,
+      safeArea: const ReaderSafeAreaMetrics(
+        viewPadding: EdgeInsets.only(top: 24, bottom: 24),
+        topMargin: 4,
+        bottomMargin: 0,
+        topChromeReserve: ReaderSafeAreaMetrics.readerTopBarReserve,
+      ),
+      metadata: ReaderPaperPageMetadata(
+        pageIdentity: id,
+        layoutFingerprint: 'layout-v4',
+        themeId: 'day',
+        chapterTitle: 'Chapter 3',
+        pageNumber: id == 'left' ? 5 : 6,
+        pageCount: 12,
+      ),
+      pageNumberPlacement: pageNumberPlacement,
+      showTopInformation: true,
+      topInformationLayout: layout,
+      status: status,
+      child: const SizedBox.expand(),
+    );
+
+    await tester.pumpWidget(
+      MaterialApp(
+        home: MediaQuery(
+          data: const MediaQueryData(alwaysUse24HourFormat: true),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: leaf(
+                  'left',
+                  ReaderTopInformationLayout.spreadLeft,
+                  ReaderPageNumberPlacement.bottomLeft,
+                ),
+              ),
+              const SizedBox(width: 24),
+              Expanded(
+                child: leaf(
+                  'right',
+                  ReaderTopInformationLayout.spreadRight,
+                  ReaderPageNumberPlacement.bottomRight,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+
+    for (final text in ['Chapter 3', '09:05', '73%']) {
+      expect(find.text(text), findsOneWidget);
+    }
+    expect(tester.getCenter(find.text('Chapter 3')).dx, lessThan(600));
+    expect(tester.getCenter(find.text('09:05')).dx, greaterThan(600));
+    expect(tester.getCenter(find.text('73%')).dx, greaterThan(600));
+  });
+
+  testWidgets('floating status paints inside the leaf status bar area', (
+    tester,
+  ) async {
+    final captureKey = GlobalKey();
+    const metadata = ReaderPaperPageMetadata(
+      pageIdentity: 'chapter-1:7',
+      layoutFingerprint: 'layout-v4',
+      themeId: 'day',
+      chapterTitle: 'Chapter 3',
+      pageNumber: 8,
+      pageCount: 12,
+    );
+    final status = ReaderLeafStatusData(
+      time: DateTime(2026, 7, 19, 9, 5),
+      battery: const ReaderBatteryStatus(level: 73, charging: false),
+      revision: 2,
+    );
+
+    await tester.pumpWidget(
+      MaterialApp(
+        home: MediaQuery(
+          data: const MediaQueryData(alwaysUse24HourFormat: true),
+          child: RepaintBoundary(
+            key: captureKey,
+            child: ReaderPaperPageLeaf(
+              palette: ReaderThemes.day,
+              safeArea: const ReaderSafeAreaMetrics(
+                viewPadding: EdgeInsets.only(top: 44, bottom: 24),
+                topMargin: 4,
+                bottomMargin: 0,
+              ),
+              metadata: metadata,
+              showFloatingStatus: true,
+              status: status,
+              child: const SizedBox.expand(),
+            ),
+          ),
+        ),
+      ),
+    );
+
+    // 章节标题不属于灵动信息栏。
+    expect(find.text('Chapter 3'), findsNothing);
+    final leafRect = tester.getRect(find.byKey(captureKey));
+    final time = find.text('09:05');
+    final battery = find.text('73%');
+    for (final part in [time, battery]) {
+      expect(part, findsOneWidget);
+      expect(
+        find.ancestor(of: part, matching: find.byKey(captureKey)),
+        findsOneWidget,
+      );
+      // 画在被隐藏的系统状态栏区域内，不占用正文空间。
+      expect(tester.getRect(part).bottom, lessThanOrEqualTo(leafRect.top + 44));
+    }
+    // 时间靠左、电量靠右，且与屏幕圆角保持至少 32 的间距。
+    expect(tester.getRect(time).left, leafRect.left + 32);
+    expect(
+      tester.getRect(battery).right,
+      lessThanOrEqualTo(leafRect.right - 32),
+    );
+    expect(tester.getCenter(time).dx, lessThan(leafRect.center.dx));
+    expect(tester.getCenter(battery).dx, greaterThan(leafRect.center.dx));
+  });
+
+  testWidgets('tablet spread splits floating time and battery across leaves', (
+    tester,
+  ) async {
+    await tester.binding.setSurfaceSize(const Size(1200, 800));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+    final status = ReaderLeafStatusData(
+      time: DateTime(2026, 7, 19, 9, 5),
+      battery: const ReaderBatteryStatus(level: 73, charging: false),
+      revision: 2,
+    );
+
+    ReaderPaperPageLeaf leaf(String id, ReaderTopInformationLayout layout) =>
+        ReaderPaperPageLeaf(
+          palette: ReaderThemes.day,
+          safeArea: const ReaderSafeAreaMetrics(
+            viewPadding: EdgeInsets.only(top: 24, bottom: 24),
+            topMargin: 4,
+            bottomMargin: 0,
+          ),
+          metadata: ReaderPaperPageMetadata(
+            pageIdentity: id,
+            layoutFingerprint: 'layout-v4',
+            themeId: 'day',
+            chapterTitle: 'Chapter 3',
+            pageNumber: id == 'left' ? 5 : 6,
+            pageCount: 12,
+          ),
+          showFloatingStatus: true,
+          topInformationLayout: layout,
+          status: status,
+          child: const SizedBox.expand(),
+        );
+
+    await tester.pumpWidget(
+      MaterialApp(
+        home: MediaQuery(
+          data: const MediaQueryData(alwaysUse24HourFormat: true),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: leaf('left', ReaderTopInformationLayout.spreadLeft),
+              ),
+              const SizedBox(width: 24),
+              Expanded(
+                child: leaf('right', ReaderTopInformationLayout.spreadRight),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+
+    expect(find.text('09:05'), findsOneWidget);
+    expect(find.text('73%'), findsOneWidget);
+    expect(tester.getCenter(find.text('09:05')).dx, lessThan(600));
+    expect(tester.getCenter(find.text('73%')).dx, greaterThan(600));
+  });
+
+  test('snapshot key separates page, layout and theme', () {
+    const base = ReaderPageSnapshotKey(
+      pageIdentity: 'chapter-1:0',
+      layoutFingerprint: 'layout-a',
+      themeId: 'day',
+    );
+    expect(
+      base,
+      isNot(
+        const ReaderPageSnapshotKey(
+          pageIdentity: 'chapter-1:1',
+          layoutFingerprint: 'layout-a',
+          themeId: 'day',
+        ),
+      ),
+    );
+    expect(
+      base,
+      isNot(
+        const ReaderPageSnapshotKey(
+          pageIdentity: 'chapter-1:0',
+          layoutFingerprint: 'layout-b',
+          themeId: 'day',
+        ),
+      ),
+    );
+    expect(
+      base,
+      isNot(
+        const ReaderPageSnapshotKey(
+          pageIdentity: 'chapter-1:0',
+          layoutFingerprint: 'layout-a',
+          themeId: 'night',
+        ),
+      ),
+    );
+  });
+}

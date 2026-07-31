@@ -1,0 +1,1872 @@
+{
+  "@@locale": "zh_TW",
+  "appTitle": "拾頁",
+  "home": "首頁",
+  "library": "書架",
+  "bookSources": "書源",
+  "discover": "探索",
+  "discoverRecommended": "推薦",
+  "discoverCategories": "分類",
+  "discoverLatest": "最新",
+  "discoverLoadFailed": "探索內容載入失敗",
+  "discoverRetry": "重新載入",
+  "discoverEmptyTitle": "暫無內容",
+  "discoverEmptyMessage": "這個欄目暫時沒有可顯示的內容。",
+  "discoverUnsupportedTitle": "目前書源暫不支援此欄目",
+  "discoverUnsupportedMessage": "需要書源提供 {capability} 能力；現有書源仍可繼續用於搜尋。",
+  "@discoverUnsupportedMessage": {
+    "placeholders": {
+      "capability": {
+        "type": "String"
+      }
+    }
+  },
+  "discoverCategoryEmpty": "這個分類暫時沒有可顯示的書籍。",
+  "bookSourceManagementTitle": "書源管理",
+  "bookSourceManagementSubtitle": "管理內容來源的新增、啟停與協定資訊。探索頁只保留找書體驗。",
+  "settingsContentSourcesTitle": "內容來源",
+  "settingsContentSourcesSubtitle": "新增、啟用或移除開放書源",
+  "bookSourcesSubtitle": "連接開放書源，跨來源搜尋可閱讀內容",
+  "bookSourcesAdd": "新增書源",
+  "bookSourcesSearchHint": "輸入書名或作者，搜尋已啟用書源",
+  "bookSourcesSearch": "搜尋",
+  "bookSourcesLoadMore": "載入更多",
+  "bookSourcesFailedCount": "{count} 個書源請求失敗",
+  "@bookSourcesFailedCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "bookSourcesSearchPrompt": "新增並啟用書源後，即可在這裡統一搜尋",
+  "bookSourcesNoResults": "沒有找到符合的書籍",
+  "bookSourcesNoSourcesTitle": "還沒有書源",
+  "bookSourcesNoSourcesDescription": "貼上相容 Open Reading Source Protocol 的服務位址即可接入。",
+  "bookSourcesManageTitle": "已接入書源",
+  "bookSourcesEnabled": "已啟用",
+  "bookSourcesDisabled": "已停用",
+  "bookSourcesRemove": "移除",
+  "bookSourcesRemoveTitle": "移除書源",
+  "bookSourcesRemoveMessage": "此操作只移除書源設定，不會刪除本機書籍。",
+  "bookSourcesCancel": "取消",
+  "bookSourcesConfirm": "確認",
+  "bookSourcesAddTitle": "新增開放書源",
+  "bookSourcesUrlLabel": "書源位址",
+  "bookSourcesUrlHint": "https://example.com 或探索文件 URL",
+  "bookSourcesNoOfficialSourcesNotice": "開元閱讀不預載任何書源，也不營運、推薦或背書第三方書源服務。每個書源位址都由你主動新增。",
+  "bookSourcesResponsibilityAck": "我確認自己有權存取相關內容，且不會利用書源繞過登入、付費、DRM 或其他存取控制。",
+  "bookSourcesConnect": "連接並驗證",
+  "bookSourcesConnecting": "正在驗證協定…",
+  "bookSourcesAdded": "書源已新增",
+  "bookSourcesRefresh": "重新整理書源",
+  "bookSourcesRefreshed": "書源已重新整理",
+  "bookSourcesRefreshFailed": "無法重新整理此書源",
+  "bookSourcesProtocolTitle": "Open Reading Source Protocol",
+  "bookSourcesProtocolDescription": "統一探索、搜尋、書籍詳情、目錄與章節內文介面。開發者可架設原生書源，也可為既有合法內容服務撰寫轉接閘道。",
+  "bookSourcesProtocolDetails": "檢視協定",
+  "bookSourcesProtocolRepository": "協定開源倉庫",
+  "bookSourcesProtocolRepositoryOpen": "在 GitHub 檢視",
+  "bookSourcesProtocolRepositoryOpenFailed": "無法開啟書源協定倉庫",
+  "bookSourcesProtocolDialogTitle": "開放書源協定 v1.4",
+  "bookSourcesProtocolDialogBody": "服務在 /.well-known/open-reading-source.json 發布探索文件，並實作核心閱讀能力：搜尋、書籍詳情、分頁章節目錄與章節內文介面。v1.4 保留完整目錄分頁，要求書源宣告這些核心能力，並保留公開、無需登入的 HTTP(S) 書源營運者、聯絡方式、內容授權與權利聲明中繼資料。",
+  "bookSourcesRightsDetails": "營運者與權利資訊",
+  "bookSourcesOperator": "書源營運者",
+  "bookSourcesContentLicense": "內容授權",
+  "bookSourcesRightsStatement": "權利聲明",
+  "bookSourcesRightsNotProvided": "此書源未提供",
+  "bookSourcesRightsUnverifiedNotice": "上述資訊由獨立書源營運者自行聲明。開元閱讀僅為提高透明度而顯示，不負責核驗，也不構成推薦或背書。",
+  "bookSourcesContactOperator": "聯絡營運者",
+  "bookSourcesRightsReport": "權利申訴",
+  "bookSourcesRightsReportOpenFailed": "無法開啟權利申訴表單",
+  "bookSourcesClose": "關閉",
+  "settings": "設定",
+  "statistics": "統計",
+  "reading": "閱讀",
+  "importBooks": "匯入書籍",
+  "darkMode": "深色模式",
+  "lightMode": "淺色模式",
+  "systemMode": "跟隨系統",
+  "theme": "主題",
+  "accent": "強調色",
+  "bookmarks": "書籤",
+  "notes": "筆記",
+  "highlights": "螢光標記",
+  "ttsReading": "語音朗讀",
+  "share": "分享",
+  "shareContent": "分享內容",
+  "shareCurrentPage": "分享目前頁面",
+  "shareSelectedText": "分享選取文字",
+  "shareProgress": "分享閱讀進度",
+  "play": "播放",
+  "pause": "暫停",
+  "stop": "停止",
+  "speed": "語速",
+  "pitch": "音調",
+  "language": "語言",
+  "fontSize": "字體大小",
+  "readingProgress": "閱讀進度",
+  "totalPages": "總頁數",
+  "currentPage": "目前頁面",
+  "readingTime": "閱讀時長",
+  "booksRead": "已讀書籍",
+  "todayReading": "今日閱讀",
+  "cancel": "取消",
+  "confirm": "確認",
+  "delete": "刪除",
+  "edit": "編輯",
+  "save": "儲存",
+  "back": "返回",
+  "next": "下一頁",
+  "previous": "上一頁",
+  "search": "搜尋",
+  "noResults": "找不到結果",
+  "loading": "載入中...",
+  "error": "錯誤",
+  "initializationFailed": "初始化失敗",
+  "unknownError": "未知錯誤",
+  "retry": "重試",
+  "appearanceSettings": "外觀設定",
+  "readingTips": "閱讀提示",
+  "readingFontSettingsMoved": "閱讀字體設定已移至閱讀介面",
+  "readingFontSettingsHint": "開啟任意書籍，點擊螢幕中央，在底部控制列中點擊「設定」按鈕，即可調整字體大小、行距、字元間距、頁面邊界與閱讀字體。",
+  "readingSettings": "閱讀設定",
+  "enableTts": "啟用朗讀功能",
+  "enableTtsHint": "開啟文字轉語音朗讀",
+  "ttsSpeedLabel": "朗讀速度",
+  "ttsSpeedHint": "調整朗讀的快慢",
+  "ttsVolumeLabel": "朗讀音量",
+  "ttsVolumeHint": "調整朗讀音量大小",
+  "ttsPitchLabel": "音調高低",
+  "ttsPitchHint": "調整朗讀音調",
+  "appSettings": "應用程式設定",
+  "appFont": "App 字體",
+  "appFontDescription": "用於導覽、按鈕、設定等介面文字，不影響書籍正文。",
+  "readerFont": "閱讀字體",
+  "readerFontDescription": "僅用於書籍正文和章節標題，不影響 App 介面。",
+  "fontSystem": "系統預設",
+  "fontSourceHanSerif": "思源宋體",
+  "fontSourceHanSans": "思源黑體",
+  "fontJetBrainsMono": "JetBrains Mono",
+  "fontInstrumentSans": "Instrument Sans",
+  "fontNewsreader": "Newsreader",
+  "fontSystemDescription": "跟隨目前裝置和作業系統的原生字體。",
+  "fontSerifDescription": "沉靜、具出版物氣質的襯線字體，適合長時間閱讀。",
+  "fontSansSerifDescription": "清晰簡潔的無襯線字體，適合緊湊介面和日常閱讀。",
+  "fontMonospaceDescription": "等寬字體，適合程式碼、技術內容和專注排版。",
+  "fontPreviewText": "Open Reading · 自由閱讀，開卷有益",
+  "customFonts": "我的字體",
+  "customFontsEmpty": "尚未匯入字體",
+  "customFontsEmptyHint": "匯入一次 TTF 或 OTF 檔案，即可用於 App 介面或閱讀正文。",
+  "customFontsCount": "已匯入 {count} 款字體",
+  "@customFontsCount": {"placeholders": {"count": {"type": "int"}}},
+  "customFontsLocalOnly": "匯入的字體只儲存在目前裝置，不會自動同步。",
+  "builtInFonts": "內建字體",
+  "importFont": "匯入字體",
+  "importingFont": "正在匯入字體…",
+  "customFontImported": "字體已匯入",
+  "customFontAlreadyImported": "該字體已經匯入，可以直接使用",
+  "customFontApplied": "字體設定已更新",
+  "customFontAppliedToApp": "已匯入並設為 App 字體",
+  "customFontAppliedToReader": "已匯入並設為閱讀字體",
+  "customFontImportUnsupported": "目前平台暫不支援持久化匯入字體。",
+  "customFontUnsupportedFormat": "請選擇 TTF 或 OTF 字體檔案。",
+  "customFontInvalid": "此檔案不是有效或支援的字體。",
+  "customFontTooLarge": "字體檔案不可超過 50 MB。",
+  "customFontReadFailed": "無法讀取字體檔案。",
+  "customFontLoadFailed": "無法載入此字體。",
+  "customFontStorageFailed": "無法將字體儲存到目前裝置。",
+  "customFontUnavailable": "字體檔案不可用，請刪除後重新匯入。",
+  "setAsAppFont": "設為 App 字體",
+  "setAsReaderFont": "設為閱讀字體",
+  "setAsBothFonts": "同時用於兩者",
+  "renameFont": "重新命名字體",
+  "deleteCustomFontTitle": "刪除「{name}」？",
+  "@deleteCustomFontTitle": {"placeholders": {"name": {"type": "String"}}},
+  "deleteCustomFontMessage": "字體檔案將從目前裝置刪除。",
+  "deleteCustomFontInUse": "此字體正在使用。刪除後，受影響的字體設定將恢復為預設值。",
+  "deleteAndReset": "刪除並恢復預設",
+  "settingsTelegramChannel": "Telegram",
+  "settingsTelegramSubtitle": "Telegram 官方頻道",
+  "settingsTelegramOpenFailed": "無法開啟 Telegram 連結",
+  "settingsQqChannel": "QQ 頻道",
+  "settingsQqChannelSubtitle": "開元閱讀 · OpenReading6",
+  "settingsQqChannelOpenFailed": "無法開啟 QQ 頻道邀請連結",
+  "languageSystem": "跟隨系統",
+  "languageChinese": "简体中文",
+  "languageEnglish": "English",
+  "languageJapanese": "日本語",
+  "languageTraditionalChinese": "繁體中文",
+  "typographySettings": "排版設定",
+  "fontFamilyLabel": "字體",
+  "fontSizeLabel": "字體大小",
+  "lineSpacingLabel": "行距",
+  "letterSpacingLabel": "字距",
+  "textAlignmentLabel": "對齊方式",
+  "textAlignmentNatural": "自然對齊",
+  "textAlignmentJustified": "左右對齊",
+  "firstLineIndentLabel": "首行縮排",
+  "paragraphSpacingLabel": "段落間距",
+  "pageMarginLabel": "頁面邊界",
+  "resetDefault": "恢復預設",
+  "ttsPanelTitle": "語音朗讀",
+  "ttsPreviewEffect": "預覽效果",
+  "ttsVolume": "音量",
+  "ttsPitch": "音調",
+  "ttsSpeed": "語速",
+  "ttsPreviousSentence": "上一句",
+  "ttsNextSentence": "下一句",
+  "ttsTimerStop": "定時停止",
+  "ttsTimerOff": "不限時",
+  "ttsTimerMinutes": "{minutes} 分鐘後停止",
+  "@ttsTimerMinutes": {
+    "placeholders": {
+      "minutes": {}
+    }
+  },
+  "ttsPlaying": "正在播放",
+  "ttsPaused": "已暫停",
+  "ttsStopped": "已停止",
+  "ttsPreviousSentenceFailed": "上一句失敗",
+  "ttsNextSentenceFailed": "下一句失敗",
+  "ttsEmptyContentError": "目前頁面內容為空",
+  "ttsPlaybackFailed": "播放失敗",
+  "ttsOperationFailed": "操作失敗",
+  "pageTurningMode": "翻頁模式",
+  "pageTurningSlide": "水平滑動",
+  "pageTurningScroll": "上下翻頁",
+  "tapZoneSettings": "點擊區域設定",
+  "tapZoneNextPage": "下一頁",
+  "tapZonePreviousPage": "上一頁",
+  "tapZoneMenu": "選單",
+  "tapZoneLegend": "圖例",
+  "tapZoneNextChapter": "下一章",
+  "tapZonePreviousChapter": "上一章",
+  "tapZoneNone": "無操作",
+  "tapZoneSettingsHint": "自訂九宮格每個區域的點擊動作",
+  "tapZoneChooseAction": "選擇操作",
+  "tapZoneMenuRequiredHint": "點擊任意區域修改動作。至少保留一個選單區域；全部移除時，中間區域會自動恢復為選單。",
+  "tapZoneReset": "恢復預設",
+  "highlightColor": "螢光筆顏色",
+  "highlightPreview": "預覽效果",
+  "highlightSampleText": "這是一段範例文字，",
+  "highlightSampleText2": "這部分將被標記顯示，",
+  "highlightSampleText3": "展示螢光筆效果。",
+  "colorLightBlue": "淺藍色",
+  "colorRed": "紅色",
+  "colorGreen": "綠色",
+  "colorPurple": "紫色",
+  "colorGold": "金色",
+  "colorOrange": "橙色",
+  "colorYellow": "黃色",
+  "colorDarkGreen": "深綠色",
+  "colorCustom": "自訂",
+  "noteTypeHighlight": "螢光標記",
+  "noteTypeUnderline": "底線",
+  "noteTypeNote": "筆記",
+  "noteTypeUnknown": "未知",
+  "bookFormatTXT": "TXT",
+  "bookFormatEPUB": "EPUB",
+  "bookFormatPDF": "PDF",
+  "importBook": "匯入書籍",
+  "importFromFiles": "從檔案匯入",
+  "importNoBooks": "還沒有匯入任何書籍",
+  "importSuccess": "書籍匯入成功",
+  "importFailed": "匯入失敗",
+  "importProcessing": "正在處理書籍...",
+  "author": "作者",
+  "progress": "進度",
+  "continueReading": "繼續閱讀",
+  "recentBooks": "最近閱讀",
+  "allBooks": "全部書籍",
+  "emptyLibrary": "書庫是空的",
+  "deleteBook": "刪除書籍",
+  "deleteBookConfirm": "確定要刪除這本書嗎？",
+  "bookDeleted": "書籍已刪除",
+  "userAgreement": "使用者條款",
+  "acceptAgreement": "我已閱讀並同意",
+  "declineAgreement": "不同意",
+  "statsToday": "今日",
+  "statsThisWeek": "本週",
+  "statsTotal": "總計",
+  "statsMinutes": "{minutes} 分鐘",
+  "@statsMinutes": {
+    "placeholders": {
+      "minutes": {}
+    }
+  },
+  "statsHours": "{hours} 小時",
+  "@statsHours": {
+    "placeholders": {
+      "hours": {}
+    }
+  },
+  "statsBooks": "{count} 本",
+  "@statsBooks": {
+    "placeholders": {
+      "count": {}
+    }
+  },
+  "statsConsecutiveDays": "連續閱讀",
+  "statsFocusTime": "專注時長",
+  "statsThisWeekTotal": "本週總計",
+  "statsKeepReading": "堅持每日閱讀",
+  "statsMaxSession": "最長單次",
+  "statsWeeklyTrend": "週閱讀趨勢",
+  "statsAchievements": "閱讀成就",
+  "readerToolbarMenu": "選單",
+  "readerToolbarTOC": "目錄",
+  "readerToolbarSettings": "設定",
+  "readerAddBookmark": "新增書籤",
+  "readerAddNote": "新增筆記",
+  "readerShare": "分享",
+  "bookmarkAdded": "已新增書籤",
+  "bookmarkRemoved": "已移除書籤",
+  "readerNavigationTitle": "閱讀導覽",
+  "readerNavigationPosition": "第 {current}/{total} 章",
+  "@readerNavigationPosition": {
+    "placeholders": {
+      "current": {"type": "int"},
+      "total": {"type": "int"}
+    }
+  },
+  "readerSearchChapters": "搜尋章節",
+  "readerBackToCurrentChapter": "回到目前章節",
+  "readerCurrentChapter": "目前",
+  "readerCurrentPosition": "目前位置",
+  "readerNoChapterResults": "找不到相關章節",
+  "readerNoChapterResultsHint": "請嘗試章節標題中的其他關鍵字。",
+  "readerNoBookmarks": "還沒有書籤",
+  "readerNoBookmarksHint": "閱讀時點擊右上角的書籤按鈕，即可儲存目前位置。",
+  "readerBookmarkRequiresShelf": "加入書架後才能儲存書籤",
+  "themeBlue": "海洋藍",
+  "themePurple": "神秘紫",
+  "themeGreen": "森林綠",
+  "themeOrange": "活力橙",
+  "themeRed": "熱情紅",
+  "themeCustom": "自訂",
+  "tapZoneLeftRight": "左/右",
+  "tapZoneLeftCenterRight": "左/中/右",
+  "homeTagline": "優雅閱讀",
+  "homeReadingStatsTitle": "閱讀統計",
+  "homeTodayReadingMoment": "今日閱讀時光",
+  "homeReadMinutesKeepGoing": "已閱讀 {minutes} 分鐘，繼續保持",
+  "@homeReadMinutesKeepGoing": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "homeTodayReadingJourneyStart": "開始今天的閱讀之旅吧",
+  "homeTodayReadingKeepRhythm": "已完成今日閱讀，保持節奏",
+  "homeTodayReadingPrompt": "今天也要留點時間給閱讀",
+  "homeTotalReadingHours": "累計閱讀 {hours} 小時",
+  "@homeTotalReadingHours": {
+    "placeholders": {
+      "hours": {
+        "type": "String"
+      }
+    }
+  },
+  "homeWeeklyReading": "本週閱讀",
+  "homeTotalReading": "累計閱讀",
+  "homeLibraryCount": "書架藏書",
+  "homeCollectionCount": "藏書",
+  "homeKeyMetrics": "關鍵指標",
+  "homeReadingRhythm": "閱讀節奏",
+  "homeAchievements": "閱讀成就",
+  "homeConsecutiveReading": "連續閱讀",
+  "homeConsecutiveReadingDesc": "保持每日閱讀習慣",
+  "homeFocusDuration": "專注時長",
+  "homeFocusDurationDesc": "單次最長閱讀時間",
+  "homeWeeklyTotal": "本週總計",
+  "homeWeeklyTotalDesc": "本週閱讀時長",
+  "homeRecentReading": "最近閱讀",
+  "homeWeeklyTrend": "本週閱讀趨勢",
+  "homeBarTooltipMinutes": "{minutes} 分鐘",
+  "@homeBarTooltipMinutes": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "unitMinute": "分鐘",
+  "unitHour": "小時",
+  "unitBook": "本",
+  "unitDay": "天",
+  "weekdayMonShort": "一",
+  "weekdayTueShort": "二",
+  "weekdayWedShort": "三",
+  "weekdayThuShort": "四",
+  "weekdayFriShort": "五",
+  "weekdaySatShort": "六",
+  "weekdaySunShort": "日",
+  "agreementTagline": "沉浸閱讀 · AI 助手 · 本機優先",
+  "agreementCardTitle": "使用者服務條款",
+  "agreementCardSubtitle": "請仔細閱讀以下內容",
+  "agreementWelcomeTitle": "歡迎使用開元閱讀",
+  "agreementWelcomeBody": "為確保你獲得穩定、可預期的閱讀體驗，請先閱讀並同意以下條款內容。",
+  "agreementFeatureFormatsTitle": "多格式支援",
+  "agreementFeatureFormatsBody": "EPUB、PDF、TXT、MOBI 等多種格式",
+  "agreementFeatureCustomizationTitle": "個人化閱讀",
+  "agreementFeatureCustomizationBody": "自訂字體、顏色、排版等閱讀體驗",
+  "agreementFeatureSyncTitle": "本機優先",
+  "agreementFeatureSyncBody": "書籍、進度與筆記儲存在目前裝置，由你掌控",
+  "agreementFeatureTtsTitle": "TTS 朗讀",
+  "agreementFeatureTtsBody": "智慧語音朗讀，解放雙眼，聽書更自由",
+  "agreementTapToAgreeHint": "點擊「同意並繼續」即表示您已閱讀並同意使用本應用程式",
+  "agreementExitApp": "離開應用程式",
+  "agreementAgreeAndContinue": "同意並繼續",
+  "agreementExitDialogContent": "如果您不同意使用者條款，將無法使用本應用程式。確定要離開嗎？",
+  "agreementConfirmExit": "確定離開",
+  "readerFileMissing": "書籍檔案不存在，請重新匯入",
+  "readerUnsupportedFormat": "該檔案格式暫不支援閱讀",
+  "readerKindleDrmProtected": "這本 Kindle 書籍受 DRM 加密保護，無法閱讀，僅支援無 DRM 的書籍",
+  "readerComicNoPages": "這本漫畫壓縮檔裡沒有找到圖片頁",
+  "readerComicCbrUnsupported": "這本 CBR 漫畫使用真實 RAR 壓縮，暫不支援閱讀，請先轉換為 CBZ 格式",
+  "readerComicArchiveUnsupported": "這本漫畫的壓縮格式暫不支援閱讀，請先轉換為 CBZ 格式",
+  "imageReaderSettings": "閱讀設定",
+  "imageReaderDirectionTitle": "閱讀方向",
+  "imageReaderDirectionLtr": "從左到右",
+  "imageReaderDirectionRtl": "從右到左（漫畫）",
+  "imageReaderJumpToPage": "跳轉頁碼",
+  "imageReaderBackgroundTitle": "頁面背景",
+  "imageReaderBackgroundBlack": "黑色",
+  "imageReaderBackgroundGray": "灰色",
+  "imageReaderBackgroundWhite": "白色",
+  "readerPdfLinuxUnsupported": "Linux 平台暫不支援 PDF 閱讀",
+  "bootstrapDataServiceFailed": "資料系統初始化失敗",
+  "bootstrapImageManagerFailed": "圖片管理器初始化失敗",
+  "homeFocusCompleted": "{minutes} 分鐘專注已完成，做得很好。",
+  "@homeFocusCompleted": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "homeDailyReadingGoal": "每日閱讀目標",
+  "homeAiAdviceSection": "AI 閱讀建議",
+  "homeTodayGlance": "今日速覽",
+  "homeTodayReadingPlan": "今日閱讀計畫",
+  "homeViewAll": "檢視全部",
+  "homeSyncingReadingPlan": "正在同步你的閱讀計畫",
+  "homeGoalDoneSuggestReview": "今日目標已完成，建議做一次閱讀回顧",
+  "homeRemainingToGoal": "還差 {minutes} 分鐘即可完成今日目標",
+  "@homeRemainingToGoal": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "homePickBookHint": "從書架選一本想繼續的書，先完成 1 個專注番茄鐘。",
+  "homeContinueBookHint": "優先繼續《{title}》，完成後再切換其他書籍。",
+  "@homeContinueBookHint": {
+    "placeholders": {
+      "title": {
+        "type": "String"
+      }
+    }
+  },
+  "homeTodayActionAdvice": "今日行動建議",
+  "homeProgressPercent": "{percent}% 進度",
+  "@homeProgressPercent": {
+    "placeholders": {
+      "percent": {
+        "type": "int"
+      }
+    }
+  },
+  "homeStreakDays": "連讀 {days} 天",
+  "@homeStreakDays": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "homeWeekMinutes": "本週 {minutes} 分鐘",
+  "@homeWeekMinutes": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "homePlanLoading": "計畫載入中",
+  "homeGoalMinutesPerDay": "目標 {minutes} 分鐘/天",
+  "@homeGoalMinutesPerDay": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "homeAiAdviceForYou": "AI 給你的閱讀建議",
+  "homeBasedOnBook": "根據《{title}》",
+  "@homeBasedOnBook": {
+    "placeholders": {
+      "title": {
+        "type": "String"
+      }
+    }
+  },
+  "homeTodayReadingMinutesLabel": "今日閱讀（分鐘）",
+  "homeTotalReadingMinutesLabel": "累計閱讀（分鐘）",
+  "homeGeneratingPlan": "正在產生今日閱讀計畫...",
+  "homeCompletedLabel": "完成",
+  "homeTodayGoalAchieved": "今日目標已達成",
+  "homeMinutesRemaining": "還差 {minutes} 分鐘",
+  "@homeMinutesRemaining": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "homeReadOfGoalMinutes": "已讀 {read} / {goal} 分鐘",
+  "@homeReadOfGoalMinutes": {
+    "placeholders": {
+      "read": {
+        "type": "int"
+      },
+      "goal": {
+        "type": "int"
+      }
+    }
+  },
+  "homeSessionsToFinishGoal": "約 {sessions} 次專注可完成今日目標",
+  "@homeSessionsToFinishGoal": {
+    "placeholders": {
+      "sessions": {
+        "type": "int"
+      }
+    }
+  },
+  "homeStreakLabel": "連續",
+  "homeWeekAchievedLabel": "週達標",
+  "homeFocusLabel": "專注",
+  "homeDaysCount": "{days}天",
+  "@homeDaysCount": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "homeTimesCount": "{times}次",
+  "@homeTimesCount": {
+    "placeholders": {
+      "times": {
+        "type": "int"
+      }
+    }
+  },
+  "homeFocusCountdown": "專注倒數 {time}",
+  "@homeFocusCountdown": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "homeGoLibraryRead": "去書庫閱讀",
+  "homeEndFocus": "結束專注",
+  "homeFocusMinutesButton": "專注 {minutes} 分鐘",
+  "@homeFocusMinutesButton": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "homeAdjustGoalMinutes": "調整目標：{minutes} 分鐘",
+  "@homeAdjustGoalMinutes": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "homeNoRecentReading": "暫無最近閱讀紀錄，去書庫開啟一本書開始閱讀吧。",
+  "homeReadingProgressPercent": "閱讀進度 {percent}%",
+  "@homeReadingProgressPercent": {
+    "placeholders": {
+      "percent": {
+        "type": "String"
+      }
+    }
+  },
+  "librarySearchHint": "搜尋書名、作者",
+  "libraryFilterAll": "全部 {count}",
+  "@libraryFilterAll": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "libraryFilterReading": "在讀 {count}",
+  "@libraryFilterReading": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "libraryFilterFinished": "已讀 {count}",
+  "libraryFilterTooltip": "按閱讀狀態篩選",
+  "@libraryFilterFinished": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "libraryNoMatchingBooks": "沒有符合的書籍",
+  "libraryNoReadingBooks": "目前沒有在讀書籍",
+  "libraryNoFinishedBooks": "目前沒有已讀書籍",
+  "libraryNoBooks": "暫無書籍",
+  "libraryProgressContinue": "{percent}% · 繼續閱讀",
+  "@libraryProgressContinue": {
+    "placeholders": {
+      "percent": {
+        "type": "int"
+      }
+    }
+  },
+  "libraryPageNumber": "第 {page} 頁",
+  "@libraryPageNumber": {
+    "placeholders": {
+      "page": {
+        "type": "int"
+      }
+    }
+  },
+  "libraryStartFromBeginning": "從頭開始",
+  "libraryBookInfo": "書籍資訊",
+  "libraryFormatAndPages": "{format} · {pages} 頁",
+  "@libraryFormatAndPages": {
+    "placeholders": {
+      "format": {
+        "type": "String"
+      },
+      "pages": {
+        "type": "int"
+      }
+    }
+  },
+  "libraryFormatAndChapters": "{format} · 共 {chapters} 章",
+  "@libraryFormatAndChapters": {
+    "placeholders": {
+      "format": {
+        "type": "String"
+      },
+      "chapters": {
+        "type": "int"
+      }
+    }
+  },
+  "libraryRenameBook": "重新命名",
+  "libraryRenameBookHint": "修改書名，本機檔案將同步重新命名",
+  "libraryRenameBookSuccess": "已重新命名",
+  "libraryRenameBookFailed": "重新命名失敗",
+  "libraryCustomCover": "自訂封面",
+  "libraryCustomCoverHint": "選擇一張圖片作為這本書的封面",
+  "libraryCustomCoverSuccess": "封面已更新",
+  "libraryCoverUnsupportedFormat": "不支援的圖片格式",
+  "libraryCoverFileTooLarge": "圖片超過 20 MB 大小限制",
+  "libraryCoverReadFailed": "無法讀取所選圖片",
+  "libraryCoverSaveFailed": "封面儲存失敗",
+  "libraryResetCover": "還原預設封面",
+  "libraryResetCoverHint": "移除自訂封面，還原原本的封面",
+  "libraryResetCoverSuccess": "已還原預設封面",
+  "libraryExportBook": "匯出書籍",
+  "libraryExportOriginalHint": "將原始檔案複製到裝置上的其他位置",
+  "libraryExportDownloadedTxtHint": "匯出下載後產生的 TXT 檔案",
+  "bookExportSuccess": "已匯出到 {location}",
+  "@bookExportSuccess": {"placeholders": {"location": {"type": "String"}}},
+  "bookExportSourceMissing": "書籍檔案不存在，無法匯出",
+  "bookExportUnsupported": "目前平台暫不支援匯出書籍",
+  "bookExportFailed": "書籍匯出失敗",
+  "bookExportInProgress": "正在匯出書籍…",
+  "incomingBooksImporting": "正在從其他應用程式匯入書籍…",
+  "incomingBooksNoBookFile": "分享內容中沒有可匯入的書籍檔案",
+  "incomingBooksPermissionExpired": "檔案存取權限已失效，請重新分享或開啟檔案",
+  "incomingBooksUnsupportedFormat": "暫不支援這種書籍格式",
+  "incomingBooksFileTooLarge": "檔案超過 100 MB 匯入限制",
+  "incomingBooksTooManyFiles": "一次分享的書籍檔案過多，請分批加入",
+  "incomingBooksSomeFilesSkipped": "部分檔案無法識別，已繼續處理其餘書籍",
+  "incomingBooksContentMismatch": "檔案格式與實際內容不相符",
+  "incomingBooksImportFailed": "從其他應用程式匯入書籍失敗",
+  "libraryDeleteBookHint": "將永久刪除此書籍",
+  "libraryBookTitle": "書名",
+  "libraryFormat": "格式",
+  "libraryPagesCount": "{pages} 頁",
+  "@libraryPagesCount": {
+    "placeholders": {
+      "pages": {
+        "type": "int"
+      }
+    }
+  },
+  "totalChapters": "總章節數",
+  "currentChapter": "目前章節",
+  "libraryChaptersCount": "{chapters} 章",
+  "@libraryChaptersCount": {
+    "placeholders": {
+      "chapters": {
+        "type": "int"
+      }
+    }
+  },
+  "libraryClose": "關閉",
+  "libraryConfirmDeleteTitle": "確認刪除",
+  "libraryDeleteBookMessage": "確定要刪除《{title}》嗎？檔案將從裝置中永久移除。",
+  "@libraryDeleteBookMessage": {
+    "placeholders": {
+      "title": {
+        "type": "String"
+      }
+    }
+  },
+  "libraryDeletingBook": "正在刪除《{title}》...",
+  "@libraryDeletingBook": {
+    "placeholders": {
+      "title": {
+        "type": "String"
+      }
+    }
+  },
+  "libraryBookDeletedToast": "《{title}》已刪除",
+  "@libraryBookDeletedToast": {
+    "placeholders": {
+      "title": {
+        "type": "String"
+      }
+    }
+  },
+  "libraryDeleteFailed": "刪除失敗：{error}",
+  "@libraryDeleteFailed": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "libraryReadingBadge": "在讀",
+  "libraryDeletingBookFile": "刪除書籍檔案...",
+  "libraryDeletingCoverImage": "刪除封面圖片...",
+  "libraryCleaningDatabase": "清理資料庫紀錄...",
+  "libraryDeleteComplete": "刪除完成",
+  "readerPrefaceTitle": "內文前",
+  "readerModeHorizontalPage": "無動畫",
+  "readerModeVerticalScrollHint": "預先分頁後上下連續滑動，左右滑動切換章節",
+  "readerModeWholeBookScrollHint": "全書預先分頁後組成可定位的縱向列表",
+  "readerScrollByChapterTitle": "按章節捲動",
+  "readerScrollByChapterOnHint": "單章內按頁上下滑動，左右滑動切換章節",
+  "readerScrollByChapterOffHint": "所有章節按頁連接為可定位的縱向列表",
+  "readerModeHorizontalPageHint": "點擊左側上一頁，點擊右側下一頁",
+  "readerModeHorizontalSlideHint": "頁面跟隨手指橫向移動並吸附翻頁",
+  "readerModeCoverSlide": "覆蓋翻頁",
+  "readerModeCoverSlideHint": "目前頁面向左滑出，底下的下一頁逐漸露出",
+  "readerModePageCurl": "仿真翻頁",
+  "readerModePageCurlHint": "左右拖動捲起頁面，放開後完成翻頁或回彈",
+  "readerFontSizeValue": "字體大小  {size}",
+  "@readerFontSizeValue": {
+    "placeholders": {
+      "size": {
+        "type": "int"
+      }
+    }
+  },
+  "readerHorizontalMarginValue": "左右頁面邊界  {margin}",
+  "@readerHorizontalMarginValue": {
+    "placeholders": {
+      "margin": {
+        "type": "int"
+      }
+    }
+  },
+  "readerHorizontalMarginLabel": "左右頁邊距",
+  "readerTopMarginLabel": "上頁邊距",
+  "readerBottomMarginLabel": "下頁邊距",
+  "readerVerticalMarginLabel": "上下頁邊距",
+  "readerVerticalMarginValue": "上下頁面邊界  {margin}",
+  "@readerVerticalMarginValue": {
+    "placeholders": {
+      "margin": {
+        "type": "int"
+      }
+    }
+  },
+  "readerChapterCount": "{count} 章",
+  "@readerChapterCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "readerChapterFallback": "第 {number} 章",
+  "@readerChapterFallback": {
+    "placeholders": {
+      "number": {
+        "type": "int"
+      }
+    }
+  },
+  "readerOpenFailed": "開啟失敗：{error}",
+  "@readerOpenFailed": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "readerNoContent": "書籍沒有可顯示的內文",
+  "readerStatusPaged": "第 {chapter}/{chapterCount} 章 · {page}/{pageCount} 頁",
+  "@readerStatusPaged": {
+    "placeholders": {
+      "chapter": {
+        "type": "int"
+      },
+      "chapterCount": {
+        "type": "int"
+      },
+      "page": {
+        "type": "int"
+      },
+      "pageCount": {
+        "type": "int"
+      }
+    }
+  },
+  "readerStatusScroll": "第 {chapter}/{chapterCount} 章 · 縱向捲動",
+  "@readerStatusScroll": {
+    "placeholders": {
+      "chapter": {
+        "type": "int"
+      },
+      "chapterCount": {
+        "type": "int"
+      }
+    }
+  },
+  "importPreparing": "準備匯入...",
+  "importFailedWithError": "匯入失敗：{error}",
+  "@importFailedWithError": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "importLocalFile": "本機檔案",
+  "settingsAiTempHintMinimax": "Temperature：MiniMax 建議 0.01 ~ 1.00",
+  "settingsAiCustomConfigTitle": "自訂 AI 設定",
+  "settingsAiCurrentProvider": "目前服務商：{provider}",
+  "@settingsAiCurrentProvider": {
+    "placeholders": {
+      "provider": {
+        "type": "String"
+      }
+    }
+  },
+  "settingsAiTempErrorMinimax": "MiniMax 的 Temperature 必須在 0.01 ~ 1.00 之間",
+  "settingsAiTempErrorOutOfRange": "Temperature 超出範圍，請按提示填寫",
+  "settingsApply": "套用",
+  "settingsAiCustomApplied": "已套用自訂參數，記得儲存設定",
+  "settingsAiApiKeyRequired": "API Key 不能為空",
+  "settingsAiModelRequired": "Model 不能為空",
+  "settingsAiBaseUrlInvalid": "Base URL 必須是合法的 http/https 位址",
+  "settingsAiSettingsSaved": "AI 設定已儲存",
+  "settingsSaveFailed": "儲存失敗：{error}",
+  "@settingsSaveFailed": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "settingsVolumeKeyTurnTitle": "音量鍵翻頁",
+  "settingsVolumeKeyTurnSubtitle": "在非捲動翻頁模式下使用音量鍵翻頁",
+  "settingsAutoResumeReadingTitle": "啟動時回到上次閱讀",
+  "settingsAutoResumeReadingSubtitle": "閱讀中退出應用程式後，下次啟動自動回到上次閱讀位置",
+  "settingsShowStatusBarTitle": "閱讀時顯示系統狀態列",
+  "settingsShowStatusBarOnSubtitle": "已隱藏閱讀頁電量/時間 UI",
+  "settingsShowStatusBarOffSubtitle": "使用閱讀頁電量/時間 UI",
+  "readerTopBarStyleTitle": "頂部資訊",
+  "readerTopBarStyleSystem": "系統狀態列",
+  "readerTopBarStyleSystemHint": "顯示系統時間、訊號與電量",
+  "readerTopBarStyleReader": "閱讀資訊列",
+  "readerTopBarStyleReaderHint": "顯示時間、章節標題與電量",
+  "readerTopBarStyleFloating": "靈動資訊列",
+  "readerTopBarStyleFloatingHint": "在狀態列位置顯示時間與電量，不佔用內文空間",
+  "readerTopBarStyleHidden": "完全沉浸",
+  "readerTopBarStyleHiddenHint": "頂部不顯示任何資訊",
+  "settingsAiAssistantTitle": "AI 閱讀助手",
+  "settingsSystemSettingsTitle": "系統設定",
+  "settingsSectionAppearanceFonts": "外觀與字體",
+  "settingsSectionDataServices": "資料與服務",
+  "settingsSectionGeneral": "通用",
+  "settingsSectionAboutSupport": "關於與支持",
+  "settingsKeepScreenOnTitle": "保持螢幕恆亮",
+  "settingsKeepScreenOnSubtitle": "閱讀時防止螢幕自動關閉",
+  "settingsAutoSaveTitle": "自動儲存",
+  "settingsAutoSaveSubtitle": "自動儲存閱讀進度",
+  "settingsHelpPlaceholder": "這裡可以放說明資訊",
+  "settingsAiConfigured": "AI 已設定",
+  "settingsAiNotConfigured": "尚未設定 API Key",
+  "settingsAiReadyToUse": "可直接使用",
+  "settingsAiPendingConfig": "待設定",
+  "settingsAiCurrentPreset": "目前預設組合：{preset}",
+  "@settingsAiCurrentPreset": {
+    "placeholders": {
+      "preset": {
+        "type": "String"
+      }
+    }
+  },
+  "settingsAiCurrentCustom": "目前設定：自訂 · {model}",
+  "@settingsAiCurrentCustom": {
+    "placeholders": {
+      "model": {
+        "type": "String"
+      }
+    }
+  },
+  "settingsAiPresetIntro": "已內建常用服務商和模型，通常只需要選擇預設組合並輸入 API Key。",
+  "settingsAiProviderLabel": "服務商",
+  "settingsAiPresetHint": "選擇預設模型",
+  "settingsAiPresetLabel": "預設模型",
+  "settingsAiCustomButton": "自訂",
+  "settingsAiPresetSelectedHint": "選擇預設組合後只需輸入 API Key 即可使用。",
+  "settingsAiCustomActiveHint": "目前使用自訂參數，可隨時切回預設組合。",
+  "settingsAiApiKeyHint": "輸入後即可啟用目前預設組合",
+  "settingsShow": "顯示",
+  "settingsHide": "隱藏",
+  "settingsAiSaving": "儲存中...",
+  "settingsAiSaveConfig": "儲存 AI 設定",
+  "settingsPageIntro": "只保留真正影響閱讀體驗的選項。",
+  "settingsSupportDevelopmentTitle": "支持開發",
+  "firstHomeSupportNow": "立即支持",
+  "firstHomeSupportLater": "再說吧",
+  "firstHomeSupportPaperSemanticLabel": "開元閱讀開發者的自願支持說明",
+  "settingsSupportDevelopmentCardTitle": "支持持續開發",
+  "settingsSupportDevelopmentCardSubtitle": "開發與維護投入了大量時間和心力。如果開元閱讀對你有幫助，歡迎自願捐贈支持。",
+  "settingsDonationAction": "微信捐贈",
+  "settingsAlipayDonationAction": "支付寶捐贈",
+  "settingsDonationDialogTitle": "微信捐贈",
+  "settingsDonationDialogHint": "請使用微信掃描二維碼。感謝你對持續開發的支持。",
+  "settingsAlipayDonationDialogTitle": "支付寶捐贈",
+  "settingsAlipayDonationDialogHint": "請使用支付寶掃描二維碼。感謝你對持續開發的支持。",
+  "settingsDonationVoluntaryNotice": "捐贈完全自願，不影響任何功能，也不構成購買或服務承諾。",
+  "settingsDonationQrCodeLabel": "微信捐贈二維碼",
+  "settingsAlipayDonationQrCodeLabel": "支付寶捐贈二維碼",
+  "settingsAiSwipeHint": "左右滑動選擇模型，點擊切換，長按編輯或刪除。",
+  "settingsAiLegacyIntro": "選擇服務商和模型，填寫 API Key 即可。其餘參數保持預設。",
+  "settingsAiModelLabel": "模型",
+  "settingsAiUsingCustomParams": "正在使用自訂模型參數",
+  "settingsAiApiKeyStoredLocally": "僅儲存在目前裝置",
+  "settingsAiSaveAndEnable": "儲存並啟用",
+  "settingsAboutTagline": "開源、跨平台、專注閱讀",
+  "settingsVersionLabel": "版本",
+  "changelogHistoryTitle": "歷史更新日誌",
+  "changelogHistorySubtitle": "查看各版本更新內容",
+  "openSourceLicensesTitle": "開源授權",
+  "openSourceLicensesSubtitle": "查看應用程式、內建字型與第三方元件的授權",
+  "openSourceLicensesIntro": "以下授權文字隨應用程式離線提供。Open Reading、內建字型及第三方軟體分別適用各自的授權條款。",
+  "openSourceProjectSection": "專案授權",
+  "openSourceLegacyLicenseTitle": "歷史版本",
+  "openSourceFontsSection": "內建字型",
+  "openSourceDependenciesSection": "第三方軟體",
+  "openSourceDependenciesTitle": "Flutter 與 Dart 相依套件",
+  "openSourceDependenciesSubtitle": "查看由 Flutter 自動彙整的第三方軟體授權",
+  "openSourceLicenseLegalese": "Open Reading 與第三方元件分別適用各自的授權條款。",
+  "openSourceLicenseLoadFailed": "無法載入授權文字。",
+  "changelogPageTitle": "版本更新記錄",
+  "changelogCurrentVersion": "目前版本",
+  "changelogLoadFailed": "更新日誌載入失敗",
+  "settingsMaintainerLabel": "維護者",
+  "settingsLicenseLabel": "授權條款",
+  "settingsViewSourceSubtitle": "檢視開源專案",
+  "settingsJoinQqGroup": "加入 QQ 群",
+  "settingsQqOpenFailed": "無法開啟 QQ，請確認已安裝 QQ",
+  "contributorsTitle": "貢獻者",
+  "contributorsSubtitle": "感謝每一位讓 Open Reading 變得更好的人",
+  "contributorsOpenProfileFailed": "無法開啟貢獻者主頁",
+  "contributorsEmpty": "暫時沒有可顯示的貢獻者",
+  "contributorsLoadFailed": "貢獻者載入失敗，請檢查網路後重試",
+  "settingsDarkModeTitle": "夜間模式",
+  "settingsCurrentValue": "目前：{value}",
+  "@settingsCurrentValue": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "settingsUiStyleTitle": "玻璃效果",
+  "settingsGlassEffectSubtitle": "開啟半透明、背景模糊和懸浮層次效果",
+  "settingsHideNavigationLabelsTitle": "隱藏底部導覽文字",
+  "settingsHideNavigationLabelsSubtitle": "開啟後，手機底部導覽列僅顯示圖示",
+  "settingsFloatingNavigationTitle": "懸浮導覽列",
+  "settingsFloatingNavigationSubtitle": "調整顯示方式與入口順序",
+  "floatingNavigationPreviewTitle": "預覽",
+  "floatingNavigationDisplayModeTitle": "顯示方式",
+  "floatingNavigationIconsOnly": "僅圖示",
+  "floatingNavigationIconsAndLabels": "圖示和文字",
+  "floatingNavigationOrderTitle": "導覽順序",
+  "floatingNavigationOrderHint": "長按右側拖曳柄調整順序",
+  "floatingNavigationSyncHint": "排序會同步到橫向滑動頁面與寬螢幕側邊導覽",
+  "floatingNavigationResetOrder": "恢復預設順序",
+  "floatingNavigationResetDone": "已恢復預設順序",
+  "settingsLibraryLayoutTitle": "書庫版面",
+  "settingsLibraryLayoutSubtitle": "選擇卡片或緊湊網格，並按需調整網格資訊",
+  "settingsLibraryLayoutCard": "卡片",
+  "settingsLibraryLayoutGrid": "網格",
+  "settingsLibraryGridColumnsTitle": "手機每列封面數量",
+  "settingsLibraryGridTwoColumns": "2 列",
+  "settingsLibraryGridThreeColumns": "3 列",
+  "settingsLibraryGridShowDetailsTitle": "顯示書名和進度",
+  "settingsLibraryGridShowDetailsSubtitle": "在每本封面下顯示單行書名和精簡進度列",
+  "settingsAccentFollowTheme": "強調色：跟隨主題",
+  "settingsAccentValue": "強調色：{name}",
+  "@settingsAccentValue": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "settingsAppThemeTitle": "應用程式主題",
+  "settingsCurrentThemeSummary": "目前：{theme} · {accent}",
+  "@settingsCurrentThemeSummary": {
+    "placeholders": {
+      "theme": {
+        "type": "String"
+      },
+      "accent": {
+        "type": "String"
+      }
+    }
+  },
+  "settingsFollowAppTheme": "跟隨應用程式主題",
+  "settingsAccentColorTitle": "強調色",
+  "settingsThemeModeSystemHint": "跟隨系統外觀自動切換",
+  "settingsThemeModeLightHint": "一律使用淺色外觀",
+  "settingsThemeModeDarkHint": "一律使用深色外觀",
+  "settingsSelectAppTheme": "選擇應用程式主題",
+  "settingsDone": "完成",
+  "settingsAccentColorAdvice": "強調色會同時產生整套 Material 3 淺色與深色色板。",
+  "settingsAccentPresetColors": "快速顏色",
+  "settingsAccentCustomColor": "自訂顏色",
+  "settingsAccentSaturationBrightness": "飽和度與亮度色盤",
+  "settingsAccentHue": "色相",
+  "settingsAccentPreview": "主題色板預覽",
+  "settingsAccentFollowThemeOption": "跟隨主題",
+  "settingsAccentFollowThemeDesc": "使用目前應用程式主題的預設強調色",
+  "settingsAboutTitle": "關於應用程式",
+  "settingsAppName": "拾頁",
+  "settingsAuthor": "維護者：小元Niki",
+  "settingsGithubRepo": "GitHub 倉庫",
+  "settingsNewYearGreeting": "一個專注、克制、可自由修改的跨平台閱讀器。",
+  "settingsGithubOpenFailed": "無法開啟 GitHub 連結",
+  "settingsOfficialWebsite": "官方網站",
+  "settingsOfficialWebsiteSubtitle": "從 open.xxread.top 下載並安裝",
+  "settingsOfficialWebsiteOpenFailed": "無法開啟官方網站",
+  "updateCheckNow": "檢查更新",
+  "updateCheckNowSubtitle": "從 GitHub 或官網取得最新版本",
+  "updateAvailableTitle": "發現新版本",
+  "updateVersionSummary": "目前版本：{currentVersion}\n最新版本：{latestVersion}",
+  "updateNotesTitle": "更新說明",
+  "updateNotesEmpty": "此版本暫未提供更新說明。",
+  "updateLater": "稍後",
+  "updateSkipVersion": "略過此版本",
+  "updateGoToDownload": "前往更新",
+  "updateFromGithub": "從 GitHub 更新",
+  "updateFromWebsite": "前往官網更新",
+  "updateFromWebsiteInstall": "從官網下載並安裝",
+  "updateWebsiteUnavailable": "官網暫未提供適用於此裝置的安裝檔",
+  "updateDownloadingTitle": "正在下載更新",
+  "updateDownloadProgress": "已下載 {percent}%",
+  "@updateDownloadProgress": {
+    "placeholders": {
+      "percent": {"type": "int"}
+    }
+  },
+  "updatePreparingInstaller": "正在驗證安裝檔並準備系統安裝程式…",
+  "updateDownloadFailed": "無法從官網下載更新，請稍後再試",
+  "updateIntegrityFailed": "安裝檔完整性驗證失敗，已刪除此下載",
+  "updateInstallFailed": "無法安裝更新，請檢查安裝未知應用程式權限後再試",
+  "updateAlreadyLatest": "目前已是最新版本",
+  "updateCheckFailed": "檢查更新失敗，請稍後再試",
+  "updateOpenFailed": "無法開啟連結",
+  "settingsIosOnlyFeature": "該功能僅支援 iOS",
+  "settingsIosSyncResult": "已同步到{storage}\n書籍 {books} 本，檔案複製 {files} 個",
+  "@settingsIosSyncResult": {
+    "placeholders": {
+      "storage": {
+        "type": "String"
+      },
+      "books": {
+        "type": "int"
+      },
+      "files": {
+        "type": "int"
+      }
+    }
+  },
+  "settingsRestartRequiredReason": "此設定變更需要重新啟動應用程式才能完全生效。",
+  "settingsRestartRequiredTitle": "需要重新啟動應用程式",
+  "settingsRestartPrompt": "{reason}\n\n是否現在重新啟動應用程式？",
+  "@settingsRestartPrompt": {
+    "placeholders": {
+      "reason": {
+        "type": "String"
+      }
+    }
+  },
+  "settingsRestartLater": "稍後",
+  "settingsRestartNow": "重新啟動",
+  "statsDetailedTitle": "詳細統計",
+  "statsRange7Days": "7天",
+  "statsRange30Days": "30天",
+  "statsRange90Days": "90天",
+  "statsRange1Year": "1年",
+  "statsRangeAll": "全部",
+  "statsTabOverview": "總覽",
+  "statsTabCharts": "圖表",
+  "statsTabBooks": "書籍",
+  "statsTabAchievements": "成就",
+  "statsReadingOverview": "閱讀總覽",
+  "statsCumulativeHours": "累計 {hours} 小時",
+  "@statsCumulativeHours": {
+    "placeholders": {
+      "hours": {}
+    }
+  },
+  "statsStreakEncouragement": "保持節奏，你已經連續閱讀 {days} 天",
+  "@statsStreakEncouragement": {
+    "placeholders": {
+      "days": {}
+    }
+  },
+  "statsTotalDuration": "總時長",
+  "statsAvgSession": "平均單次",
+  "statsDaysCount": "{count} 天",
+  "@statsDaysCount": {
+    "placeholders": {
+      "count": {}
+    }
+  },
+  "statsNoData": "暫無資料",
+  "statsPeriodEarlyMorning": "清晨 05:00-08:59",
+  "statsPeriodMorning": "上午 09:00-11:59",
+  "statsPeriodAfternoon": "下午 12:00-17:59",
+  "statsPeriodEvening": "晚上 18:00-21:59",
+  "statsPeriodLateNight": "深夜 22:00-04:59",
+  "statsTotalReadingTime": "總閱讀時長",
+  "statsTotalPagesRead": "總閱讀頁數",
+  "statsBooksReadCount": "閱讀書籍數",
+  "statsUnitPage": "頁",
+  "statsTodayProgress": "今日閱讀進度",
+  "statsMinutesOfTarget": "{current} / {target} 分鐘",
+  "@statsMinutesOfTarget": {
+    "placeholders": {
+      "current": {},
+      "target": {}
+    }
+  },
+  "statsPagesRead": "閱讀頁數",
+  "statsPagesOfTarget": "{current} / {target} 頁",
+  "@statsPagesOfTarget": {
+    "placeholders": {
+      "current": {},
+      "target": {}
+    }
+  },
+  "statsReadingHabits": "閱讀習慣分析",
+  "statsBestReadingPeriod": "最佳閱讀時段",
+  "statsAvgSessionReading": "平均單次閱讀",
+  "statsMaxStreakDays": "最高連讀天數",
+  "statsFocusScore": "閱讀專注度",
+  "statsBookCount": "書籍數量",
+  "statsTrendAnalysis": "閱讀趨勢分析",
+  "statsAxisMinutes": "{value}分",
+  "@statsAxisMinutes": {
+    "placeholders": {
+      "value": {}
+    }
+  },
+  "statsAxisPages": "{value}頁",
+  "@statsAxisPages": {
+    "placeholders": {
+      "value": {}
+    }
+  },
+  "statsAxisBooks": "{value}本",
+  "@statsAxisBooks": {
+    "placeholders": {
+      "value": {}
+    }
+  },
+  "statsAxisHour": "{hour}時",
+  "@statsAxisHour": {
+    "placeholders": {
+      "hour": {}
+    }
+  },
+  "statsTimeDistribution": "閱讀時間分布",
+  "statsFormatDistribution": "書籍格式分布",
+  "statsCompleted": "已完成",
+  "statsInProgress": "閱讀中",
+  "statsDurationRanking": "閱讀時長排行",
+  "statsProgressRanking": "閱讀進度排行",
+  "statsPagesCount": "{count}頁",
+  "@statsPagesCount": {
+    "placeholders": {
+      "count": {}
+    }
+  },
+  "statsSessionCount": "{count} 次工作階段",
+  "@statsSessionCount": {
+    "placeholders": {
+      "count": {}
+    }
+  },
+  "statsAchievementsSummary": "已獲得 {achieved} 個成就，還有 {remaining} 個等待解鎖",
+  "@statsAchievementsSummary": {
+    "placeholders": {
+      "achieved": {},
+      "remaining": {}
+    }
+  },
+  "statsAchievementFirstReadTitle": "初次閱讀",
+  "statsAchievementFirstReadDesc": "完成第一次閱讀紀錄",
+  "statsAchievementNoviceTitle": "閱讀新手",
+  "statsAchievementNoviceDesc": "累計閱讀時長達到 10 小時",
+  "statsAchievementBookwormTitle": "書蟲",
+  "statsAchievementBookwormDesc": "累計閱讀時長達到 100 小時",
+  "statsAchievementExpertTitle": "閱讀達人",
+  "statsAchievementExpertDesc": "連續閱讀 7 天",
+  "statsAchievementOceanTitle": "知識海洋",
+  "statsAchievementOceanDesc": "閱讀頁數達到 10000 頁",
+  "statsAchievementScholarTitle": "博學者",
+  "statsAchievementScholarDesc": "閱讀 10 本不同的書籍",
+  "statsAchievementMarathonTitle": "閱讀馬拉松",
+  "statsAchievementMarathonDesc": "連續閱讀 30 天",
+  "statsAchievementFocusTitle": "專注達人",
+  "statsAchievementFocusDesc": "累計閱讀時長達到 500 小時",
+  "statsProgressPercent": "進度：{percent}%",
+  "@statsProgressPercent": {
+    "placeholders": {
+      "percent": {}
+    }
+  },
+  "statsGoalProgress": "閱讀目標進度",
+  "statsMonthlyReadingTime": "本月閱讀時長",
+  "statsWeeklyReadingTime": "本週閱讀時長",
+  "statsAvgDailyPages7d": "近 7 天日均頁數",
+  "statsHoursCount": "{count}小時",
+  "@statsHoursCount": {
+    "placeholders": {
+      "count": {}
+    }
+  },
+  "statsSpeedTrend": "閱讀速度趨勢",
+  "statsAvgSpeed": "平均：{speed}頁/分鐘",
+  "@statsAvgSpeed": {
+    "placeholders": {
+      "speed": {}
+    }
+  },
+  "statsReadingContinuity": "閱讀連續性",
+  "statsCurrentStreak": "目前連讀：{days}天",
+  "@statsCurrentStreak": {
+    "placeholders": {
+      "days": {}
+    }
+  },
+  "statsHeatmapLess": "少",
+  "statsHeatmapMore": "多",
+  "statsWeekNumber": "第{week}週",
+  "@statsWeekNumber": {
+    "placeholders": {
+      "week": {}
+    }
+  },
+  "bookSourceAddToShelf": "加入書架",
+  "bookSourceAddOnline": "線上加入書架",
+  "bookSourceAddOnlineHint": "不下載全書，閱讀時從書源取得並快取章節",
+  "bookSourceDownloadLocal": "下載到本機",
+  "bookSourceDownloadLocalHint": "下載全部章節並作為本機 TXT 加入書架",
+  "bookSourceAddedOnline": "已線上加入書架",
+  "bookSourceAlreadyOnShelf": "這本書已在書架中",
+  "bookSourceDownloading": "正在下載到本機",
+  "bookSourceFetchingCatalog": "正在取得章節目錄…",
+  "bookSourceDownloadProgress": "{completed}/{total} 章",
+  "bookSourceDownloadComplete": "下載完成，已加入本機書架",
+  "bookSourceDownloadConverted": "下載完成，已轉為本機書籍",
+  "bookSourceDownloadFailed": "下載失敗：{error}",
+  "downloadTasksTitle": "下載任務",
+  "downloadTasksEmpty": "沒有下載任務",
+  "downloadTaskQueued": "等待下載",
+  "downloadTaskDownloading": "正在背景下載",
+  "downloadTaskCompleted": "下載完成",
+  "downloadTaskFailed": "下載失敗",
+  "downloadTaskCancelled": "已取消",
+  "downloadTaskCancel": "取消任務",
+  "downloadContinueInBackground": "背景繼續下載",
+  "downloadRunningInBackground": "下載任務已在背景繼續",
+  "bookSourceExitAddTitle": "加入書架？",
+  "bookSourceExitAddMessage": "要把《{title}》作為線上書籍加入書架嗎？閱讀進度會繼續保留。",
+  "bookSourceNotNow": "暫不",
+  "bookSourceOnlineBadge": "線上",
+  "bookSourceOnlineDataBroken": "線上書籍資訊損壞：{error}",
+  "readerThemeTitle": "閱讀主題",
+  "readerThemeDescription": "僅改變閱讀頁面與閱讀控制列，不影響應用程式主題",
+  "readerSettingsTabTheme": "主題",
+  "readerSettingsTabText": "文字",
+  "readerSettingsTabLayout": "版式",
+  "readerSettingsTabPaging": "翻頁",
+  "readerSettingsAdvancedTypography": "進階排版",
+  "readerThemeDay": "白天",
+  "readerThemeFollowSystem": "跟隨系統",
+  "readerThemeMist": "晨霧",
+  "readerThemeGreen": "護眼",
+  "readerThemeRose": "豆沙",
+  "readerThemeNavy": "深藍",
+  "readerThemeNight": "黑夜",
+  "readerThemePureBlack": "純黑",
+  "readerThemeParchment": "牛皮紙",
+  "readerThemeCustom": "自訂",
+  "readerPullBookmarkTitle": "下拉書籤",
+  "readerPullBookmarkHint": "從螢幕頂部向下拉，放開即可加入或移除目前頁書籤",
+  "readerPullBookmarkAddHint": "繼續下拉以加入書籤",
+  "readerPullBookmarkRemoveHint": "繼續下拉以移除書籤",
+  "readerPullBookmarkReleaseHint": "放開完成",
+  "readerTapAnimationTitle": "點擊動畫",
+  "readerTapAnimationHint": "左右點擊時使用目前翻頁模式的動畫；關閉後立即刷新頁面",
+  "readerTabletTwoPageTitle": "平板雙頁版面",
+  "readerTabletTwoPageHint": "橫向時並排顯示左右兩頁；關閉後一律使用單頁版面",
+  "readerCustomThemeTitle": "自訂閱讀主題",
+  "readerCustomThemeReset": "重設",
+  "readerCustomThemeColors": "主題顏色",
+  "readerCustomThemeTextColor": "字體顏色",
+  "readerCustomThemeTextColorHint": "正文、標題與主要圖示",
+  "readerCustomThemeBackground": "閱讀背景",
+  "readerCustomThemeBackgroundHint": "紙張與閱讀畫布的底色",
+  "readerCustomThemeControlBar": "控制列顏色",
+  "readerCustomThemeControlBarHint": "頂部、底部控制列與設定面板",
+  "readerCustomThemeContrastGood": "正文與背景對比清晰，適合長時間閱讀",
+  "readerCustomThemeContrastLow": "正文與背景對比較低，可能容易疲勞",
+  "readerCustomThemeSave": "儲存並使用",
+  "readerCustomThemePreview": "即時預覽",
+  "readerCustomThemePreviewChapter": "第一章 · 風從書頁間吹過",
+  "readerCustomThemePreviewBody": "這是你的閱讀空間。調整字體、紙張和控制列的顏色，讓每一頁都更貼近自己的閱讀習慣。",
+  "readerCustomThemeHexInvalid": "請輸入 6 位十六進位顏色，例如 #F6F0E4",
+  "readerCustomThemeHexLabel": "十六進位顏色",
+  "readerCustomThemesTitle": "自訂閱讀主題",
+  "readerCustomThemeAdd": "新增主題",
+  "readerCustomThemeReorderHint": "長按右側拖曳柄調整順序，排序會同步到閱讀設定的主題列表。",
+  "readerCustomThemeUse": "使用選取的主題",
+  "readerCustomThemeDeleteTitle": "刪除閱讀主題？",
+  "readerCustomThemeDeleteMessage": "「{name}」將從主題列表中刪除，已儲存的背景圖片也會一併清理。",
+  "readerCustomThemeEmptyTitle": "還沒有自訂主題",
+  "readerCustomThemeEmptyHint": "新增一套屬於自己的文字、紙張與背景圖片組合。",
+  "readerCustomThemeNewTitle": "新增閱讀主題",
+  "readerCustomThemeEditTitle": "編輯閱讀主題",
+  "readerCustomThemeName": "主題名稱",
+  "readerCustomThemeNameHint": "例如：雨夜、午後紙張",
+  "readerCustomThemeBackgroundImage": "背景圖片",
+  "readerCustomThemeBackgroundImageHint": "支援 JPG、PNG、WebP，圖片會複製到應用程式儲存空間。",
+  "readerCustomThemeChooseImage": "上傳圖片",
+  "readerCustomThemeReplaceImage": "更換圖片",
+  "readerCustomThemeRemoveImage": "移除圖片",
+  "readerCustomThemeImageStrength": "背景圖片強度",
+  "readerCustomThemeImageUnsupported": "目前平台暫不支援匯入背景圖片",
+  "readerCustomThemeImageTooLarge": "圖片不能超過 20 MB",
+  "readerCustomThemeImageFormat": "請選擇 JPG、PNG 或 WebP 圖片",
+  "readerCustomThemeImageFailed": "背景圖片匯入失敗，請再試一次",
+  "importSourceTitle": "加入書籍",
+  "importSourceDescription": "可以一次選擇多本書，確認佇列後再開始匯入。",
+  "importSelectFiles": "選擇檔案",
+  "importIosSharedDocuments": "我的 iPhone · Open Reading",
+  "importICloudDrive": "iCloud Drive · Open Reading",
+  "importICloudUnavailable": "iCloud Drive 目前無法使用",
+  "importAndroidFolder": "授權書籍目錄",
+  "importAndroidRescan": "掃描已授權目錄",
+  "importFolderPermissionAvailable": "已授權 · 點擊掃描",
+  "importFolderPermissionLost": "權限已失效 · 請重新授權",
+  "importRemoveFolder": "移除目錄",
+  "importQueueTitle": "匯入佇列（{count}）",
+  "importQueueHint": "可先移除誤選項，匯入時會逐本處理。",
+  "importQueueEmptyTitle": "尚未選擇書籍",
+  "importQueueEmptyBody": "請選擇 EPUB、PDF、TXT、MOBI 或其他支援的書籍檔案。",
+  "importAction": "匯入 {count} 本",
+  "importRetryFailed": "重試失敗的 {count} 本",
+  "importStatusQueued": "等待中",
+  "importStatusPreparing": "正在準備檔案",
+  "importStatusChecking": "正在檢查",
+  "importStatusCopying": "正在複製",
+  "importStatusAnalyzing": "正在解析",
+  "importStatusSaving": "正在儲存",
+  "importStatusImported": "匯入成功",
+  "importStatusSkipped": "已存在，已略過",
+  "importStatusFailed": "匯入失敗",
+  "importRemove": "移除",
+  "importRetry": "重試",
+  "importClearCompleted": "清除已完成",
+  "importDone": "完成",
+  "importSummary": "成功 {succeeded} 本 · 略過 {skipped} 本 · 失敗 {failed} 本",
+  "importNoSupportedFiles": "沒有找到支援的書籍檔案",
+  "importScanning": "正在掃描檔案…",
+  "settingsAiApiKeyConfigured": "API Key 已設定",
+  "settingsAiApiKeyTapToConfigure": "點擊完成設定",
+  "settingsAiAddModel": "新增模型",
+  "settingsAiSwitchedToModel": "已切換到 {model}",
+  "@settingsAiSwitchedToModel": {
+    "placeholders": {
+        "model": {"type": "String"}
+    }
+  },
+  "settingsAiFillBaseUrlAndApiKey": "請先填寫 Base URL 和 API Key",
+  "settingsAiEditModelTitle": "設定模型",
+  "settingsAiQuickCardSubtitle": "每張快捷卡片只綁定一個模型",
+  "settingsAiPresetModel": "預設模型",
+  "settingsAiBaseUrlLabel": "Base URL",
+  "settingsAiApiKeyLabel": "API Key",
+  "settingsAiModelNameLabel": "模型型號",
+  "settingsAiFetchModelsTooltip": "自動取得模型",
+  "settingsAiFetchModelsList": "自動取得模型列表",
+  "settingsAiSelectModel": "選擇一個模型",
+  "settingsAiTemperatureLabel": "Temperature",
+  "settingsAiAddAndEnable": "新增並啟用",
+  "settingsAiModelMismatchClaude": "Claude 服務商的模型名通常應以 claude 開頭，請檢查 provider 和 model 是否匹配",
+  "settingsAiModelMismatchGemini": "Gemini 服務商的模型名通常應包含 gemini，請檢查 provider 和 model 是否匹配",
+  "settingsAiModelMismatchGlm": "GLM 服務商的模型名通常應以 glm 開頭，請檢查 provider 和 model 是否匹配",
+  "settingsAiModelMismatchMinimax": "MiniMax 服務商的模型名通常應包含 MiniMax，請檢查 provider 和 model 是否匹配",
+  "settingsAiModelListFormatUnrecognized": "模型列表返回格式無法識別",
+  "settingsAiNoModelsReturned": "服務端沒有返回可用模型列表",
+  "settingsAiNoModelsAvailable": "沒有取得到可用模型",
+  "settingsAiFetchModelsFailed": "取得模型失敗：{error}",
+  "@settingsAiFetchModelsFailed": {
+    "placeholders": {
+        "error": {"type": "String"}
+    }
+  },
+  "settingsAiPreprocessTitle": "AI 預處理書籍",
+  "settingsAiPreprocessSubtitle": "匯入書籍後自動讓 AI 通讀並產生本機摘要知識庫",
+  "settingsAiPreprocessWarning": "預處理會把整本書分段傳送給 AI 模型，消耗大量 token，且耗時較長。確定開啟？",
+  "settingsAiPreprocessNeedModel": "請先設定可用的 AI 模型與 API Key",
+  "libraryAiPreprocess": "AI 預處理",
+  "libraryAiPreprocessConfirm": "讓 AI 通讀《{title}》並產生摘要知識庫？將消耗大量 token。",
+  "libraryAiPreprocessProgress": "AI 正在通讀本書…（第 {done}/{total} 步）",
+  "libraryAiPreprocessDone": "AI 知識庫已產生",
+  "libraryAiPreprocessFailed": "AI 預處理失敗：{error}",
+  "libraryAiPreprocessUnsupported": "該書格式暫不支援 AI 預處理",
+  "libraryAiPreprocessQueued": "已加入 AI 預處理佇列，可在下載任務頁查看進度。",
+  "downloadTasksTabDownloads": "下載",
+  "aiPreprocessTaskRunning": "AI 通讀中…",
+  "aiPreprocessTasksEmpty": "暫無 AI 預處理任務",
+  "aiPreprocessClearFinished": "清除已完成",
+  "aiChatNewChat": "新對話",
+  "aiChatSelectBook": "關聯書籍",
+  "aiChatNoBook": "不關聯書籍",
+  "navAi": "AI",
+  "aiHistoryTitle": "AI 對話記錄",
+  "aiHistoryEmpty": "還沒有 AI 對話。\n閱讀時點擊「問AI」發起第一次對話。",
+  "aiHistoryMessageCount": "{count} 則訊息",
+  "aiHistoryClearAll": "清空全部",
+  "aiHistoryClearAllConfirm": "刪除全部 AI 對話記錄？此操作無法復原。",
+  "aiHistoryDeleteConfirm": "刪除這則對話記錄？",
+  "floatingNavigationVisibilityHint": "關閉開關即可隱藏對應頁面；設定無法隱藏。",
+  "readerAskAi": "問AI",
+  "readerAiInputHint": "就本書內容提問…",
+  "readerAiSendButton": "傳送",
+  "readerAiThinking": "思考中…",
+  "readerAiNotConfiguredHint": "尚未設定 AI 模型。請前往 設定 → AI 閱讀助手 新增模型與 API Key。",
+  "readerAiEmptyHint": "可以向 AI 詢問目前頁面或本書的任何內容。",
+  "readerAiSelectionQuestionLabel": "解釋這段選取內容",
+  "readerAiSelectionPrompt": "請解釋下面這段選取文字，並給出 3 條要點。\n\n【選取文字】\n{selection}\n\n【上文】\n{before}\n\n【下文】\n{after}",
+  "readerAiEnterQuestionFirst": "請先輸入問題再發送",
+  "readerAiEmptyResponse": "模型返回為空，請重試",
+  "readerAiRequestFailed": "請求失敗：{error}",
+  "@readerAiRequestFailed": {
+    "placeholders": {
+        "error": {"type": "String"}
+    }
+  },
+  "readerAiUnknownError": "未知錯誤",
+  "readerAiEmptyResponseError": "服務端返回為空，通常是 Base URL 設定錯誤、閘道沒有轉發到模型介面，或服務端提前斷開連線。\n請求位址：{endpoint}",
+  "@readerAiEmptyResponseError": {
+    "placeholders": {
+        "endpoint": {"type": "String"}
+    }
+  },
+  "readerAiInvalidJsonError": "服務端返回的不是合法 JSON，目前介面可能與 {provider} 設定不相容。\n請求位址：{endpoint}\n返回片段：{snippet}",
+  "@readerAiInvalidJsonError": {
+    "placeholders": {
+        "provider": {"type": "String"},
+        "endpoint": {"type": "String"},
+        "snippet": {"type": "String"}
+    }
+  },
+  "readerAiFailedReadBody": "請求失敗{status}：無法讀取服務端返回的資料，通常是 Base URL 設定錯誤、介面返回空內容，或網路將回應截斷了。\n請求位址：{endpoint}",
+  "@readerAiFailedReadBody": {
+    "placeholders": {
+        "status": {"type": "String"},
+        "endpoint": {"type": "String"}
+    }
+  },
+  "readerAiNetworkRequestFailed": "網路請求失敗{status}：{error}\n請求位址：{endpoint}",
+  "@readerAiNetworkRequestFailed": {
+    "placeholders": {
+        "status": {"type": "String"},
+        "error": {"type": "String"},
+        "endpoint": {"type": "String"}
+    }
+  },
+  "readerAiRequestFailedMinimaxHint": "請求失敗({status})：{text}\n建議檢查：1) MiniMax 溫度需在 (0,1]；2) 模型名與介面是否匹配；3) 僅使用單條 system 指令。\n請求位址：{endpoint}",
+  "@readerAiRequestFailedMinimaxHint": {
+    "placeholders": {
+        "status": {"type": "String"},
+        "text": {"type": "String"},
+        "endpoint": {"type": "String"}
+    }
+  },
+  "readerAiRequestFailedClaudeHint": "請求失敗({status})：{text}\n提示：Claude 必須攜帶 anthropic-version 請求標頭。\n請求位址：{endpoint}",
+  "@readerAiRequestFailedClaudeHint": {
+    "placeholders": {
+        "status": {"type": "String"},
+        "text": {"type": "String"},
+        "endpoint": {"type": "String"}
+    }
+  },
+  "readerAiRequestFailedProviderMismatchHint": "請求失敗({status})：{text}\n提示：請確認服務商與 API Key 對應，不可混用。\n請求位址：{endpoint}",
+  "@readerAiRequestFailedProviderMismatchHint": {
+    "placeholders": {
+        "status": {"type": "String"},
+        "text": {"type": "String"},
+        "endpoint": {"type": "String"}
+    }
+  },
+  "readerAiRequestFailedGeneric": "請求失敗({status})：{text}\n請求位址：{endpoint}",
+  "@readerAiRequestFailedGeneric": {
+    "placeholders": {
+        "status": {"type": "String"},
+        "text": {"type": "String"},
+        "endpoint": {"type": "String"}
+    }
+  },
+  "readerAiMockSelectionResponse": "AI(模擬): 你選擇的內容是\"{selectedText}\"。\n\n上文: {before}\n下文: {after}",
+  "@readerAiMockSelectionResponse": {
+    "placeholders": {
+        "selectedText": {"type": "String"},
+        "before": {"type": "String"},
+        "after": {"type": "String"}
+    }
+  },
+  "readerAiMockPageAnalysis": "AI(模擬): 本頁共 {chars} 字，建議重點關注段落開頭與結尾處的論點。",
+  "@readerAiMockPageAnalysis": {
+    "placeholders": {
+        "chars": {"type": "int"}
+    }
+  },
+  "readerAiMockGreeting": "你好",
+  "readerAiMockChatResponse": "AI(模擬): 你問的是「{question}」。\n\n我已讀取目前頁（{chars} 字），你可以繼續追問。",
+  "@readerAiMockChatResponse": {
+    "placeholders": {
+        "question": {"type": "String"},
+        "chars": {"type": "int"}
+    }
+  },
+  "readerAiMemorySummaryHeading": "【本書記憶摘要】",
+  "readerAiReadingAdviceHeading": "【針對使用者的閱讀建議】",
+  "readerAiIndexedSnippetsHeading": "【索引命中片段】",
+  "readerAiLocalFallbackIntro": "目前未設定線上 AI Key，先基於本機記憶和索引給你一個答案：",
+  "readerAiRelatedContentHeading": "【相關內容】",
+  "readerAiNoRelatedContent": "【相關內容】暫未命中可用片段。",
+  "readerAiRelatedContentLocationHeading": "【相關內容定位】",
+  "readerAiSnippetLocation": "- 位置：{chapterId} ({startOffset}-{endOffset})",
+  "@readerAiSnippetLocation": {
+    "placeholders": {
+        "chapterId": {"type": "String"},
+        "startOffset": {"type": "int"},
+        "endOffset": {"type": "int"}
+    }
+  },
+  "readerAiReadingSuggestionHeading": "【建議怎麼讀】",
+  "readerAiNextStepHeading": "【下一步】",
+  "readerAiNextStepReadSnippet": "1) 先讀上面命中的片段。",
+  "readerAiNextStepAskFollowUp": "2) 用「為什麼/如何/例子」再追問一次，我會繼續按索引定位。",
+  "ttsSystemDefault": "系統預設",
+  "ttsUnavailable": "系統 TTS 不可用",
+  "ttsUnsupportedLanguage": "系統不支援語言: {language}",
+  "@ttsUnsupportedLanguage": {
+    "placeholders": {
+        "language": {"type": "String"}
+    }
+  },
+  "ttsCallFailed": "系統 TTS 呼叫失敗",
+  "importErrorSourceMissing": "來源檔案不存在",
+  "importErrorHashFailed": "無法校驗檔案內容",
+  "importErrorTargetNameExhausted": "無法為匯入檔案分配可用名稱",
+  "importErrorSourceNotMaterialized": "來源檔案尚未準備到本機",
+  "importErrorCopyVerificationFailed": "複製後的檔案與來源檔案不一致",
+  "importErrorFileTooLarge": "檔案超過 100 MB 匯入限制",
+  "importErrorSourcePrepareFailed": "無法準備匯入檔案",
+  "importErrorFailed": "書籍匯入失敗",
+  "importUnknownTitle": "不明標題",
+  "importUnknownAuthor": "不明作者",
+  "bookUntitled": "未命名",
+  "homePlanTaskCompleteDailyGoal": "完成今日目標",
+  "homePlanTaskReadMinutes": "閱讀 {minutes} 分鐘",
+  "@homePlanTaskReadMinutes": {
+    "placeholders": {
+        "minutes": {"type": "int"}
+    }
+  },
+  "homePlanTaskCompleteFocusReading": "完成專注閱讀",
+  "homePlanTaskFocusSession": "至少 1 次 {minutes} 分鐘專注工作階段",
+  "@homePlanTaskFocusSession": {
+    "placeholders": {
+        "minutes": {"type": "int"}
+    }
+  },
+  "homePlanTaskKeepRhythm": "保持節奏",
+  "homePlanTaskWeekAchievedDays": "本週達標天數 ≥ 5 天",
+  "noteColorLightBlue": "淺藍色",
+  "noteColorRed": "紅色",
+  "noteColorGreen": "綠色",
+  "noteColorPurple": "紫色",
+  "noteColorGold": "金色",
+  "noteColorOrange": "橙色",
+  "noteColorYellow": "黃色",
+  "noteColorDarkGreen": "深綠色",
+  "noteColorCustom": "自訂",
+  "noteShareBookHeader": "📖 《{title}》- {author}",
+  "@noteShareBookHeader": {
+    "placeholders": {
+        "title": {"type": "String"},
+        "author": {"type": "String"}
+    }
+  },
+  "noteShareNoteLabel": "💭 筆記：{note}",
+  "@noteShareNoteLabel": {
+    "placeholders": {
+        "note": {"type": "String"}
+    }
+  },
+  "noteShareChapterLabel": "📍 {chapter}",
+  "@noteShareChapterLabel": {
+    "placeholders": {
+        "chapter": {"type": "String"}
+    }
+  },
+  "noteSharePageLabel": "📄 第{page}頁",
+  "@noteSharePageLabel": {
+    "placeholders": {
+        "page": {"type": "int"}
+    }
+  },
+  "noteShareHashtags": "#讀書筆記 #{type}",
+  "@noteShareHashtags": {
+    "placeholders": {
+        "type": {"type": "String"}
+    }
+  },
+  "accentPurple": "優雅紫",
+  "accentPink": "櫻花粉",
+  "accentCyan": "清新青",
+  "accentBrown": "古典棕",
+  "accentGrey": "優雅灰",
+  "accentDeepPurple": "魅力紫",
+  "accentAmber": "琥珀金",
+  "accentLightGreen": "生機綠",
+  "accentYellow": "陽光黃",
+  "accentNeutralGrey": "簡約灰",
+  "accentIndigo": "深邃藍",
+  "accentDeepOrange": "火焰橙",
+  "glassPresetClear": "清晰模式",
+  "glassPresetStandard": "標準模式",
+  "glassPresetDreamy": "朦朧模式",
+  "agreementV2HeroTitle": "把閱讀，留在自己的裝置裡。",
+  "agreementV2HeroBody": "開元閱讀是一款開源、跨平台、本機優先的電子書閱讀工具。它提供閱讀能力，但不提供、代管或審核你匯入的書籍。",
+  "agreementV2LocalTitle": "本機優先",
+  "agreementV2LocalBody": "書籍、進度與筆記原則上儲存在你的裝置中，由你自行管理與備份。",
+  "agreementV2OpenSourceTitle": "AGPL-3.0 開源",
+  "agreementV2OpenSourceBody": "原始碼依 GNU AGPL v3.0 提供；軟體按「原樣」交付，不附帶任何明示或默示擔保。",
+  "agreementV2VersionLabel": "條款版本 {version}",
+  "@agreementV2VersionLabel": {
+    "placeholders": {
+        "version": {"type": "String"}
+    }
+  },
+  "agreementV2Title": "使用條款與隱私說明",
+  "agreementV2Subtitle": "使用前請完整閱讀，重點條款已直接說明",
+  "agreementV2ImportantNotice": "特別提示：開元閱讀官方版本不預載、不內建、不推薦任何第三方書源，也不營運、代理或代管書源內容。你匯入的檔案和主動新增的書源均由你自行選擇；請僅存取和使用你有權使用的內容。",
+  "agreementV2SourceBoundaryTitle": "第三方書源責任邊界",
+  "agreementV2SourceBoundaryPoint1": "官方只提供開源閱讀軟體和 Open Reading Source Protocol，不提供書源位址或官方書源目錄。",
+  "agreementV2SourceBoundaryPoint2": "每個書源位址都必須由你主動輸入新增；App 直接連接該獨立第三方服務，不經過開發者內容伺服器。",
+  "agreementV2SourceBoundaryPoint3": "協定相容只代表介面可以連接，不代表內容合法或已獲授權。書源營運者負責其內容，你負責新增前審查並合法使用。",
+  "agreementV2Section1Title": "協議範圍與接受",
+  "agreementV2Section1Body": "本協議適用於你對開元閱讀軟體及其附帶功能的下載、安裝和使用。點擊「同意並繼續」即表示你已閱讀、理解並同意本協議；如你不同意，請停止使用並離開應用程式。若你未達到所在地法律規定的獨立同意年齡，應由監護人閱讀並同意。",
+  "agreementV2Section2Title": "開源軟體與授權",
+  "agreementV2Section2Body": "開元閱讀後續版本依 GNU Affero General Public License v3.0 發布。你可以依授權條款使用、複製、修改、散布或銷售軟體；散布修改版時必須依 AGPL-3.0 提供完整對應原始碼，修改版透過網路向使用者提供服務時也必須依授權條款向這些使用者提供對應原始碼。v1.0.0 及更早版本已取得的 MIT 授權繼續有效且不會撤回。本協議不限制開源授權已授予的權利；第三方元件仍適用各自授權條款。",
+  "agreementV2Section3Title": "使用者內容與著作權責任",
+  "agreementV2Section3Body": "“使用者內容”包括你匯入、下載、開啟、轉換、快取、標註、朗讀或以其他方式處理的書籍、文件、圖片、詮釋資料及連結。你須確保自己對使用者內容擁有合法權利或已取得必要授權，並自行承擔因內容引起的著作權、商標、隱私、名譽、違法資訊、惡意檔案及其他爭議或損失。軟體和開發者不上傳、出售、授權、背書或審核你的使用者內容，也不因軟體能夠讀取某種格式而表示該內容可以被合法使用。",
+  "agreementV2Section4Title": "禁止使用",
+  "agreementV2Section4Body": "你不得利用本軟體侵犯智慧財產權或其他合法權益，不得散布違法、有害或惡意內容，不得繞過數位版權保護、存取控制或付費限制，不得攻擊、干擾第三方系統，亦不得將本軟體用於任何違反適用法律的活動。因你的使用行為導致的申訴、求償、處罰或損失由你自行承擔。",
+  "agreementV2Section5Title": "書源、連結與第三方服務",
+  "agreementV2Section5Body": "官方版本不預載、不散布、不推薦書源，也不營運官方書源目錄。你新增的書源、網路介面、外部連結、線上內容、系統 TTS、AI 服務及其他第三方能力均由獨立第三方提供和控制，與開發者不存在營運、代理、授權、背書或內容審核關係。書源營運者依法負責其提供的內容；你須在新增前審查來源、內容授權、隱私政策和使用條款，並對自己的存取、下載、快取、散布及其他使用行為負責。在適用法律允許的最大範圍內，開發者不對第三方內容、收費、資料處理、服務中斷或侵權爭議承擔責任。",
+  "agreementV2Section6Title": "資料與隱私",
+  "agreementV2Section6Body": "本軟體採用本機優先設計，書籍、閱讀進度、筆記和設定通常儲存在你的裝置。除非你主動啟用連網書源、AI、同步或其他連網功能，本軟體不會為了提供本機閱讀而主動將書籍內文傳送給開發者。應用程式自動或手動檢查更新時，會存取 GitHub 和官方網站 open.xxread.top，並傳送平台、處理器架構、發布頻道等必要技術參數；伺服器和網路服務會依正常通訊處理你的 IP 位址與 User-Agent。你從官方網站下載安裝套件時，後台會記錄版本、架構、下載時間、IP 和 User-Agent，用於下載次數統計、安全防護和故障排除；原始 IP 下載明細最多保留 30 天，之後刪除，長期僅保留不含原始 IP 的彙總統計。上述更新請求不包含書籍內文、書庫、筆記、帳戶或裝置唯一識別碼；存取 GitHub 時亦適用 GitHub 的隱私規則。啟用其他連網功能時，相關查詢、文字片段、裝置網路資訊或必要參數可能傳送給你選擇的第三方服務，具體以該服務規則為準。你應自行保護裝置、存取金鑰和備份；解除安裝、清除資料、裝置故障或誤操作可能導致資料永久遺失。",
+  "agreementV2Section7Title": "AI 與自動化輸出",
+  "agreementV2Section7Body": "AI 摘要、問答、翻譯、推薦或其他自動產生的結果可能不準確、不完整、過時或具有誤導性，僅供輔助閱讀，不構成法律、醫療、投資、學術或其他專業意見。你應獨立查核後再使用，不應依賴其作出高風險決定。你提交給 AI 服務的內容還受對應服務商條款約束。",
+  "agreementV2Section8Title": "無擔保聲明",
+  "agreementV2Section8Body": "在適用法律允許的最大範圍內，本軟體及相關資料均按「原樣」和「可用」狀態提供，不作任何明示、默示或法定擔保，包括但不限於適售性、特定用途適用性、權利完整、不侵權、準確性、相容性、安全性、無錯誤、不中斷或資料不遺失。開源貢獻者沒有義務提供維護、更新、技術支援或缺陷修復。",
+  "agreementV2Section9Title": "責任限制",
+  "agreementV2Section9Body": "在適用法律允許的最大範圍內，開發者、著作權人及貢獻者不對因安裝、使用或無法使用本軟體，使用者內容，第三方服務，資料遺失，裝置異常，業務中斷或安全事件產生的任何直接、間接、附帶、特殊、懲罰性或衍生性損失承擔責任，無論該責任基於契約、侵權或其他理論。法律不得排除的責任不受本條排除，但應限制在法律允許的最低範圍。",
+  "agreementV2Section10Title": "賠償與責任承擔",
+  "agreementV2Section10Body": "如因你的使用者內容、違法使用、侵權行為、違反本協議或使用第三方服務，導致開發者、著作權人或貢獻者遭受第三方求償、行政調查、處罰、損失或合理費用，你應在適用法律允許的範圍內承擔相應責任並使其免受損害。",
+  "agreementV2Section11Title": "變更、終止與適用規則",
+  "agreementV2Section11Body": "軟體功能、專案維護狀態和本協議可能因開源專案發展、法律變化或風險控制需要而調整。重大條款更新時，應用程式可要求你重新確認；不同意新條款的，你應停止使用。你可隨時解除安裝軟體。爭議優先友好協商；在不影響你依法享有的強制性消費者權益前提下，適用開發者所在地法律並由有管轄權的法院處理。若部分條款無效，其餘條款仍然有效。",
+  "agreementV2ConfirmLabel": "我已完整閱讀並同意以上使用條款與隱私說明。",
+  "agreementV2SourceConfirmLabel": "我已知悉官方不提供任何書源；我新增的書源及其內容由獨立第三方提供，我會自行確認授權並對自己的使用行為負責。",
+  "agreementV2ExitLabel": "不同意",
+  "agreementV2ContinueLabel": "同意並繼續",
+  "agreementV2ExitDialogTitle": "不同意條款？",
+  "agreementV2ExitDialogBody": "你需要同意使用條款後才能繼續使用開元閱讀。若不同意，請離開應用程式。",
+  "agreementV2CancelLabel": "返回閱讀",
+  "agreementV2ConfirmExitLabel": "確認離開",
+  "agreementV2SaveFailed": "無法儲存同意狀態，請稍後重試。",
+  "settingsDataSyncTitle": "資料與同步",
+  "settingsCacheManagementTitle": "快取管理",
+  "settingsCacheManagementSubtitle": "共佔用 {size}，查看分類並清除",
+  "settingsCacheUsageTitle": "快取佔用",
+  "settingsCacheTotalUsage": "總佔用",
+  "settingsCacheSafeHint": "這裡只統計可安全清除的快取，不包含書籍、閱讀進度和設定。",
+  "settingsCacheSourceCovers": "書源封面快取",
+  "settingsCacheSourceCoversSubtitle": "已下載的書源封面 · {size}",
+  "settingsCacheSourceData": "書源章節快取",
+  "settingsCacheSourceDataSubtitle": "可安全刪除的線上章節快取 · {size}",
+  "settingsCacheTemporaryFiles": "暫存檔案",
+  "settingsCacheTemporaryFilesSubtitle": "可丟棄的更新與暫存檔案 · {size}",
+  "settingsCacheClearAll": "清除全部安全快取",
+  "settingsCacheClearAllSubtitle": "只清除以上類別 · {size}",
+  "settingsCacheCalculating": "正在計算…",
+  "settingsCacheClearConfirm": "只會刪除暫存快取資料，不會刪除書籍、已儲存封面、閱讀進度、資料庫、設定或憑證。",
+  "settingsCacheClearAction": "清除",
+  "settingsCacheCleared": "快取已清除",
+  "settingsCacheClearFailed": "無法清除快取",
+  "settingsWebDavSyncTitle": "WebDAV 同步",
+  "webDavNotConfigured": "尚未設定",
+  "webDavConfigureSubtitle": "將閱讀資料同步到你自己的 WebDAV 空間",
+  "webDavBetaBadge": "Beta · 可能不穩定",
+  "webDavPageTitle": "WebDAV 同步",
+  "webDavConnected": "已連線",
+  "webDavSyncing": "正在同步",
+  "webDavPartialFailure": "部分內容需要處理",
+  "webDavSyncFailed": "同步失敗",
+  "webDavPendingChanges": "{count} 項變更等待同步",
+  "webDavLastSync": "上次同步：{time}",
+  "webDavNeverSynced": "尚未同步",
+  "webDavSyncNow": "立即同步",
+  "webDavSetUp": "設定 WebDAV",
+  "webDavConnectionTitle": "連線資訊",
+  "webDavServerUrl": "WebDAV 位址",
+  "webDavUsername": "使用者名稱",
+  "webDavPassword": "應用程式密碼",
+  "webDavPasswordHint": "僅安全儲存在目前裝置",
+  "webDavRootPath": "遠端目錄",
+  "webDavTestConnection": "測試連線",
+  "webDavTestingConnection": "正在測試連線…",
+  "webDavConnectionSuccess": "連線與寫入權限驗證成功",
+  "webDavConnectionFailed": "連線測試失敗：{reason}",
+  "webDavSaveConfiguration": "儲存設定",
+  "webDavAutomaticSync": "自動同步",
+  "webDavAutomaticSyncHint": "啟動應用程式或回到前景時自動同步",
+  "webDavSyncContent": "同步內容",
+  "webDavScopeBookSources": "書源",
+  "webDavScopeBooks": "書庫與線上書籍",
+  "webDavScopeProgress": "閱讀進度",
+  "webDavScopeBookmarks": "書籤",
+  "webDavScopeReadingSessions": "閱讀統計",
+  "webDavScopeBookFiles": "書籍原始檔",
+  "webDavBookFilesHint": "選擇需要上傳或下載的書籍",
+  "webDavBookFilesUnavailable": "書籍檔案傳輸將在中繼資料同步穩定後開放",
+  "webDavSecurityNotice": "資料透過 HTTPS 傳輸，但 WebDAV 服務提供者仍可讀取未加密的遠端內容。",
+  "webDavConnectionDetails": "連線設定",
+  "webDavClearConfiguration": "清除本機設定",
+  "webDavClearConfigurationTitle": "清除 WebDAV 設定？",
+  "webDavClearConfigurationMessage": "這會刪除目前裝置儲存的 WebDAV 位址和登入資訊，不會刪除本機閱讀資料或遠端檔案。",
+  "webDavClearConfigurationConfirm": "從本機清除",
+  "webDavActivityTitle": "同步活動",
+  "webDavActivityEmpty": "尚無同步記錄",
+  "webDavSyncCompleteSummary": "上傳 {uploaded} 項，下載 {downloaded} 項",
+  "webDavErrorAuthentication": "使用者名稱、密碼或目錄權限不正確。",
+  "webDavErrorInvalidConfiguration": "WebDAV 設定不完整或無效。",
+  "webDavErrorInsecureConnection": "目前連線不符合安全要求。",
+  "webDavErrorCertificate": "無法驗證伺服器憑證。",
+  "webDavErrorPermission": "遠端目錄沒有寫入權限。",
+  "webDavErrorNotFound": "遠端同步目錄或必要檔案不存在。",
+  "webDavErrorConflict": "遠端資料發生衝突，請重試同步。",
+  "webDavErrorStorageFull": "WebDAV 空間已滿。",
+  "webDavErrorRateLimited": "WebDAV 請求過於頻繁，請稍後重試。",
+  "webDavErrorTimeout": "伺服器未及時回應。",
+  "webDavErrorUnsupported": "此 WebDAV 服務不支援安全同步所需的能力。",
+  "webDavErrorNetwork": "目前無法使用網路，變更仍已儲存在本機。",
+  "webDavErrorCorruptData": "部分遠端同步資料已損壞，因此未套用。",
+  "webDavErrorClockSkew": "本機時間與 WebDAV 伺服器相差過大。",
+  "webDavErrorSecureStorage": "無法從系統安全儲存讀取 WebDAV 密碼。",
+  "webDavErrorUnknown": "WebDAV 無法完成這次操作。",
+  "webDavErrorPhase": "失敗階段：{phase}",
+  "webDavPhaseConnecting": "連接遠端",
+  "webDavPhaseScanningLocal": "掃描本機資料",
+  "webDavPhaseReadingRemote": "讀取遠端資料",
+  "webDavPhaseApplyingRemote": "合併遠端資料",
+  "webDavPhaseUploadingLocal": "上傳本機變更",
+  "webDavPhaseFinishing": "完成同步",
+  "webDavPhaseUnknown": "未知",
+  "webDavBookFilesTitle": "書籍檔案",
+  "webDavFilesPendingUpload": "待上傳",
+  "webDavFilesAvailableDownload": "可下載",
+  "webDavFilesSynced": "已同步",
+  "webDavFilesUploadSelected": "上傳所選",
+  "webDavFilesDownloadSelected": "下載所選",
+  "webDavFilesSelectedSummary": "已選擇 {count} 本 · {size}",
+  "webDavFilesOnlyLocal": "僅在本機",
+  "webDavFilesOnlyRemote": "檔案尚未下載到本機",
+  "webDavFilesUploadPermission": "允許上傳書籍原始檔案",
+  "webDavFilesUploadPermissionHint": "只會上傳你明確選取的書籍；WebDAV 保留原始檔名與內容，不另行加密",
+  "webDavLegacyBookDirectoryTitle": "舊版 WebDAV 書籍仍相容",
+  "webDavLegacyBookDirectoryMessage": "無需重新同步。新上傳書籍將使用「書名 - 作者/原始檔名」的可讀目錄。",
+  "webDavNewBookPolicyTitle": "新書檔案處理",
+  "webDavNewBookPolicyAsk": "每次詢問（建議）",
+  "webDavNewBookPolicyAskHint": "匯入完成後選擇這次要上傳的書籍",
+  "webDavNewBookPolicyAutomatic": "自動上傳新書",
+  "webDavNewBookPolicyAutomaticHint": "匯入完成後立即上傳，可能使用行動網路",
+  "webDavNewBookPolicyManual": "始終手動選擇",
+  "webDavNewBookPolicyManualHint": "只在書籍檔案頁中手動開始上傳",
+  "webDavNewBooksPromptTitle": "同步這次匯入的 {count} 本書？",
+  "webDavNewBooksPromptBody": "閱讀資料會自動同步。請選擇要上傳到 WebDAV 的書籍原始檔案。",
+  "webDavNewBooksSkip": "暫不上傳",
+  "webDavNewBooksUploading": "正在上傳 {count} 本新書…",
+  "webDavNewBooksUploadResult": "新書上傳完成：成功 {success} 本，失敗 {failed} 本",
+  "webDavFilesTooLarge": "目前版本暫不支援超過 100 MiB 的書籍檔案",
+  "webDavFilesEmpty": "此分類中沒有書籍",
+  "webDavFilesTransferComplete": "書籍檔案傳輸完成",
+  "readerAddAnnotation": "新增批註",
+  "readerAnnotationHint": "寫下你對這段文字的想法…",
+  "readerAnnotationSaved": "批註已儲存",
+  "readerAnnotationDeleted": "批註已刪除",
+  "readerAnnotationShelfRequired": "請先將本書加入書架，再儲存高亮與批註",
+  "readerNoAnnotations": "還沒有批註",
+  "readerNoAnnotationsHint": "選取文字即可高亮或新增文字批註；點擊帶底線的批註文字可再次查看筆記。"
+}

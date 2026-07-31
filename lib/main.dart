@@ -1,0 +1,960 @@
+// 文件说明：应用启动入口，负责初始化数据库、依赖注入、主题、国际化与全局服务。
+// 技术要点：Flutter Localizations、Provider、SharedPreferences、SQLite FFI、Path Provider。
+
+import 'dart:async';
+import 'dart:io';
+
+import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:path/path.dart' as path;
+import 'package:provider/provider.dart' as provider;
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:sqflite_common_ffi/sqflite_ffi.dart';
+
+import 'l10n/app_localizations.dart';
+import 'book_sources/services/book_source_client.dart';
+import 'book_sources/services/book_source_shelf_service.dart';
+import 'core/reader/native_reader_service.dart';
+import 'models/book.dart';
+import 'pages/home/home_shell_page.dart';
+import 'pages/library/import_book/import_book_page.dart';
+import 'pages/legal/user_agreement_page.dart';
+import 'pages/reader/book_source_reader_page.dart';
+import 'services/books/book_services.dart';
+import 'services/books/book_format_support.dart';
+import 'services/reading/reading_resume_service.dart';
+import 'services/core/app_update_download_service.dart';
+import 'services/core/background_download_notifier.dart';
+import 'services/core/core_services.dart';
+import 'services/library/download_task_controller.dart';
+import 'services/sync/webdav_sync_controller.dart';
+import 'utils/app_themes.dart';
+import 'utils/book_open_transition.dart';
+import 'services/tts_service.dart';
+import 'services/reader_aloud_service.dart';
+import 'package:path_provider/path_provider.dart';
+import 'utils/glass_config.dart';
+import 'utils/localization_extension.dart';
+import 'utils/font_catalog_helper.dart';
+import 'utils/ui_style.dart';
+import 'widgets/app_brand_icon.dart';
+import 'widgets/side_toast.dart';
+import 'widgets/update_check_gate.dart';
+
+void main(List<String> arguments) async {
+  // 确保可以在 runApp 前安全调用 SystemChrome
+  WidgetsFlutterBinding.ensureInitialized();
+
+  // 🚀 启用高刷新率支持
+  if (!kIsWeb && (Platform.isAndroid || Platform.isIOS)) {
+    // 检查并启用设备的最高刷新率
+    SystemChrome.setApplicationSwitcherDescription(
+      const ApplicationSwitcherDescription(
+        label: '开元阅读',
+        primaryColor: 0xFF1976D2,
+      ),
+    );
+    if (Platform.isAndroid) {
+      const fullscreenChannel = MethodChannel('com.niki.xxread/fullscreen');
+      try {
+        await fullscreenChannel.invokeMethod<void>('enableHighRefreshRate');
+      } catch (_) {
+        // 部分机型不支持动态切换高刷，忽略异常
+      }
+    }
+  }
+
+  // 在桌面平台上初始化 sqflite_common_ffi
+  if (!kIsWeb && (Platform.isWindows || Platform.isLinux || Platform.isMacOS)) {
+    sqfliteFfiInit();
+    databaseFactory = databaseFactoryFfi;
+  }
+
+  // 设置基础系统UI样式 - 透明背景
+  // 注意：不在这里设置SystemUiMode，让各页面根据需要自行控制
+  SystemChrome.setSystemUIOverlayStyle(
+    const SystemUiOverlayStyle(
+      statusBarColor: Colors.transparent,
+      statusBarIconBrightness: Brightness.dark, // iOS: 状态栏图标为深色(适合白色背景)
+      statusBarBrightness: Brightness.light, // iOS: 状态栏背景为浅色
+      systemNavigationBarColor: Colors.transparent,
+      systemNavigationBarDividerColor: Colors.transparent,
+      systemStatusBarContrastEnforced: false,
+      systemNavigationBarContrastEnforced: false,
+    ),
+  );
+
+  runApp(
+    RestartableApp(
+      child: provider.MultiProvider(
+        providers: [
+          provider.ChangeNotifierProvider(create: (_) => ThemeNotifier()),
+          provider.ChangeNotifierProvider(create: (_) => AppSettingsNotifier()),
+          provider.ChangeNotifierProvider(create: (_) => TtsService()),
+          provider.ChangeNotifierProxyProvider<TtsService, ReaderAloudService>(
+            create: (context) => ReaderAloudService(
+              systemEngine: provider.Provider.of<TtsService>(
+                context,
+                listen: false,
+              ),
+            ),
+            update: (context, tts, service) =>
+                service ?? ReaderAloudService(systemEngine: tts),
+          ),
+          provider.ChangeNotifierProvider(
+            create: (_) => DownloadTaskController(),
+          ),
+          provider.ChangeNotifierProvider(
+            create: (_) => WebDavSyncController(),
+          ),
+        ],
+        child: XxReadApp(
+          initialFilePaths: _supportedDesktopFileArguments(arguments),
+        ),
+      ),
+    ),
+  );
+}
+
+List<String> _supportedDesktopFileArguments(List<String> arguments) {
+  if (kIsWeb || Platform.isAndroid || Platform.isIOS) return const [];
+  final paths = <String>[];
+  for (final argument in arguments) {
+    var candidate = argument;
+    final uri = Uri.tryParse(argument);
+    if (uri != null && uri.scheme == 'file') {
+      try {
+        candidate = uri.toFilePath();
+      } catch (_) {
+        continue;
+      }
+    }
+    final file = File(candidate);
+    if (!file.existsSync()) continue;
+    final extension = BookFormatRegistry.normalizeExtension(
+      path.extension(candidate),
+    );
+    if (BookFormatRegistry.pickerExtensions.contains(extension)) {
+      paths.add(file.absolute.path);
+    }
+  }
+  return List<String>.unmodifiable(paths.toSet());
+}
+
+class RestartableApp extends StatefulWidget {
+  const RestartableApp({super.key, required this.child});
+
+  final Widget child;
+
+  static void restart(BuildContext context) {
+    final state = context.findAncestorStateOfType<_RestartableAppState>();
+    state?.restartApp();
+  }
+
+  @override
+  State<RestartableApp> createState() => _RestartableAppState();
+}
+
+class _RestartableAppState extends State<RestartableApp> {
+  Key _subtreeKey = UniqueKey();
+
+  void restartApp() {
+    setState(() => _subtreeKey = UniqueKey());
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return KeyedSubtree(key: _subtreeKey, child: widget.child);
+  }
+}
+
+class ThemeNotifier extends ChangeNotifier {
+  static const String _themeModePrefKey = 'isDarkMode';
+  static const String _uiStylePrefKey = 'ui_style_mode';
+  static const String _accentColorPrefKey = 'appAccentColorV2';
+
+  // 仅用于从旧版“双层主题 + 强调色”设置迁移。
+  static const String _appThemePrefKey = 'appTheme';
+  static const String _customAccentPrefKey = 'customAccentColor';
+  static const String _globalAccentPrefKey = 'globalAccentColor';
+  static const String _lastPresetThemePrefKey = 'last_preset_app_theme';
+
+  ThemeMode _themeMode = ThemeMode.system;
+  bool _isInitialized = false;
+  Color _accentColor = AppThemes.defaultAccentColor;
+  AppTheme _currentAppTheme = AppThemes.fromAccentColor(
+    AppThemes.defaultAccentColor,
+  );
+  AppUiStyle _uiStyle = AppUiStyle.material3;
+
+  ThemeMode get themeMode => _themeMode;
+  bool get isInitialized => _isInitialized;
+  Color get accentColor => _accentColor;
+  AppTheme get currentAppTheme => _currentAppTheme;
+  AppUiStyle get uiStyle => _uiStyle;
+  bool get isGlassEffectsEnabled => _uiStyle == AppUiStyle.glass;
+  bool get shouldDisableGlassEffects => _uiStyle == AppUiStyle.material3;
+
+  ThemeNotifier() {
+    _loadTheme();
+  }
+
+  void _loadTheme() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    final isDarkMode = prefs.getBool(_themeModePrefKey);
+    _uiStyle = appUiStyleFromStorage(prefs.getString(_uiStylePrefKey));
+    await prefs.remove('disable_glass_effects');
+    final storedAccentColor = prefs.getInt(_accentColorPrefKey);
+
+    _syncGlassEffectState();
+    if (prefs.getBool('enableAnimations') != true) {
+      await prefs.setBool('enableAnimations', true);
+    }
+
+    if (isDarkMode == null) {
+      // 首次启动，使用系统主题
+      _themeMode = ThemeMode.system;
+    } else {
+      _themeMode = isDarkMode ? ThemeMode.dark : ThemeMode.light;
+    }
+
+    if (storedAccentColor != null) {
+      _accentColor = Color(storedAccentColor);
+    } else {
+      _accentColor = _migrateLegacyAccentColor(prefs);
+      await prefs.setInt(_accentColorPrefKey, _accentColor.toARGB32());
+    }
+    await _removeLegacyThemePreferences(prefs);
+    _currentAppTheme = AppThemes.fromAccentColor(_accentColor);
+
+    _isInitialized = true;
+    notifyListeners();
+
+    // 不在这里更新系统UI，让各页面自行控制
+    // 避免与阅读页面的全屏模式冲突
+  }
+
+  void toggleTheme(bool isDarkMode) async {
+    final newThemeMode = isDarkMode ? ThemeMode.dark : ThemeMode.light;
+    if (_themeMode == newThemeMode) return; // 避免重复设置
+
+    _themeMode = newThemeMode;
+
+    // 立即通知监听器更新UI
+    notifyListeners();
+
+    // 不在这里更新系统栏样式，让各页面自行控制
+    // 避免与阅读页面的全屏模式冲突
+
+    // 异步保存设置
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setBool(_themeModePrefKey, isDarkMode);
+  }
+
+  /// 强调色是应用配色的唯一来源，Material 3 会由它生成完整浅色/深色色板。
+  Future<void> setAccentColor(Color color) async {
+    if (_accentColor.toARGB32() == color.toARGB32()) return;
+
+    _accentColor = color;
+    _currentAppTheme = AppThemes.fromAccentColor(color);
+    notifyListeners();
+
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setInt(_accentColorPrefKey, color.toARGB32());
+    await _removeLegacyThemePreferences(prefs);
+  }
+
+  Color _migrateLegacyAccentColor(SharedPreferences prefs) {
+    final globalAccent = prefs.getInt(_globalAccentPrefKey);
+    if (globalAccent != null) return Color(globalAccent);
+
+    final appThemeName = prefs.getString(_appThemePrefKey);
+    final customAccent = prefs.getInt(_customAccentPrefKey);
+    if (appThemeName == 'custom' && customAccent != null) {
+      return Color(customAccent);
+    }
+    return AppThemes.accentColorForLegacyTheme(appThemeName);
+  }
+
+  Future<void> _removeLegacyThemePreferences(SharedPreferences prefs) async {
+    await prefs.remove(_appThemePrefKey);
+    await prefs.remove(_customAccentPrefKey);
+    await prefs.remove(_globalAccentPrefKey);
+    await prefs.remove(_lastPresetThemePrefKey);
+  }
+
+  void setThemeMode(ThemeMode mode) {
+    if (_themeMode == mode) return;
+
+    _themeMode = mode;
+    notifyListeners();
+
+    // 不在这里更新系统UI，让各页面自行控制
+    // 避免与阅读页面的全屏模式冲突
+
+    // 保存设置
+    _saveThemeMode(mode);
+  }
+
+  void _saveThemeMode(ThemeMode mode) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    if (mode == ThemeMode.system) {
+      await prefs.remove(_themeModePrefKey);
+    } else {
+      await prefs.setBool(_themeModePrefKey, mode == ThemeMode.dark);
+    }
+  }
+
+  Future<void> setUiStyle(AppUiStyle style) async {
+    if (_uiStyle == style) return;
+    _uiStyle = style;
+    _syncGlassEffectState();
+    notifyListeners();
+
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString(_uiStylePrefKey, style.storageValue);
+  }
+
+  Future<void> setGlassEffectsEnabled(bool enabled) {
+    return setUiStyle(enabled ? AppUiStyle.glass : AppUiStyle.material3);
+  }
+
+  void _syncGlassEffectState() {
+    GlassEffectConfig.setDisableAllGlassEffects(shouldDisableGlassEffects);
+    GlassEffectConfig.applyPerformanceMode(
+      reduceEffects: shouldDisableGlassEffects,
+    );
+  }
+}
+
+class XxReadApp extends StatefulWidget {
+  const XxReadApp({super.key, this.initialFilePaths = const []});
+
+  final List<String> initialFilePaths;
+
+  @override
+  State<XxReadApp> createState() => _XxReadAppState();
+}
+
+class _XxReadAppState extends State<XxReadApp> with WidgetsBindingObserver {
+  final GlobalKey<NavigatorState> _navigatorKey = GlobalKey<NavigatorState>();
+  bool? _hasAcceptedAgreement;
+  bool _isBootstrapped = false;
+  bool _showFirstHomeSupportAfterAgreement = false;
+  _BootstrapError? _bootstrapError;
+  StreamSubscription<BackgroundDownloadTap>? _notificationTapSubscription;
+  BackgroundDownloadTap? _pendingNotificationTap;
+  bool _webDavSyncInitialized = false;
+  bool _resumeReadingHandled = false;
+  late final IncomingBookService _incomingBookService;
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+    _incomingBookService = IncomingBookService(
+      bridge: IncomingBookPlatformBridge(),
+      materializer: IncomingBookMaterializer(),
+      importer: BookImportService(),
+      openBook: _openIncomingBook,
+      openImportQueue: _openIncomingImportQueue,
+      onFailure: _showIncomingBookFailure,
+      onProcessing: (processing) {
+        if (processing) _showIncomingBookProcessing();
+      },
+    );
+    unawaited(
+      _incomingBookService.start().catchError((Object error) {
+        debugPrint('入站书籍通道初始化失败: $error');
+      }),
+    );
+    _enqueueInitialDesktopBooks();
+    _notificationTapSubscription = BackgroundDownloadNotifier.taps.listen(
+      _handleNotificationTap,
+    );
+    unawaited(BackgroundDownloadNotifier.initialize());
+    _bootstrapServices();
+    _checkAgreementStatus();
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    _notificationTapSubscription?.cancel();
+    unawaited(_incomingBookService.dispose());
+    super.dispose();
+  }
+
+  void _enqueueInitialDesktopBooks() {
+    if (widget.initialFilePaths.isEmpty) return;
+    final requestId =
+        'desktop:${DateTime.now().microsecondsSinceEpoch.toRadixString(16)}';
+    _incomingBookService.addRequest(
+      IncomingBookRequest(
+        requestId: requestId,
+        action: IncomingBookAction.open,
+        items: [
+          for (var index = 0; index < widget.initialFilePaths.length; index++)
+            IncomingBookItem(
+              id: '$requestId:$index',
+              displayName: path.basename(widget.initialFilePaths[index]),
+              localPath: widget.initialFilePaths[index],
+            ),
+        ],
+      ),
+    );
+  }
+
+  void _syncIncomingBookReadiness() {
+    final ready = _isBootstrapped && _hasAcceptedAgreement == true;
+    if (!ready) {
+      unawaited(_incomingBookService.setReady(false));
+      return;
+    }
+    if (_navigatorKey.currentContext != null) {
+      unawaited(_incomingBookService.setReady(true));
+      return;
+    }
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted) _syncIncomingBookReadiness();
+    });
+  }
+
+  Future<void> _openIncomingBook(Book book) async {
+    // 外部打开文件是显式意图，本次启动不再自动恢复上次阅读。
+    _resumeReadingHandled = true;
+    final context = _navigatorKey.currentContext;
+    if (!mounted || context == null) {
+      throw StateError('Navigator is not ready for an incoming book');
+    }
+    // Wait for repair and successful route insertion, but do not hold the
+    // incoming-request FIFO until the reader is closed.
+    await NativeReaderService.openBook(
+      context,
+      book,
+      waitForReaderClose: false,
+    );
+  }
+
+  Future<void> _openIncomingImportQueue(List<BookImportSource> sources) async {
+    _resumeReadingHandled = true;
+    final context = _navigatorKey.currentContext;
+    if (!mounted || context == null) {
+      throw StateError('Navigator is not ready for incoming books');
+    }
+    await Navigator.of(context).push<bool>(
+      MaterialPageRoute(
+        builder: (_) => ImportBookPage(initialSources: sources),
+      ),
+    );
+  }
+
+  void _showIncomingBookProcessing() {
+    final context = _navigatorKey.currentContext;
+    if (context != null) {
+      showSideToast(context, context.l10n.incomingBooksImporting);
+    }
+  }
+
+  void _showIncomingBookFailure(IncomingBookFailure failure) {
+    final context = _navigatorKey.currentContext;
+    if (context == null) {
+      debugPrint('入站书籍失败: ${failure.code}');
+      return;
+    }
+    final message = switch (failure.code) {
+      'no_book_file' => context.l10n.incomingBooksNoBookFile,
+      'permission_expired' => context.l10n.incomingBooksPermissionExpired,
+      'unsupported_format' => context.l10n.incomingBooksUnsupportedFormat,
+      'file_too_large' => context.l10n.incomingBooksFileTooLarge,
+      'too_many_files' => context.l10n.incomingBooksTooManyFiles,
+      'content_mismatch' => context.l10n.incomingBooksContentMismatch,
+      'partial_failure' => context.l10n.incomingBooksSomeFilesSkipped,
+      _ => context.l10n.incomingBooksImportFailed,
+    };
+    showSideToast(context, message, kind: SideToastKind.error);
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed) {
+      unawaited(_runAutomaticWebDavSyncIfNeeded());
+    }
+  }
+
+  Future<void> _runAutomaticWebDavSyncIfNeeded() async {
+    if (!_webDavSyncInitialized || !mounted) return;
+    final sync = provider.Provider.of<WebDavSyncController>(
+      context,
+      listen: false,
+    );
+    if (!sync.isConfigured || !sync.autoSync) return;
+    final lastSuccess = sync.lastSuccessfulSync;
+    if (lastSuccess != null &&
+        DateTime.now().difference(lastSuccess) < const Duration(minutes: 15)) {
+      return;
+    }
+    try {
+      await sync.syncNow();
+    } catch (error) {
+      debugPrint('WebDAV 自动同步失败（已保留本地变更）: $error');
+    }
+  }
+
+  Future<void> _bootstrapServices() async {
+    setState(() {
+      _isBootstrapped = false;
+      _bootstrapError = null;
+    });
+    _syncIncomingBookReadiness();
+
+    // 初始化缓存与应用状态服务
+    try {
+      await DataCacheService().initialize();
+      await AppStateService().initialize();
+    } catch (e) {
+      debugPrint('数据服务初始化失败: $e');
+      if (mounted) {
+        setState(() => _bootstrapError = _BootstrapError.dataService);
+      }
+      return;
+    }
+
+    // 浏览器没有 path_provider 的文件系统目录。Web 端的图片与书籍
+    // 持久化需要单独的浏览器存储实现，不应让本地文件系统的初始化
+    // 阻塞整个 Web 应用启动。
+    if (!kIsWeb) {
+      // 初始化图片管理器
+      try {
+        final appDocDir = await getApplicationDocumentsDirectory();
+        await BookImageManager().initialize(appDocDir.path);
+      } catch (e) {
+        debugPrint('图片管理器初始化失败: $e');
+        if (mounted) {
+          setState(() => _bootstrapError = _BootstrapError.imageManager);
+        }
+        return;
+      }
+
+      // 修复历史绝对路径（升级/重装后可能导致书籍与封面路径失效）
+      try {
+        await BookStorageRepairService().repairAllBooksIfNeeded();
+        // 清理历史残留的临时/无效文件，避免占用存储
+        await BookStorageRepairService().cleanupUnusedStorageArtifacts();
+      } catch (e) {
+        // 路径修复失败不阻塞启动
+        debugPrint('书籍路径修复失败（已忽略，不阻塞启动）: $e');
+      }
+    }
+
+    if (!mounted) return;
+    try {
+      final sync = provider.Provider.of<WebDavSyncController>(
+        context,
+        listen: false,
+      );
+      await sync.initialize();
+      _webDavSyncInitialized = true;
+      unawaited(_runAutomaticWebDavSyncIfNeeded());
+    } catch (error) {
+      // WebDAV 是可选能力，安全存储或远端初始化失败不能阻塞本地阅读。
+      debugPrint('WebDAV 同步初始化失败（已忽略）: $error');
+    }
+
+    if (!mounted) return;
+    setState(() {
+      _isBootstrapped = true;
+      _bootstrapError = null;
+    });
+    _syncIncomingBookReadiness();
+    unawaited(_openPendingNotificationTap());
+    _scheduleResumeLastReading();
+  }
+
+  /// 检查用户是否已同意协议
+  Future<void> _checkAgreementStatus() async {
+    final hasAccepted = await UserAgreementService.hasUserAcceptedAgreement();
+    if (!mounted) return;
+    setState(() {
+      _hasAcceptedAgreement = hasAccepted;
+    });
+    _syncIncomingBookReadiness();
+    unawaited(_openPendingNotificationTap());
+    _scheduleResumeLastReading();
+    debugPrint('📋 协议状态检查: ${hasAccepted ? "已同意" : "未同意"}');
+  }
+
+  /// 处理用户同意协议
+  void _onAgreementAccepted() {
+    setState(() {
+      _hasAcceptedAgreement = true;
+      _showFirstHomeSupportAfterAgreement = true;
+    });
+    _syncIncomingBookReadiness();
+    unawaited(_openPendingNotificationTap());
+    _scheduleResumeLastReading();
+    debugPrint('✅ 用户协议已同意，进入主应用');
+  }
+
+  void _handleNotificationTap(BackgroundDownloadTap tap) {
+    _pendingNotificationTap = tap;
+    unawaited(_openPendingNotificationTap());
+  }
+
+  Future<void> _openPendingNotificationTap() async {
+    if (!_isBootstrapped || _hasAcceptedAgreement != true) return;
+    final tap = _pendingNotificationTap;
+    if (tap == null) return;
+    _pendingNotificationTap = null;
+    // 用户点通知进来，意图明确，本次启动不再自动恢复上次阅读。
+    _resumeReadingHandled = true;
+    if (tap.kind == BackgroundDownloadKind.update) {
+      final apkPath = tap.apkPath;
+      final buildNumber = tap.expectedBuildNumber;
+      if (apkPath != null && buildNumber != null) {
+        try {
+          await AppUpdateDownloadService.installDownloadedApk(
+            apkPath,
+            expectedBuildNumber: buildNumber,
+          );
+        } catch (error) {
+          debugPrint('open downloaded update failed: $error');
+        }
+      }
+      return;
+    }
+    final bookId = tap.bookId;
+    final context = _navigatorKey.currentContext;
+    if (bookId == null || context == null) return;
+    final book = await BookDao().getBookById(bookId);
+    if (book == null || !mounted || _navigatorKey.currentContext == null) {
+      return;
+    }
+    await NativeReaderService.openBook(_navigatorKey.currentContext!, book);
+  }
+
+  /// 启动后自动回到上次阅读。
+  ///
+  /// 仅当「阅读中退出应用」留下的会话记录存在且设置开关开启时触发；
+  /// 通知点击、外部文件打开等显式意图优先，命中时本次启动不再自动恢复。
+  void _scheduleResumeLastReading() {
+    if (!_isBootstrapped || _hasAcceptedAgreement != true) return;
+    if (_resumeReadingHandled) return;
+    if (_navigatorKey.currentContext == null) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (mounted) _scheduleResumeLastReading();
+      });
+      return;
+    }
+    unawaited(_resumeLastReading());
+  }
+
+  Future<void> _resumeLastReading() async {
+    if (_resumeReadingHandled) return;
+    _resumeReadingHandled = true;
+    // 桌面端带文件参数启动时，交给入站书籍通道打开目标文件。
+    if (widget.initialFilePaths.isNotEmpty) return;
+    try {
+      final bookId = await ReadingResumeService.takePendingResumeBookId();
+      if (bookId == null) return;
+      final book = await BookDao().getBookById(bookId);
+      if (book == null || !mounted) return;
+      final context = _navigatorKey.currentContext;
+      if (context == null || !context.mounted) return;
+      if (book.isOnline) {
+        final client = BookSourceClient();
+        final shelfService = BookSourceShelfService(client: client);
+        final route = BookOpenTransition.createRoute<void>(
+          BookSourceReaderPage(
+            source: shelfService.sourceFrom(book),
+            book: shelfService.sourceBookFrom(book),
+            client: client,
+            shelfService: shelfService,
+          ),
+          waitForReaderReady: true,
+        );
+        await BookOpenTransition.push<void>(context, route);
+      } else {
+        await NativeReaderService.openBook(context, book);
+      }
+    } catch (error) {
+      // 自动恢复失败不打扰用户，停留首页即可。
+      debugPrint('自动恢复上次阅读失败（已忽略）: $error');
+    }
+  }
+
+  /// 处理用户拒绝协议
+  void _onAgreementRejected() {
+    // 退出应用
+    debugPrint('❌ 用户拒绝协议，退出应用');
+    // 这里可以调用 SystemNavigator.pop() 或其他退出逻辑
+    // SystemNavigator.pop();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return provider.Consumer<ThemeNotifier>(
+      builder: (context, themeNotifier, child) =>
+          provider.Selector<AppSettingsNotifier, (String?, Locale?)>(
+            selector: (_, appSettings) =>
+                (appSettings.appFontFamily, appSettings.locale),
+            builder: (context, appAppearance, child) {
+              final (appFontFamily, locale) = appAppearance;
+              // 不在这里更新系统UI，让各页面自行控制
+              // 避免与阅读页面的全屏模式冲突
+              return MaterialApp(
+                navigatorKey: _navigatorKey,
+                onGenerateTitle: (context) => context.l10n.appTitle,
+                debugShowCheckedModeBanner: false,
+                // 🚀 启用高性能渲染，支持120Hz高刷新率
+                scrollBehavior: const MaterialScrollBehavior().copyWith(
+                  physics: const BouncingScrollPhysics(),
+                ),
+                theme: _buildLightTheme(
+                  themeNotifier.currentAppTheme,
+                  appFontFamily,
+                  themeNotifier.uiStyle,
+                ),
+                darkTheme: _buildDarkTheme(
+                  themeNotifier.currentAppTheme,
+                  appFontFamily,
+                  themeNotifier.uiStyle,
+                ),
+                themeMode: themeNotifier.themeMode,
+                locale: locale,
+                localizationsDelegates: const [
+                  AppLocalizations.delegate,
+                  GlobalMaterialLocalizations.delegate,
+                  GlobalWidgetsLocalizations.delegate,
+                  GlobalCupertinoLocalizations.delegate,
+                ],
+                supportedLocales: AppLocalizations.supportedLocales,
+                home: Builder(builder: (context) => _buildHome(context)),
+                // 移除 builder 中的系统UI更新，让各页面自行控制
+                // 避免与阅读页面的全屏模式冲突
+              );
+            },
+          ),
+    );
+  }
+
+  // 已移除未使用的 _getEffectiveThemeMode 方法
+
+  /// 根据协议状态决定显示哪个页面
+  Widget _buildHome(BuildContext context) {
+    if (_bootstrapError != null) {
+      return _buildBootstrapErrorPage(context);
+    }
+
+    // 如果还在初始化，显示加载页面
+    if (!_isBootstrapped) {
+      return _buildLoadingPage(context);
+    }
+
+    // 如果还在检查协议状态，显示加载页面
+    if (_hasAcceptedAgreement == null) {
+      return _buildLoadingPage(context);
+    }
+
+    // 如果未同意协议，显示协议页面
+    if (!_hasAcceptedAgreement!) {
+      return UserAgreementPage(
+        onAgreed: _onAgreementAccepted,
+        onDisagreed: _onAgreementRejected,
+      );
+    }
+
+    // 已同意协议，显示主页面
+    return UpdateCheckGate(
+      child: HomeShellPage(
+        showFirstHomeSupport: _showFirstHomeSupportAfterAgreement,
+      ),
+    );
+  }
+
+  Widget _buildBootstrapErrorPage(BuildContext context) {
+    return Scaffold(
+      body: Center(
+        child: Padding(
+          padding: const EdgeInsets.all(24),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(
+                Icons.error_outline,
+                size: 48,
+                color: Theme.of(context).colorScheme.error,
+              ),
+              const SizedBox(height: 16),
+              Text(
+                context.l10n.initializationFailed,
+                style: Theme.of(
+                  context,
+                ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w600),
+              ),
+              const SizedBox(height: 8),
+              Text(
+                switch (_bootstrapError) {
+                  _BootstrapError.dataService =>
+                    context.l10n.bootstrapDataServiceFailed,
+                  _BootstrapError.imageManager =>
+                    context.l10n.bootstrapImageManagerFailed,
+                  null => context.l10n.unknownError,
+                },
+                textAlign: TextAlign.center,
+                style: Theme.of(context).textTheme.bodyMedium,
+              ),
+              const SizedBox(height: 16),
+              ElevatedButton(
+                onPressed: _bootstrapServices,
+                child: Text(context.l10n.retry),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  /// 构建加载页面
+  Widget _buildLoadingPage(BuildContext context) {
+    return Scaffold(
+      body: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: [
+              Theme.of(context).colorScheme.primary.withValues(alpha: 0.1),
+              Theme.of(context).colorScheme.secondary.withValues(alpha: 0.05),
+              Theme.of(context).colorScheme.surface,
+            ],
+          ),
+        ),
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
+                width: 68,
+                height: 68,
+                padding: const EdgeInsets.all(6),
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [
+                      Theme.of(context).colorScheme.primary,
+                      Theme.of(context).colorScheme.secondary,
+                    ],
+                  ),
+                  borderRadius: BorderRadius.circular(18),
+                ),
+                child: const AppBrandIcon(size: 56, borderRadius: 13),
+              ),
+              const SizedBox(height: 20),
+              Text(
+                context.l10n.appTitle,
+                style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              const SizedBox(height: 40),
+              CircularProgressIndicator(
+                valueColor: AlwaysStoppedAnimation<Color>(
+                  Theme.of(context).colorScheme.primary,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  ThemeData _buildLightTheme(
+    AppTheme appTheme,
+    String? appFontFamily,
+    AppUiStyle uiStyle,
+  ) {
+    return _buildThemeData(
+      colorScheme: appTheme.lightColorScheme,
+      brightness: Brightness.light,
+      appFontFamily: appFontFamily,
+      uiStyle: uiStyle,
+    );
+  }
+
+  ThemeData _buildDarkTheme(
+    AppTheme appTheme,
+    String? appFontFamily,
+    AppUiStyle uiStyle,
+  ) {
+    return _buildThemeData(
+      colorScheme: appTheme.darkColorScheme,
+      brightness: Brightness.dark,
+      appFontFamily: appFontFamily,
+      uiStyle: uiStyle,
+    );
+  }
+
+  ThemeData _buildThemeData({
+    required ColorScheme colorScheme,
+    required Brightness brightness,
+    required String? appFontFamily,
+    required AppUiStyle uiStyle,
+  }) {
+    final isDark = brightness == Brightness.dark;
+    final isMaterial3Style = uiStyle == AppUiStyle.material3;
+    final systemBarColor = isMaterial3Style
+        ? colorScheme.surface
+        : Colors.transparent;
+
+    return ThemeData(
+      useMaterial3: true,
+      brightness: brightness,
+      colorScheme: colorScheme,
+      scaffoldBackgroundColor: colorScheme.surface,
+      cardColor: isMaterial3Style
+          ? colorScheme.surfaceContainerLow
+          : colorScheme.surface.withValues(alpha: isDark ? 0.82 : 0.9),
+      dialogTheme: DialogThemeData(
+        backgroundColor: isMaterial3Style
+            ? colorScheme.surfaceContainerHigh
+            : colorScheme.surface.withValues(alpha: isDark ? 0.9 : 0.96),
+      ),
+      fontFamily: appFontFamily,
+      fontFamilyFallback: FontCatalog.appFallbacks(appFontFamily),
+      appBarTheme: AppBarTheme(
+        elevation: 0,
+        scrolledUnderElevation: 0,
+        backgroundColor: systemBarColor,
+        surfaceTintColor: Colors.transparent,
+        systemOverlayStyle: SystemUiOverlayStyle(
+          statusBarColor: systemBarColor,
+          statusBarIconBrightness: isDark ? Brightness.light : Brightness.dark,
+          statusBarBrightness: isDark ? Brightness.dark : Brightness.light,
+          systemNavigationBarColor: systemBarColor,
+          systemNavigationBarIconBrightness: isDark
+              ? Brightness.light
+              : Brightness.dark,
+          systemNavigationBarDividerColor: Colors.transparent,
+          systemStatusBarContrastEnforced: false,
+          systemNavigationBarContrastEnforced: false,
+        ),
+      ),
+      dividerTheme: DividerThemeData(
+        color: colorScheme.outline.withValues(
+          alpha: isMaterial3Style ? 0.32 : 0.18,
+        ),
+        thickness: 0.7,
+      ),
+      extensions: <ThemeExtension<dynamic>>[
+        UiStyleThemeExtension(style: uiStyle),
+      ],
+    );
+  }
+}
+
+/// 启动初始化失败的类型，文案在 build 时按当前语言解析。
+enum _BootstrapError { dataService, imageManager }

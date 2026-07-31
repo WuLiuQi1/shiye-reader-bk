@@ -1,0 +1,422 @@
+import 'dart:math' as math;
+
+import 'package:flutter/foundation.dart';
+import 'package:flutter/painting.dart';
+
+import 'reader_text_characters.dart';
+
+typedef NativeTextSpanBuilder = TextSpan Function(int start, int end);
+
+/// 自然对齐保持显式字间距稳定；用户仍可在排版设置中选择两端对齐。
+/// 分页测量和实际绘制必须共用同一个对齐方式。
+const TextAlign readerBodyTextAlign = TextAlign.start;
+
+/// Book text has its own explicit font-size controls, so it must not be scaled
+/// a second time by iOS Dynamic Type or Windows system text scaling. Reader
+/// chrome remains outside this flow and continues to follow platform
+/// accessibility settings.
+const TextScaler readerBodyTextScaler = TextScaler.noScaling;
+
+const List<String> _iosSimplifiedChineseSystemFallbacks = <String>[
+  'PingFang SC',
+  'PingFang TC',
+];
+const List<String> _iosTraditionalChineseSystemFallbacks = <String>[
+  'PingFang TC',
+  'PingFang SC',
+];
+
+/// Keeps the platform-default reader font while making iOS CJK resolution
+/// deterministic.
+///
+/// Impeller can otherwise resolve Chinese glyph runs through different
+/// fallback faces when [fontFamily] is null, which makes adjacent glyphs look
+/// uneven even though their configured font size is identical. PingFang is
+/// the native iOS Chinese system face, so this does not bundle or download a
+/// replacement font.
+List<String>? readerFontFamilyFallbacks({
+  required String? fontFamily,
+  required List<String> configuredFallbacks,
+  Locale? locale,
+}) {
+  if (configuredFallbacks.isNotEmpty) return configuredFallbacks;
+  if (fontFamily != null ||
+      kIsWeb ||
+      defaultTargetPlatform != TargetPlatform.iOS) {
+    return null;
+  }
+  if (locale?.languageCode.toLowerCase() != 'zh') return null;
+  final scriptCode = locale?.scriptCode?.toLowerCase();
+  final countryCode = locale?.countryCode?.toUpperCase();
+  final usesTraditionalChinese =
+      scriptCode == 'hant' ||
+      countryCode == 'TW' ||
+      countryCode == 'HK' ||
+      countryCode == 'MO';
+  return usesTraditionalChinese
+      ? _iosTraditionalChineseSystemFallbacks
+      : _iosSimplifiedChineseSystemFallbacks;
+}
+
+/// 行高只作用于行与行之间：首行上方、末行下方不再垫行距，
+/// 这样"上/下边距"就是从字形边缘量起，不随行高设置漂移。
+const TextHeightBehavior readerTextHeightBehavior = TextHeightBehavior(
+  applyHeightToFirstAscent: false,
+  applyHeightToLastDescent: false,
+  leadingDistribution: TextLeadingDistribution.proportional,
+);
+
+/// 与 [readerTextHeightBehavior] 配套的 strut：只兜底字体回退时的
+/// 行高一致性，不携带 height——strut 不受 TextHeightBehavior 裁剪，
+/// 带上 height 会把首行行距原样加回来。
+StrutStyle readerStrutStyle(TextStyle style) => StrutStyle(
+  fontFamily: style.fontFamily,
+  fontFamilyFallback: style.fontFamilyFallback,
+  fontSize: style.fontSize,
+  fontWeight: style.fontWeight,
+  fontStyle: style.fontStyle,
+);
+
+@immutable
+class NativeTextFlowStyle {
+  const NativeTextFlowStyle({
+    required this.textDirection,
+    required this.textScaler,
+    required this.locale,
+    required this.strutStyle,
+    required this.textHeightBehavior,
+    this.textAlign = readerBodyTextAlign,
+    this.textWidthBasis = TextWidthBasis.parent,
+  });
+
+  final TextDirection textDirection;
+  final TextScaler textScaler;
+  final Locale? locale;
+  final StrutStyle? strutStyle;
+  final TextHeightBehavior? textHeightBehavior;
+  final TextAlign textAlign;
+  final TextWidthBasis textWidthBasis;
+
+  TextPainter createPainter(InlineSpan text, {int? maxLines}) {
+    return TextPainter(
+      text: text,
+      textAlign: textAlign,
+      textDirection: textDirection,
+      textScaler: textScaler,
+      maxLines: maxLines,
+      locale: locale,
+      strutStyle: strutStyle,
+      textWidthBasis: textWidthBasis,
+      textHeightBehavior: textHeightBehavior,
+    );
+  }
+}
+
+@immutable
+class NativeTextPageRange {
+  const NativeTextPageRange({
+    required this.start,
+    required this.end,
+    required this.lineCount,
+    int? visibleStart,
+    int? visibleEnd,
+  }) : visibleStart = visibleStart ?? start,
+       visibleEnd = visibleEnd ?? end,
+       assert(start <= (visibleStart ?? start)),
+       assert((visibleStart ?? start) <= (visibleEnd ?? end)),
+       assert((visibleEnd ?? end) <= end);
+
+  /// Contiguous text ownership used for canonical offset coverage.
+  final int start;
+  final int end;
+
+  /// The slice that is actually measured and painted. Paragraph separators
+  /// owned by this page may be folded at the top without deleting source text.
+  final int visibleStart;
+  final int visibleEnd;
+  final int lineCount;
+}
+
+/// Paginates only at visual line boundaries produced by Flutter's paragraph
+/// engine. Measurement and rendering must use the same [flowStyle].
+class NativeTextPaginator {
+  const NativeTextPaginator({
+    required this.maxWidth,
+    required this.maxHeight,
+    required this.flowStyle,
+    this.initialProbeLength = 2048,
+    this.avoidShortContinuingLine = true,
+  });
+
+  final double maxWidth;
+  final double maxHeight;
+  final NativeTextFlowStyle flowStyle;
+  final int initialProbeLength;
+  final bool avoidShortContinuingLine;
+
+  List<NativeTextPageRange> paginate({
+    required String text,
+    required NativeTextSpanBuilder spanBuilder,
+    int sourceOffset = 0,
+    double? firstPageHeight,
+  }) {
+    final resolvedFirstPageHeight = firstPageHeight ?? maxHeight;
+    if (text.isEmpty ||
+        maxWidth <= 0 ||
+        maxHeight <= 0 ||
+        resolvedFirstPageHeight <= 0) {
+      return const <NativeTextPageRange>[];
+    }
+
+    final pages = <NativeTextPageRange>[];
+    var pageStart = 0;
+    while (pageStart < text.length) {
+      final visibleStart = _firstVisiblePageOffset(text, pageStart);
+      if (visibleStart >= text.length) {
+        if (pages.isEmpty) {
+          pages.add(
+            NativeTextPageRange(
+              start: pageStart,
+              end: text.length,
+              visibleStart: text.length,
+              visibleEnd: text.length,
+              lineCount: 0,
+            ),
+          );
+        } else {
+          final previous = pages.removeLast();
+          pages.add(
+            NativeTextPageRange(
+              start: previous.start,
+              end: text.length,
+              visibleStart: previous.visibleStart,
+              visibleEnd: previous.visibleEnd,
+              lineCount: previous.lineCount,
+            ),
+          );
+        }
+        break;
+      }
+      final pageMaxHeight = pages.isEmpty ? resolvedFirstPageHeight : maxHeight;
+      final candidates = _lineEndCandidates(
+        text: text,
+        pageStart: visibleStart,
+        sourceOffset: sourceOffset,
+        spanBuilder: spanBuilder,
+        pageMaxHeight: pageMaxHeight,
+      );
+      var selected = _selectVerifiedCandidate(
+        candidates: candidates,
+        pageStart: visibleStart,
+        sourceOffset: sourceOffset,
+        spanBuilder: spanBuilder,
+        pageMaxHeight: pageMaxHeight,
+      );
+
+      if (avoidShortContinuingLine &&
+          selected.lineCount > 1 &&
+          selected.end < text.length &&
+          !_endsParagraph(text, selected.end)) {
+        final selectedIndex = candidates.indexOf(selected.end);
+        final previousEnd = selectedIndex > 0
+            ? candidates[selectedIndex - 1]
+            : -1;
+        if (previousEnd >= visibleStart) {
+          final finalLine = text.substring(previousEnd, selected.end).trim();
+          if (finalLine.isNotEmpty && finalLine.runes.length <= 2) {
+            selected =
+                _verifiedRange(
+                  pageStart: visibleStart,
+                  pageEnd: previousEnd,
+                  sourceOffset: sourceOffset,
+                  spanBuilder: spanBuilder,
+                  pageMaxHeight: pageMaxHeight,
+                ) ??
+                selected;
+          }
+        }
+      }
+
+      assert(selected.end > visibleStart);
+      final ownsTrailingWhitespace =
+          _firstVisiblePageOffset(text, selected.end) >= text.length;
+      final pageEnd = ownsTrailingWhitespace ? text.length : selected.end;
+      pages.add(
+        NativeTextPageRange(
+          start: pageStart,
+          end: pageEnd,
+          visibleStart: visibleStart,
+          visibleEnd: selected.end,
+          lineCount: selected.lineCount,
+        ),
+      );
+      pageStart = pageEnd;
+    }
+
+    assert(pages.first.start == 0);
+    assert(pages.last.end == text.length);
+    for (var i = 1; i < pages.length; i++) {
+      assert(pages[i - 1].end == pages[i].start);
+    }
+    return pages;
+  }
+
+  List<int> _lineEndCandidates({
+    required String text,
+    required int pageStart,
+    required int sourceOffset,
+    required NativeTextSpanBuilder spanBuilder,
+    required double pageMaxHeight,
+  }) {
+    var probeLength = math.min(initialProbeLength, text.length - pageStart);
+    while (true) {
+      var probeEnd = pageStart + probeLength;
+      probeEnd = _safeCodeUnitBoundary(text, pageStart, probeEnd);
+      final painter = flowStyle.createPainter(
+        spanBuilder(sourceOffset + pageStart, sourceOffset + probeEnd),
+      )..layout(maxWidth: maxWidth);
+      final metrics = painter.computeLineMetrics();
+      final reachedTextEnd = probeEnd == text.length;
+      final candidates = <int>[];
+      var observedOverflowLine = false;
+
+      // Collect visual line ends from the probe. Do NOT reject lines using
+      // baseline/ascent/height arithmetic here — with TextStyle.height and
+      // TextHeightBehavior that formula often overestimates the line box and
+      // stops a page early, leaving large empty regions at the bottom (common
+      // on EPUB chapters with mixed heading scales and paragraph gaps).
+      // Hard limit is always TextPainter.height via _selectVerifiedCandidate.
+      for (var index = 0; index < metrics.length; index++) {
+        final metric = metrics[index];
+        final isArtificialProbeTail =
+            !reachedTextEnd && index == metrics.length - 1;
+        if (isArtificialProbeTail) break;
+
+        final samplePosition = painter.getPositionForOffset(
+          Offset(
+            metric.left + (metric.width / 2),
+            metric.baseline - (metric.ascent / 2),
+          ),
+        );
+        final boundary = painter.getLineBoundary(samplePosition);
+        final end = pageStart + boundary.end;
+        if (end > pageStart && (candidates.isEmpty || end > candidates.last)) {
+          // Cheap pre-check: ink bottom (baseline+descent). May be slightly
+          // tighter than full line height with leading; verification still
+          // decides. If already past maxHeight, further lines will not fit.
+          final inkBottom = metric.baseline + metric.descent;
+          if (inkBottom > pageMaxHeight + 0.5) {
+            observedOverflowLine = true;
+            break;
+          }
+          candidates.add(end);
+        }
+      }
+      // If the probe itself is taller than the page, we have enough lines to
+      // binary-walk; mark overflow so the outer loop can stop growing probe.
+      if (!observedOverflowLine && painter.height > pageMaxHeight + 0.5) {
+        observedOverflowLine = true;
+      }
+      painter.dispose();
+
+      if (candidates.isNotEmpty && (reachedTextEnd || observedOverflowLine)) {
+        return candidates;
+      }
+      if (reachedTextEnd) {
+        return candidates.isNotEmpty
+            ? candidates
+            : <int>[_nextCodePointBoundary(text, pageStart)];
+      }
+      probeLength = math.min(probeLength * 2, text.length - pageStart);
+    }
+  }
+
+  NativeTextPageRange _selectVerifiedCandidate({
+    required List<int> candidates,
+    required int pageStart,
+    required int sourceOffset,
+    required NativeTextSpanBuilder spanBuilder,
+    required double pageMaxHeight,
+  }) {
+    for (var index = candidates.length - 1; index >= 0; index--) {
+      final verified = _verifiedRange(
+        pageStart: pageStart,
+        pageEnd: candidates[index],
+        sourceOffset: sourceOffset,
+        spanBuilder: spanBuilder,
+        pageMaxHeight: pageMaxHeight,
+      );
+      if (verified != null) return verified;
+    }
+    final fallbackEnd = candidates.isEmpty ? pageStart + 1 : candidates.first;
+    return NativeTextPageRange(
+      start: pageStart,
+      end: fallbackEnd,
+      lineCount: 1,
+    );
+  }
+
+  NativeTextPageRange? _verifiedRange({
+    required int pageStart,
+    required int pageEnd,
+    required int sourceOffset,
+    required NativeTextSpanBuilder spanBuilder,
+    required double pageMaxHeight,
+  }) {
+    if (pageEnd <= pageStart) return null;
+    final painter = flowStyle.createPainter(
+      spanBuilder(sourceOffset + pageStart, sourceOffset + pageEnd),
+    )..layout(maxWidth: maxWidth);
+    final fits = painter.height <= pageMaxHeight;
+    final actualLineCount = painter.computeLineMetrics().length;
+    painter.dispose();
+    if (!fits) return null;
+    return NativeTextPageRange(
+      start: pageStart,
+      end: pageEnd,
+      lineCount: actualLineCount,
+    );
+  }
+}
+
+int _safeCodeUnitBoundary(String text, int start, int end) {
+  if (end >= text.length) return text.length;
+  if (end > start && _isLowSurrogate(text.codeUnitAt(end))) return end - 1;
+  return end;
+}
+
+int _nextCodePointBoundary(String text, int start) {
+  if (start >= text.length) return text.length;
+  if (_isHighSurrogate(text.codeUnitAt(start)) && start + 1 < text.length) {
+    return start + 2;
+  }
+  return start + 1;
+}
+
+bool _endsParagraph(String text, int end) {
+  if (end <= 0) return true;
+  return isReaderLineBreakCodeUnit(text.codeUnitAt(end - 1));
+}
+
+/// Folds only complete blank rows at a page boundary. Indentation belonging to
+/// the first non-empty row is preserved, while original/generated paragraph
+/// separators remain owned by the page for canonical offset continuity.
+int _firstVisiblePageOffset(String text, int pageStart) {
+  var rowStart = pageStart;
+  while (rowStart < text.length) {
+    var cursor = rowStart;
+    while (cursor < text.length &&
+        isReaderIndentCodeUnit(text.codeUnitAt(cursor))) {
+      cursor++;
+    }
+    if (cursor >= text.length) return text.length;
+    final breakLength = readerLineBreakLengthAt(text, cursor);
+    if (breakLength == 0) return rowStart;
+    rowStart = cursor + breakLength;
+  }
+  return rowStart;
+}
+
+bool _isHighSurrogate(int codeUnit) => codeUnit >= 0xD800 && codeUnit <= 0xDBFF;
+
+bool _isLowSurrogate(int codeUnit) => codeUnit >= 0xDC00 && codeUnit <= 0xDFFF;

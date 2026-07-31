@@ -1,0 +1,166 @@
+# Miscellaneous
+*.class
+*.log
+*.pyc
+*.swp
+**/~syncthing~*.tmp
+.DS_Store
+.atom/
+.build/
+.buildlog/
+.history
+.svn/
+.swiftpm/
+migrate_working_dir/
+
+# IntelliJ / VS Code
+*.iml
+*.ipr
+*.iws
+.idea/
+.vscode/
+
+# Claude / Agent internal
+.claude/
+CLAUDE.md
+AGENTS.md
+.omx/
+
+# Flutter/Dart/Pub related
+**/doc/api/
+**/ios/Flutter/.last_build_id
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.pub-cache/
+.pub/
+/build/
+
+# Symbolication related
+app.*.symbols
+
+# Obfuscation related
+app.*.map.json
+
+# Android Studio will place build artifacts here
+/android/app/debug
+/android/app/profile
+/android/app/release
+android/local.properties
+
+# Internal dev docs & logs
+Log.md
+knowledge_base/
+/knowledge/
+*.pen
+
+# Screenshots / dev captures
+screenshots/
+shot/
+diagrams/
+!marketing/app-store/screenshots/
+!marketing/app-store/screenshots/**
+
+# Misc utility scripts & internal docs
+extract_svg.py
+fix_svg.py
+replace_withopacity.ps1
+预览SVG图表.html
+如何预览SVG图表.md
+修复SVG显示.py
+提取并转换SVG.py
+devtools_options.yaml
+
+# Copyright application / internal docs
+软著*.md
+需求.md
+最终解决方案.md
+转换为PDF说明.md
+
+# Test data (novel TXT files — not part of the project)
+/*.txt
+/test/failures/
+
+# Secrets
+*.env
+**/.env
+**/.env.*
+!**/.env.example
+*.pem
+*.key
+*.jks
+*.keystore
+*.p12
+*.pfx
+*.ppk
+*.kdbx
+**/id_rsa
+**/id_rsa_*
+**/id_ed25519
+**/id_ed25519_*
+**/id_dsa
+**/id_dsa_*
+**/id_ecdsa
+**/id_ecdsa_*
+**/id_xmss
+**/id_xmss_*
+**/known_hosts
+**/key.properties
+**/keystore.properties
+**/.netrc
+**/.pypirc
+**/.ssh/
+**/.secrets/
+**/secrets/
+**/credentials*.json
+**/client_secret*.json
+**/service-account*.json
+**/application_default_credentials.json
+**/firebase-adminsdk-*.json
+!**/credentials.example.json
+!**/client_secret.example.json
+!**/service-account.example.json
+*.tfstate
+*.tfstate.*
+*.tfvars
+!*.tfvars.example
+
+# Private backend runtime data and release payloads
+*.db
+*.db-*
+*.sqlite
+*.sqlite-*
+*.sqlite3
+*.sqlite3-*
+*.bak
+*.backup
+*.dump
+*.sql.gz
+*.apk
+*.aab
+*.ipa
+*.dmg
+*.pkg
+*.exe
+*.msi
+*.msix
+*.appimage
+*.deb
+*.rpm
+/official-site-bundle/
+
+# Agent-generated assets are never part of application releases
+/output/
+/Project.md
+/.playwright-cli/
+
+# l10n tooling artifacts
+l10n_untranslated.json
+.l10n_work/
+
+# Syncthing
+.syncthing.*.tmp
+*.sync-conflict-*
+.stfolder/
+.stversions/
+.stignore

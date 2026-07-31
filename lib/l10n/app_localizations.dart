@@ -1,0 +1,7508 @@
+import 'dart:async';
+
+import 'package:flutter/foundation.dart';
+import 'package:flutter/widgets.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:intl/intl.dart' as intl;
+
+import 'app_localizations_en.dart';
+import 'app_localizations_ja.dart';
+import 'app_localizations_zh.dart';
+
+// ignore_for_file: type=lint
+
+/// Callers can lookup localized strings with an instance of AppLocalizations
+/// returned by `AppLocalizations.of(context)`.
+///
+/// Applications need to include `AppLocalizations.delegate()` in their app's
+/// `localizationDelegates` list, and the locales they support in the app's
+/// `supportedLocales` list. For example:
+///
+/// ```dart
+/// import 'l10n/app_localizations.dart';
+///
+/// return MaterialApp(
+///   localizationsDelegates: AppLocalizations.localizationsDelegates,
+///   supportedLocales: AppLocalizations.supportedLocales,
+///   home: MyApplicationHome(),
+/// );
+/// ```
+///
+/// ## Update pubspec.yaml
+///
+/// Please make sure to update your pubspec.yaml to include the following
+/// packages:
+///
+/// ```yaml
+/// dependencies:
+///   # Internationalization support.
+///   flutter_localizations:
+///     sdk: flutter
+///   intl: any # Use the pinned version from flutter_localizations
+///
+///   # Rest of dependencies
+/// ```
+///
+/// ## iOS Applications
+///
+/// iOS applications define key application metadata, including supported
+/// locales, in an Info.plist file that is built into the application bundle.
+/// To configure the locales supported by your app, you’ll need to edit this
+/// file.
+///
+/// First, open your project’s ios/Runner.xcworkspace Xcode workspace file.
+/// Then, in the Project Navigator, open the Info.plist file under the Runner
+/// project’s Runner folder.
+///
+/// Next, select the Information Property List item, select Add Item from the
+/// Editor menu, then select Localizations from the pop-up menu.
+///
+/// Select and expand the newly-created Localizations item then, for each
+/// locale your application supports, add a new item and select the locale
+/// you wish to add from the pop-up menu in the Value field. This list should
+/// be consistent with the languages listed in the AppLocalizations.supportedLocales
+/// property.
+abstract class AppLocalizations {
+  AppLocalizations(String locale)
+    : localeName = intl.Intl.canonicalizedLocale(locale.toString());
+
+  final String localeName;
+
+  static AppLocalizations of(BuildContext context) {
+    return Localizations.of<AppLocalizations>(context, AppLocalizations)!;
+  }
+
+  static const LocalizationsDelegate<AppLocalizations> delegate =
+      _AppLocalizationsDelegate();
+
+  /// A list of this localizations delegate along with the default localizations
+  /// delegates.
+  ///
+  /// Returns a list of localizations delegates containing this delegate along with
+  /// GlobalMaterialLocalizations.delegate, GlobalCupertinoLocalizations.delegate,
+  /// and GlobalWidgetsLocalizations.delegate.
+  ///
+  /// Additional delegates can be added by appending to this list in
+  /// MaterialApp. This list does not have to be used at all if a custom list
+  /// of delegates is preferred or required.
+  static const List<LocalizationsDelegate<dynamic>> localizationsDelegates =
+      <LocalizationsDelegate<dynamic>>[
+        delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+      ];
+
+  /// A list of this localizations delegate's supported locales.
+  static const List<Locale> supportedLocales = <Locale>[
+    Locale('en'),
+    Locale('ja'),
+    Locale('zh'),
+    Locale('zh', 'TW'),
+  ];
+
+  /// The title of the application
+  ///
+  /// In en, this message translates to:
+  /// **'OpenReading'**
+  String get appTitle;
+
+  /// Home tab label
+  ///
+  /// In en, this message translates to:
+  /// **'Home'**
+  String get home;
+
+  /// Library tab label
+  ///
+  /// In en, this message translates to:
+  /// **'Bookshelf'**
+  String get library;
+
+  /// Book sources tab label
+  ///
+  /// In en, this message translates to:
+  /// **'Sources'**
+  String get bookSources;
+
+  /// No description provided for @discover.
+  ///
+  /// In en, this message translates to:
+  /// **'Discover'**
+  String get discover;
+
+  /// No description provided for @discoverRecommended.
+  ///
+  /// In en, this message translates to:
+  /// **'For you'**
+  String get discoverRecommended;
+
+  /// No description provided for @discoverCategories.
+  ///
+  /// In en, this message translates to:
+  /// **'Categories'**
+  String get discoverCategories;
+
+  /// No description provided for @discoverLatest.
+  ///
+  /// In en, this message translates to:
+  /// **'Latest'**
+  String get discoverLatest;
+
+  /// No description provided for @discoverLoadFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not load discovery content'**
+  String get discoverLoadFailed;
+
+  /// No description provided for @discoverRetry.
+  ///
+  /// In en, this message translates to:
+  /// **'Try again'**
+  String get discoverRetry;
+
+  /// No description provided for @discoverEmptyTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing to show yet'**
+  String get discoverEmptyTitle;
+
+  /// No description provided for @discoverEmptyMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'This section has no content to show yet.'**
+  String get discoverEmptyMessage;
+
+  /// No description provided for @discoverUnsupportedTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Current sources do not support this section'**
+  String get discoverUnsupportedTitle;
+
+  /// No description provided for @discoverUnsupportedMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'A source with the {capability} capability is required. Existing sources can still be searched.'**
+  String discoverUnsupportedMessage(String capability);
+
+  /// No description provided for @discoverCategoryEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'There are no books to show in this category yet.'**
+  String get discoverCategoryEmpty;
+
+  /// No description provided for @bookSourceManagementTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Manage sources'**
+  String get bookSourceManagementTitle;
+
+  /// No description provided for @bookSourceManagementSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Add, enable, remove, and inspect content providers. Discovery stays focused on finding books.'**
+  String get bookSourceManagementSubtitle;
+
+  /// No description provided for @settingsContentSourcesTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Content sources'**
+  String get settingsContentSourcesTitle;
+
+  /// No description provided for @settingsContentSourcesSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Add, enable, or remove open book sources'**
+  String get settingsContentSourcesSubtitle;
+
+  /// No description provided for @bookSourcesSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Connect open sources and search readable content across providers'**
+  String get bookSourcesSubtitle;
+
+  /// No description provided for @bookSourcesAdd.
+  ///
+  /// In en, this message translates to:
+  /// **'Add source'**
+  String get bookSourcesAdd;
+
+  /// No description provided for @bookSourcesSearchHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Search enabled sources by title or author'**
+  String get bookSourcesSearchHint;
+
+  /// No description provided for @bookSourcesSearch.
+  ///
+  /// In en, this message translates to:
+  /// **'Search'**
+  String get bookSourcesSearch;
+
+  /// No description provided for @bookSourcesLoadMore.
+  ///
+  /// In en, this message translates to:
+  /// **'Load more'**
+  String get bookSourcesLoadMore;
+
+  /// No description provided for @bookSourcesFailedCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} source request(s) failed'**
+  String bookSourcesFailedCount(int count);
+
+  /// No description provided for @bookSourcesSearchPrompt.
+  ///
+  /// In en, this message translates to:
+  /// **'Add and enable a source to search it here'**
+  String get bookSourcesSearchPrompt;
+
+  /// No description provided for @bookSourcesNoResults.
+  ///
+  /// In en, this message translates to:
+  /// **'No matching books found'**
+  String get bookSourcesNoResults;
+
+  /// No description provided for @bookSourcesNoSourcesTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'No sources yet'**
+  String get bookSourcesNoSourcesTitle;
+
+  /// No description provided for @bookSourcesNoSourcesDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Paste the address of a service compatible with the Open Reading Source Protocol.'**
+  String get bookSourcesNoSourcesDescription;
+
+  /// No description provided for @bookSourcesManageTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Connected sources'**
+  String get bookSourcesManageTitle;
+
+  /// No description provided for @bookSourcesEnabled.
+  ///
+  /// In en, this message translates to:
+  /// **'Enabled'**
+  String get bookSourcesEnabled;
+
+  /// No description provided for @bookSourcesDisabled.
+  ///
+  /// In en, this message translates to:
+  /// **'Disabled'**
+  String get bookSourcesDisabled;
+
+  /// No description provided for @bookSourcesRemove.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove'**
+  String get bookSourcesRemove;
+
+  /// No description provided for @bookSourcesRemoveTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove source'**
+  String get bookSourcesRemoveTitle;
+
+  /// No description provided for @bookSourcesRemoveMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'This only removes the source configuration. Local books are not affected.'**
+  String get bookSourcesRemoveMessage;
+
+  /// No description provided for @bookSourcesCancel.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get bookSourcesCancel;
+
+  /// No description provided for @bookSourcesConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm'**
+  String get bookSourcesConfirm;
+
+  /// No description provided for @bookSourcesAddTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Add open source'**
+  String get bookSourcesAddTitle;
+
+  /// No description provided for @bookSourcesUrlLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Source address'**
+  String get bookSourcesUrlLabel;
+
+  /// No description provided for @bookSourcesUrlHint.
+  ///
+  /// In en, this message translates to:
+  /// **'https://example.com or a discovery document URL'**
+  String get bookSourcesUrlHint;
+
+  /// No description provided for @bookSourcesNoOfficialSourcesNotice.
+  ///
+  /// In en, this message translates to:
+  /// **'OpenReading includes no sources and does not operate, recommend, or endorse third-party source services. Every source address is added by you.'**
+  String get bookSourcesNoOfficialSourcesNotice;
+
+  /// No description provided for @bookSourcesResponsibilityAck.
+  ///
+  /// In en, this message translates to:
+  /// **'I confirm that I am authorized to access this content and will not use the source to bypass sign-in, payment, DRM, or other access controls.'**
+  String get bookSourcesResponsibilityAck;
+
+  /// No description provided for @bookSourcesConnect.
+  ///
+  /// In en, this message translates to:
+  /// **'Connect and validate'**
+  String get bookSourcesConnect;
+
+  /// No description provided for @bookSourcesConnecting.
+  ///
+  /// In en, this message translates to:
+  /// **'Validating protocol…'**
+  String get bookSourcesConnecting;
+
+  /// No description provided for @bookSourcesAdded.
+  ///
+  /// In en, this message translates to:
+  /// **'Source added'**
+  String get bookSourcesAdded;
+
+  /// No description provided for @bookSourcesRefresh.
+  ///
+  /// In en, this message translates to:
+  /// **'Refresh source'**
+  String get bookSourcesRefresh;
+
+  /// No description provided for @bookSourcesRefreshed.
+  ///
+  /// In en, this message translates to:
+  /// **'Book source refreshed'**
+  String get bookSourcesRefreshed;
+
+  /// No description provided for @bookSourcesRefreshFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not refresh this book source'**
+  String get bookSourcesRefreshFailed;
+
+  /// No description provided for @bookSourcesProtocolTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Open Reading Source Protocol'**
+  String get bookSourcesProtocolTitle;
+
+  /// No description provided for @bookSourcesProtocolDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'A common contract for discovery, search, book details, catalogs, and chapter content. Developers can host native sources or build adapters for content they are authorized to serve.'**
+  String get bookSourcesProtocolDescription;
+
+  /// No description provided for @bookSourcesProtocolDetails.
+  ///
+  /// In en, this message translates to:
+  /// **'View protocol'**
+  String get bookSourcesProtocolDetails;
+
+  /// No description provided for @bookSourcesProtocolRepository.
+  ///
+  /// In en, this message translates to:
+  /// **'Protocol repository'**
+  String get bookSourcesProtocolRepository;
+
+  /// No description provided for @bookSourcesProtocolRepositoryOpen.
+  ///
+  /// In en, this message translates to:
+  /// **'View on GitHub'**
+  String get bookSourcesProtocolRepositoryOpen;
+
+  /// No description provided for @bookSourcesProtocolRepositoryOpenFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not open the protocol repository'**
+  String get bookSourcesProtocolRepositoryOpenFailed;
+
+  /// No description provided for @bookSourcesProtocolDialogTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Open source protocol v1.4'**
+  String get bookSourcesProtocolDialogTitle;
+
+  /// No description provided for @bookSourcesProtocolDialogBody.
+  ///
+  /// In en, this message translates to:
+  /// **'A source publishes /.well-known/open-reading-source.json and implements the Core Reading capabilities: search, book details, paginated chapter catalogs, and chapter content. Version 1.4 keeps complete catalog pagination, requires these core capabilities, and retains operator, contact, license, and rights-statement metadata for public HTTP(S) sources that do not require sign-in.'**
+  String get bookSourcesProtocolDialogBody;
+
+  /// No description provided for @bookSourcesRightsDetails.
+  ///
+  /// In en, this message translates to:
+  /// **'Operator and rights'**
+  String get bookSourcesRightsDetails;
+
+  /// No description provided for @bookSourcesOperator.
+  ///
+  /// In en, this message translates to:
+  /// **'Source operator'**
+  String get bookSourcesOperator;
+
+  /// No description provided for @bookSourcesContentLicense.
+  ///
+  /// In en, this message translates to:
+  /// **'Content license'**
+  String get bookSourcesContentLicense;
+
+  /// No description provided for @bookSourcesRightsStatement.
+  ///
+  /// In en, this message translates to:
+  /// **'Rights statement'**
+  String get bookSourcesRightsStatement;
+
+  /// No description provided for @bookSourcesRightsNotProvided.
+  ///
+  /// In en, this message translates to:
+  /// **'Not provided by this source'**
+  String get bookSourcesRightsNotProvided;
+
+  /// No description provided for @bookSourcesRightsUnverifiedNotice.
+  ///
+  /// In en, this message translates to:
+  /// **'These statements are supplied by the independent source operator. OpenReading displays them for transparency but does not verify or endorse them.'**
+  String get bookSourcesRightsUnverifiedNotice;
+
+  /// No description provided for @bookSourcesContactOperator.
+  ///
+  /// In en, this message translates to:
+  /// **'Contact operator'**
+  String get bookSourcesContactOperator;
+
+  /// No description provided for @bookSourcesRightsReport.
+  ///
+  /// In en, this message translates to:
+  /// **'Rights report'**
+  String get bookSourcesRightsReport;
+
+  /// No description provided for @bookSourcesRightsReportOpenFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not open the rights-report form'**
+  String get bookSourcesRightsReportOpenFailed;
+
+  /// No description provided for @bookSourcesClose.
+  ///
+  /// In en, this message translates to:
+  /// **'Close'**
+  String get bookSourcesClose;
+
+  /// Settings tab label
+  ///
+  /// In en, this message translates to:
+  /// **'Settings'**
+  String get settings;
+
+  /// Statistics tab label
+  ///
+  /// In en, this message translates to:
+  /// **'Statistics'**
+  String get statistics;
+
+  /// Reading page title
+  ///
+  /// In en, this message translates to:
+  /// **'Reading'**
+  String get reading;
+
+  /// Import books button label
+  ///
+  /// In en, this message translates to:
+  /// **'Import Books'**
+  String get importBooks;
+
+  /// Dark mode setting label
+  ///
+  /// In en, this message translates to:
+  /// **'Dark Mode'**
+  String get darkMode;
+
+  /// Light mode setting label
+  ///
+  /// In en, this message translates to:
+  /// **'Light Mode'**
+  String get lightMode;
+
+  /// System theme mode setting label
+  ///
+  /// In en, this message translates to:
+  /// **'System'**
+  String get systemMode;
+
+  /// Theme setting section
+  ///
+  /// In en, this message translates to:
+  /// **'Theme'**
+  String get theme;
+
+  /// Accent color setting label
+  ///
+  /// In en, this message translates to:
+  /// **'Accent Color'**
+  String get accent;
+
+  /// Bookmarks feature label
+  ///
+  /// In en, this message translates to:
+  /// **'Bookmarks'**
+  String get bookmarks;
+
+  /// Notes feature label
+  ///
+  /// In en, this message translates to:
+  /// **'Notes'**
+  String get notes;
+
+  /// Highlights feature label
+  ///
+  /// In en, this message translates to:
+  /// **'Highlights'**
+  String get highlights;
+
+  /// TTS reading feature label
+  ///
+  /// In en, this message translates to:
+  /// **'Text-to-Speech'**
+  String get ttsReading;
+
+  /// Share button label
+  ///
+  /// In en, this message translates to:
+  /// **'Share'**
+  String get share;
+
+  /// Share content dialog title
+  ///
+  /// In en, this message translates to:
+  /// **'Share Content'**
+  String get shareContent;
+
+  /// Share current page option
+  ///
+  /// In en, this message translates to:
+  /// **'Share Current Page'**
+  String get shareCurrentPage;
+
+  /// Share selected text option
+  ///
+  /// In en, this message translates to:
+  /// **'Share Selected Text'**
+  String get shareSelectedText;
+
+  /// Share reading progress option
+  ///
+  /// In en, this message translates to:
+  /// **'Share Reading Progress'**
+  String get shareProgress;
+
+  /// Play TTS button
+  ///
+  /// In en, this message translates to:
+  /// **'Play'**
+  String get play;
+
+  /// Pause TTS button
+  ///
+  /// In en, this message translates to:
+  /// **'Pause'**
+  String get pause;
+
+  /// Stop TTS button
+  ///
+  /// In en, this message translates to:
+  /// **'Stop'**
+  String get stop;
+
+  /// TTS speed setting
+  ///
+  /// In en, this message translates to:
+  /// **'Speed'**
+  String get speed;
+
+  /// TTS pitch setting
+  ///
+  /// In en, this message translates to:
+  /// **'Pitch'**
+  String get pitch;
+
+  /// Language setting
+  ///
+  /// In en, this message translates to:
+  /// **'Language'**
+  String get language;
+
+  /// Font size setting
+  ///
+  /// In en, this message translates to:
+  /// **'Font Size'**
+  String get fontSize;
+
+  /// Reading progress indicator
+  ///
+  /// In en, this message translates to:
+  /// **'Reading Progress'**
+  String get readingProgress;
+
+  /// Total pages label
+  ///
+  /// In en, this message translates to:
+  /// **'Total Pages'**
+  String get totalPages;
+
+  /// Current page label
+  ///
+  /// In en, this message translates to:
+  /// **'Current Page'**
+  String get currentPage;
+
+  /// Reading time statistics
+  ///
+  /// In en, this message translates to:
+  /// **'Reading Time'**
+  String get readingTime;
+
+  /// Books read statistics
+  ///
+  /// In en, this message translates to:
+  /// **'Books Read'**
+  String get booksRead;
+
+  /// Today's reading time
+  ///
+  /// In en, this message translates to:
+  /// **'Today\'s Reading'**
+  String get todayReading;
+
+  /// Cancel button
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get cancel;
+
+  /// Confirm button
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm'**
+  String get confirm;
+
+  /// Delete button
+  ///
+  /// In en, this message translates to:
+  /// **'Delete'**
+  String get delete;
+
+  /// Edit button
+  ///
+  /// In en, this message translates to:
+  /// **'Edit'**
+  String get edit;
+
+  /// Save button
+  ///
+  /// In en, this message translates to:
+  /// **'Save'**
+  String get save;
+
+  /// Back button
+  ///
+  /// In en, this message translates to:
+  /// **'Back'**
+  String get back;
+
+  /// Next button
+  ///
+  /// In en, this message translates to:
+  /// **'Next'**
+  String get next;
+
+  /// Previous button
+  ///
+  /// In en, this message translates to:
+  /// **'Previous'**
+  String get previous;
+
+  /// Search function
+  ///
+  /// In en, this message translates to:
+  /// **'Search'**
+  String get search;
+
+  /// No search results message
+  ///
+  /// In en, this message translates to:
+  /// **'No results found'**
+  String get noResults;
+
+  /// Loading indicator text
+  ///
+  /// In en, this message translates to:
+  /// **'Loading...'**
+  String get loading;
+
+  /// Error message
+  ///
+  /// In en, this message translates to:
+  /// **'Error'**
+  String get error;
+
+  /// Initialization failed message
+  ///
+  /// In en, this message translates to:
+  /// **'Initialization failed'**
+  String get initializationFailed;
+
+  /// Unknown error message
+  ///
+  /// In en, this message translates to:
+  /// **'Unknown error'**
+  String get unknownError;
+
+  /// Retry button
+  ///
+  /// In en, this message translates to:
+  /// **'Retry'**
+  String get retry;
+
+  /// Appearance settings section
+  ///
+  /// In en, this message translates to:
+  /// **'Appearance'**
+  String get appearanceSettings;
+
+  /// Reading tips section
+  ///
+  /// In en, this message translates to:
+  /// **'Reading Tips'**
+  String get readingTips;
+
+  /// Message about moved font settings
+  ///
+  /// In en, this message translates to:
+  /// **'Reading font settings moved'**
+  String get readingFontSettingsMoved;
+
+  /// Hint about font settings location
+  ///
+  /// In en, this message translates to:
+  /// **'Open any book, tap the center of the screen, then use the bottom toolbar to adjust font size, line spacing, letter spacing, margins, and reading font.'**
+  String get readingFontSettingsHint;
+
+  /// Reading settings section
+  ///
+  /// In en, this message translates to:
+  /// **'Reading Settings'**
+  String get readingSettings;
+
+  /// Enable text-to-speech option
+  ///
+  /// In en, this message translates to:
+  /// **'Enable TTS'**
+  String get enableTts;
+
+  /// Hint about enabling TTS
+  ///
+  /// In en, this message translates to:
+  /// **'Enable text-to-speech reading'**
+  String get enableTtsHint;
+
+  /// TTS speed label
+  ///
+  /// In en, this message translates to:
+  /// **'Speed'**
+  String get ttsSpeedLabel;
+
+  /// Hint for TTS speed
+  ///
+  /// In en, this message translates to:
+  /// **'Adjust reading speed'**
+  String get ttsSpeedHint;
+
+  /// TTS volume label
+  ///
+  /// In en, this message translates to:
+  /// **'Volume'**
+  String get ttsVolumeLabel;
+
+  /// Hint for TTS volume
+  ///
+  /// In en, this message translates to:
+  /// **'Adjust reading volume'**
+  String get ttsVolumeHint;
+
+  /// TTS pitch label
+  ///
+  /// In en, this message translates to:
+  /// **'Pitch'**
+  String get ttsPitchLabel;
+
+  /// Hint for TTS pitch
+  ///
+  /// In en, this message translates to:
+  /// **'Adjust reading pitch'**
+  String get ttsPitchHint;
+
+  /// App settings section
+  ///
+  /// In en, this message translates to:
+  /// **'App Settings'**
+  String get appSettings;
+
+  /// App font setting
+  ///
+  /// In en, this message translates to:
+  /// **'App font'**
+  String get appFont;
+
+  /// Explains the scope of the app font
+  ///
+  /// In en, this message translates to:
+  /// **'Used by navigation, buttons, settings, and other interface text. It does not change book content.'**
+  String get appFontDescription;
+
+  /// Reader content font setting
+  ///
+  /// In en, this message translates to:
+  /// **'Reading font'**
+  String get readerFont;
+
+  /// Explains the scope of the reading font
+  ///
+  /// In en, this message translates to:
+  /// **'Used only for book text and chapter headings. It does not change the app interface.'**
+  String get readerFontDescription;
+
+  /// System default font
+  ///
+  /// In en, this message translates to:
+  /// **'System Default'**
+  String get fontSystem;
+
+  /// Source Han Serif font
+  ///
+  /// In en, this message translates to:
+  /// **'Source Han Serif'**
+  String get fontSourceHanSerif;
+
+  /// Source Han Sans font
+  ///
+  /// In en, this message translates to:
+  /// **'Source Han Sans'**
+  String get fontSourceHanSans;
+
+  /// JetBrains Mono font
+  ///
+  /// In en, this message translates to:
+  /// **'JetBrains Mono'**
+  String get fontJetBrainsMono;
+
+  /// Instrument Sans font
+  ///
+  /// In en, this message translates to:
+  /// **'Instrument Sans'**
+  String get fontInstrumentSans;
+
+  /// Newsreader font
+  ///
+  /// In en, this message translates to:
+  /// **'Newsreader'**
+  String get fontNewsreader;
+
+  /// System font option description
+  ///
+  /// In en, this message translates to:
+  /// **'Follows the native font of the current device and operating system.'**
+  String get fontSystemDescription;
+
+  /// Serif font option description
+  ///
+  /// In en, this message translates to:
+  /// **'Serif type with a calm, editorial character for sustained reading.'**
+  String get fontSerifDescription;
+
+  /// Sans serif font option description
+  ///
+  /// In en, this message translates to:
+  /// **'Clear sans serif type suited to compact interfaces and everyday reading.'**
+  String get fontSansSerifDescription;
+
+  /// Monospace font option description
+  ///
+  /// In en, this message translates to:
+  /// **'Fixed-width type suited to code, technical material, and focused layouts.'**
+  String get fontMonospaceDescription;
+
+  /// Bilingual font preview sample
+  ///
+  /// In en, this message translates to:
+  /// **'Open Reading · Read freely 开卷有益'**
+  String get fontPreviewText;
+
+  /// No description provided for @customFonts.
+  ///
+  /// In en, this message translates to:
+  /// **'My fonts'**
+  String get customFonts;
+
+  /// No description provided for @customFontsEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'No custom fonts yet'**
+  String get customFontsEmpty;
+
+  /// No description provided for @customFontsEmptyHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Import a TTF or OTF file once, then use it for the app interface or reading.'**
+  String get customFontsEmptyHint;
+
+  /// No description provided for @customFontsCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} imported fonts'**
+  String customFontsCount(int count);
+
+  /// No description provided for @customFontsLocalOnly.
+  ///
+  /// In en, this message translates to:
+  /// **'Imported fonts are stored only on this device and are not synced automatically.'**
+  String get customFontsLocalOnly;
+
+  /// No description provided for @builtInFonts.
+  ///
+  /// In en, this message translates to:
+  /// **'Built-in fonts'**
+  String get builtInFonts;
+
+  /// No description provided for @onlineFonts.
+  ///
+  /// In en, this message translates to:
+  /// **'Online fonts'**
+  String get onlineFonts;
+
+  /// No description provided for @fontDownload.
+  ///
+  /// In en, this message translates to:
+  /// **'Download'**
+  String get fontDownload;
+
+  /// No description provided for @fontDownloading.
+  ///
+  /// In en, this message translates to:
+  /// **'Downloading…'**
+  String get fontDownloading;
+
+  /// No description provided for @fontDownloaded.
+  ///
+  /// In en, this message translates to:
+  /// **'Downloaded'**
+  String get fontDownloaded;
+
+  /// No description provided for @fontDownloadFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Download failed, tap to retry'**
+  String get fontDownloadFailed;
+
+  /// No description provided for @fontDownloadHint.
+  ///
+  /// In en, this message translates to:
+  /// **'First use requires download from GitHub'**
+  String get fontDownloadHint;
+
+  /// No description provided for @fontDeleteDownload.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete download'**
+  String get fontDeleteDownload;
+
+  /// No description provided for @fontDeleteDownloadTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete downloaded \"{name}\"?'**
+  String fontDeleteDownloadTitle(String name);
+
+  /// No description provided for @fontDeleteDownloadMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Will free {size} of storage. Will re-download next time you use it.'**
+  String fontDeleteDownloadMessage(String size);
+
+  /// No description provided for @fontDownloadCancelled.
+  ///
+  /// In en, this message translates to:
+  /// **'Download cancelled'**
+  String get fontDownloadCancelled;
+
+  /// No description provided for @fontDownloadNetworkFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Network error, download failed'**
+  String get fontDownloadNetworkFailed;
+
+  /// No description provided for @fontDownloadInvalid.
+  ///
+  /// In en, this message translates to:
+  /// **'Downloaded font file is invalid'**
+  String get fontDownloadInvalid;
+
+  /// No description provided for @fontDownloadUnsupported.
+  ///
+  /// In en, this message translates to:
+  /// **'Online font download is not supported on this platform'**
+  String get fontDownloadUnsupported;
+
+  /// No description provided for @importFont.
+  ///
+  /// In en, this message translates to:
+  /// **'Import font'**
+  String get importFont;
+
+  /// No description provided for @importingFont.
+  ///
+  /// In en, this message translates to:
+  /// **'Importing font…'**
+  String get importingFont;
+
+  /// No description provided for @customFontImported.
+  ///
+  /// In en, this message translates to:
+  /// **'Font imported'**
+  String get customFontImported;
+
+  /// No description provided for @customFontAlreadyImported.
+  ///
+  /// In en, this message translates to:
+  /// **'This font was already imported and is ready to use'**
+  String get customFontAlreadyImported;
+
+  /// No description provided for @customFontApplied.
+  ///
+  /// In en, this message translates to:
+  /// **'Font selection updated'**
+  String get customFontApplied;
+
+  /// No description provided for @customFontAppliedToApp.
+  ///
+  /// In en, this message translates to:
+  /// **'Imported and set as the app font'**
+  String get customFontAppliedToApp;
+
+  /// No description provided for @customFontAppliedToReader.
+  ///
+  /// In en, this message translates to:
+  /// **'Imported and set as the reading font'**
+  String get customFontAppliedToReader;
+
+  /// No description provided for @customFontImportUnsupported.
+  ///
+  /// In en, this message translates to:
+  /// **'Persistent font import is not supported on this platform yet.'**
+  String get customFontImportUnsupported;
+
+  /// No description provided for @customFontUnsupportedFormat.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose a TTF or OTF font file.'**
+  String get customFontUnsupportedFormat;
+
+  /// No description provided for @customFontInvalid.
+  ///
+  /// In en, this message translates to:
+  /// **'This file is not a valid or supported font.'**
+  String get customFontInvalid;
+
+  /// No description provided for @customFontTooLarge.
+  ///
+  /// In en, this message translates to:
+  /// **'The font file is larger than 50 MB.'**
+  String get customFontTooLarge;
+
+  /// No description provided for @customFontReadFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'The font file could not be read.'**
+  String get customFontReadFailed;
+
+  /// No description provided for @customFontLoadFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'The font could not be loaded.'**
+  String get customFontLoadFailed;
+
+  /// No description provided for @customFontStorageFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'The font could not be saved on this device.'**
+  String get customFontStorageFailed;
+
+  /// No description provided for @customFontUnavailable.
+  ///
+  /// In en, this message translates to:
+  /// **'Font file is unavailable. Delete it and import it again.'**
+  String get customFontUnavailable;
+
+  /// No description provided for @setAsAppFont.
+  ///
+  /// In en, this message translates to:
+  /// **'Use as app font'**
+  String get setAsAppFont;
+
+  /// No description provided for @setAsReaderFont.
+  ///
+  /// In en, this message translates to:
+  /// **'Use as reading font'**
+  String get setAsReaderFont;
+
+  /// No description provided for @setAsBothFonts.
+  ///
+  /// In en, this message translates to:
+  /// **'Use for both'**
+  String get setAsBothFonts;
+
+  /// No description provided for @renameFont.
+  ///
+  /// In en, this message translates to:
+  /// **'Rename font'**
+  String get renameFont;
+
+  /// No description provided for @deleteCustomFontTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete “{name}”?'**
+  String deleteCustomFontTitle(String name);
+
+  /// No description provided for @deleteCustomFontMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'The font file will be removed from this device.'**
+  String get deleteCustomFontMessage;
+
+  /// No description provided for @deleteCustomFontInUse.
+  ///
+  /// In en, this message translates to:
+  /// **'This font is currently in use. Deleting it will restore the affected font settings to their defaults.'**
+  String get deleteCustomFontInUse;
+
+  /// No description provided for @deleteAndReset.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete and reset'**
+  String get deleteAndReset;
+
+  /// No description provided for @settingsTelegramChannel.
+  ///
+  /// In en, this message translates to:
+  /// **'Telegram'**
+  String get settingsTelegramChannel;
+
+  /// No description provided for @settingsTelegramSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Official Telegram channel'**
+  String get settingsTelegramSubtitle;
+
+  /// No description provided for @settingsTelegramOpenFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not open the Telegram link'**
+  String get settingsTelegramOpenFailed;
+
+  /// No description provided for @settingsQqChannel.
+  ///
+  /// In en, this message translates to:
+  /// **'QQ Channel'**
+  String get settingsQqChannel;
+
+  /// No description provided for @settingsQqChannelSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Open Reading · OpenReading6'**
+  String get settingsQqChannelSubtitle;
+
+  /// No description provided for @settingsQqChannelOpenFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not open the QQ Channel invitation link'**
+  String get settingsQqChannelOpenFailed;
+
+  /// Follow system language
+  ///
+  /// In en, this message translates to:
+  /// **'Follow System'**
+  String get languageSystem;
+
+  /// Simplified Chinese language shown in its native name
+  ///
+  /// In en, this message translates to:
+  /// **'简体中文'**
+  String get languageChinese;
+
+  /// English language
+  ///
+  /// In en, this message translates to:
+  /// **'English'**
+  String get languageEnglish;
+
+  /// Japanese language shown in its native name
+  ///
+  /// In en, this message translates to:
+  /// **'日本語'**
+  String get languageJapanese;
+
+  /// Traditional Chinese language shown in its native name
+  ///
+  /// In en, this message translates to:
+  /// **'繁體中文'**
+  String get languageTraditionalChinese;
+
+  /// Typography settings section
+  ///
+  /// In en, this message translates to:
+  /// **'Typography'**
+  String get typographySettings;
+
+  /// Font family label
+  ///
+  /// In en, this message translates to:
+  /// **'Font'**
+  String get fontFamilyLabel;
+
+  /// Font size label
+  ///
+  /// In en, this message translates to:
+  /// **'Font Size'**
+  String get fontSizeLabel;
+
+  /// Line spacing label
+  ///
+  /// In en, this message translates to:
+  /// **'Line Spacing'**
+  String get lineSpacingLabel;
+
+  /// Letter spacing label
+  ///
+  /// In en, this message translates to:
+  /// **'Letter Spacing'**
+  String get letterSpacingLabel;
+
+  /// Reader body text alignment label
+  ///
+  /// In en, this message translates to:
+  /// **'Text Alignment'**
+  String get textAlignmentLabel;
+
+  /// Natural reader body text alignment
+  ///
+  /// In en, this message translates to:
+  /// **'Natural'**
+  String get textAlignmentNatural;
+
+  /// Justified reader body text alignment
+  ///
+  /// In en, this message translates to:
+  /// **'Justified'**
+  String get textAlignmentJustified;
+
+  /// First line indent label
+  ///
+  /// In en, this message translates to:
+  /// **'First-line Indent'**
+  String get firstLineIndentLabel;
+
+  /// Additional spacing between reader paragraphs
+  ///
+  /// In en, this message translates to:
+  /// **'Paragraph Spacing'**
+  String get paragraphSpacingLabel;
+
+  /// Page margin label
+  ///
+  /// In en, this message translates to:
+  /// **'Page Margin'**
+  String get pageMarginLabel;
+
+  /// Reset to default button
+  ///
+  /// In en, this message translates to:
+  /// **'Reset'**
+  String get resetDefault;
+
+  /// TTS panel title
+  ///
+  /// In en, this message translates to:
+  /// **'Text-to-Speech'**
+  String get ttsPanelTitle;
+
+  /// Preview effect label
+  ///
+  /// In en, this message translates to:
+  /// **'Preview Effect'**
+  String get ttsPreviewEffect;
+
+  /// TTS volume
+  ///
+  /// In en, this message translates to:
+  /// **'Volume'**
+  String get ttsVolume;
+
+  /// TTS pitch
+  ///
+  /// In en, this message translates to:
+  /// **'Pitch'**
+  String get ttsPitch;
+
+  /// TTS speed
+  ///
+  /// In en, this message translates to:
+  /// **'Speed'**
+  String get ttsSpeed;
+
+  /// Previous sentence button
+  ///
+  /// In en, this message translates to:
+  /// **'Previous Sentence'**
+  String get ttsPreviousSentence;
+
+  /// Next sentence button
+  ///
+  /// In en, this message translates to:
+  /// **'Next Sentence'**
+  String get ttsNextSentence;
+
+  /// Timer stop label
+  ///
+  /// In en, this message translates to:
+  /// **'Timer Stop'**
+  String get ttsTimerStop;
+
+  /// No time limit option
+  ///
+  /// In en, this message translates to:
+  /// **'No Limit'**
+  String get ttsTimerOff;
+
+  /// Timer minutes option
+  ///
+  /// In en, this message translates to:
+  /// **'{minutes} minutes'**
+  String ttsTimerMinutes(Object minutes);
+
+  /// TTS playing status
+  ///
+  /// In en, this message translates to:
+  /// **'Playing'**
+  String get ttsPlaying;
+
+  /// TTS paused status
+  ///
+  /// In en, this message translates to:
+  /// **'Paused'**
+  String get ttsPaused;
+
+  /// TTS stopped status
+  ///
+  /// In en, this message translates to:
+  /// **'Stopped'**
+  String get ttsStopped;
+
+  /// Previous sentence failed message
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to play previous sentence'**
+  String get ttsPreviousSentenceFailed;
+
+  /// Next sentence failed message
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to play next sentence'**
+  String get ttsNextSentenceFailed;
+
+  /// Empty content error
+  ///
+  /// In en, this message translates to:
+  /// **'Current page content is empty'**
+  String get ttsEmptyContentError;
+
+  /// Playback failed message
+  ///
+  /// In en, this message translates to:
+  /// **'Playback failed'**
+  String get ttsPlaybackFailed;
+
+  /// Operation failed message
+  ///
+  /// In en, this message translates to:
+  /// **'Operation failed'**
+  String get ttsOperationFailed;
+
+  /// Page turning mode
+  ///
+  /// In en, this message translates to:
+  /// **'Page Mode'**
+  String get pageTurningMode;
+
+  /// Slide page turning
+  ///
+  /// In en, this message translates to:
+  /// **'Horizontal Slide'**
+  String get pageTurningSlide;
+
+  /// Scroll page turning
+  ///
+  /// In en, this message translates to:
+  /// **'Vertical paging'**
+  String get pageTurningScroll;
+
+  /// Tap zone settings
+  ///
+  /// In en, this message translates to:
+  /// **'Tap Zones'**
+  String get tapZoneSettings;
+
+  /// Next page tap zone
+  ///
+  /// In en, this message translates to:
+  /// **'Next Page'**
+  String get tapZoneNextPage;
+
+  /// Previous page tap zone
+  ///
+  /// In en, this message translates to:
+  /// **'Previous Page'**
+  String get tapZonePreviousPage;
+
+  /// Menu tap zone
+  ///
+  /// In en, this message translates to:
+  /// **'Menu'**
+  String get tapZoneMenu;
+
+  /// Tap zone legend
+  ///
+  /// In en, this message translates to:
+  /// **'Legend'**
+  String get tapZoneLegend;
+
+  /// Next chapter tap zone
+  ///
+  /// In en, this message translates to:
+  /// **'Next Chapter'**
+  String get tapZoneNextChapter;
+
+  /// Previous chapter tap zone
+  ///
+  /// In en, this message translates to:
+  /// **'Previous Chapter'**
+  String get tapZonePreviousChapter;
+
+  /// Tap zone without any action
+  ///
+  /// In en, this message translates to:
+  /// **'No Action'**
+  String get tapZoneNone;
+
+  /// Tap zone settings entry hint
+  ///
+  /// In en, this message translates to:
+  /// **'Customize what each of the nine tap areas does'**
+  String get tapZoneSettingsHint;
+
+  /// Tap zone action picker title
+  ///
+  /// In en, this message translates to:
+  /// **'Choose an action'**
+  String get tapZoneChooseAction;
+
+  /// Tap zone editor menu requirement hint
+  ///
+  /// In en, this message translates to:
+  /// **'Tap an area to change its action. At least one area must stay Menu; if every Menu is removed, the center area becomes Menu again.'**
+  String get tapZoneMenuRequiredHint;
+
+  /// Tap zone reset button
+  ///
+  /// In en, this message translates to:
+  /// **'Restore Defaults'**
+  String get tapZoneReset;
+
+  /// Highlight color label
+  ///
+  /// In en, this message translates to:
+  /// **'Highlight Color'**
+  String get highlightColor;
+
+  /// Highlight preview
+  ///
+  /// In en, this message translates to:
+  /// **'Preview'**
+  String get highlightPreview;
+
+  /// Sample text for highlight preview
+  ///
+  /// In en, this message translates to:
+  /// **'This is a sample text,'**
+  String get highlightSampleText;
+
+  /// Sample text part 2
+  ///
+  /// In en, this message translates to:
+  /// **'this part will be highlighted,'**
+  String get highlightSampleText2;
+
+  /// Sample text part 3
+  ///
+  /// In en, this message translates to:
+  /// **'showing the highlight effect.'**
+  String get highlightSampleText3;
+
+  /// Light blue color name
+  ///
+  /// In en, this message translates to:
+  /// **'Light Blue'**
+  String get colorLightBlue;
+
+  /// Red color name
+  ///
+  /// In en, this message translates to:
+  /// **'Red'**
+  String get colorRed;
+
+  /// Green color name
+  ///
+  /// In en, this message translates to:
+  /// **'Green'**
+  String get colorGreen;
+
+  /// Purple color name
+  ///
+  /// In en, this message translates to:
+  /// **'Purple'**
+  String get colorPurple;
+
+  /// Gold color name
+  ///
+  /// In en, this message translates to:
+  /// **'Gold'**
+  String get colorGold;
+
+  /// Orange color name
+  ///
+  /// In en, this message translates to:
+  /// **'Orange'**
+  String get colorOrange;
+
+  /// Yellow color name
+  ///
+  /// In en, this message translates to:
+  /// **'Yellow'**
+  String get colorYellow;
+
+  /// Dark green color name
+  ///
+  /// In en, this message translates to:
+  /// **'Dark Green'**
+  String get colorDarkGreen;
+
+  /// Custom color name
+  ///
+  /// In en, this message translates to:
+  /// **'Custom'**
+  String get colorCustom;
+
+  /// Highlight note type
+  ///
+  /// In en, this message translates to:
+  /// **'Highlight'**
+  String get noteTypeHighlight;
+
+  /// Underline note type
+  ///
+  /// In en, this message translates to:
+  /// **'Underline'**
+  String get noteTypeUnderline;
+
+  /// Note type
+  ///
+  /// In en, this message translates to:
+  /// **'Note'**
+  String get noteTypeNote;
+
+  /// Unknown note type
+  ///
+  /// In en, this message translates to:
+  /// **'Unknown'**
+  String get noteTypeUnknown;
+
+  /// TXT book format
+  ///
+  /// In en, this message translates to:
+  /// **'TXT'**
+  String get bookFormatTXT;
+
+  /// EPUB book format
+  ///
+  /// In en, this message translates to:
+  /// **'EPUB'**
+  String get bookFormatEPUB;
+
+  /// PDF book format
+  ///
+  /// In en, this message translates to:
+  /// **'PDF'**
+  String get bookFormatPDF;
+
+  /// Import book action
+  ///
+  /// In en, this message translates to:
+  /// **'Import Book'**
+  String get importBook;
+
+  /// Import from files
+  ///
+  /// In en, this message translates to:
+  /// **'Import from Files'**
+  String get importFromFiles;
+
+  /// No books message
+  ///
+  /// In en, this message translates to:
+  /// **'No books imported yet'**
+  String get importNoBooks;
+
+  /// Import success message
+  ///
+  /// In en, this message translates to:
+  /// **'Book imported successfully'**
+  String get importSuccess;
+
+  /// Import failed message
+  ///
+  /// In en, this message translates to:
+  /// **'Import failed'**
+  String get importFailed;
+
+  /// Import processing message
+  ///
+  /// In en, this message translates to:
+  /// **'Processing book...'**
+  String get importProcessing;
+
+  /// Author label
+  ///
+  /// In en, this message translates to:
+  /// **'Author'**
+  String get author;
+
+  /// Progress label
+  ///
+  /// In en, this message translates to:
+  /// **'Progress'**
+  String get progress;
+
+  /// Continue reading button
+  ///
+  /// In en, this message translates to:
+  /// **'Continue Reading'**
+  String get continueReading;
+
+  /// Recent books section
+  ///
+  /// In en, this message translates to:
+  /// **'Recent Books'**
+  String get recentBooks;
+
+  /// All books section
+  ///
+  /// In en, this message translates to:
+  /// **'All Books'**
+  String get allBooks;
+
+  /// Empty library message
+  ///
+  /// In en, this message translates to:
+  /// **'Library is empty'**
+  String get emptyLibrary;
+
+  /// Delete book action
+  ///
+  /// In en, this message translates to:
+  /// **'Delete Book'**
+  String get deleteBook;
+
+  /// Delete book confirmation
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to delete this book?'**
+  String get deleteBookConfirm;
+
+  /// Book deleted message
+  ///
+  /// In en, this message translates to:
+  /// **'Book deleted'**
+  String get bookDeleted;
+
+  /// User agreement title
+  ///
+  /// In en, this message translates to:
+  /// **'User Agreement'**
+  String get userAgreement;
+
+  /// Accept agreement checkbox
+  ///
+  /// In en, this message translates to:
+  /// **'I have read and agree'**
+  String get acceptAgreement;
+
+  /// Decline agreement button
+  ///
+  /// In en, this message translates to:
+  /// **'Decline'**
+  String get declineAgreement;
+
+  /// Today's statistics
+  ///
+  /// In en, this message translates to:
+  /// **'Today'**
+  String get statsToday;
+
+  /// This week's statistics
+  ///
+  /// In en, this message translates to:
+  /// **'This Week'**
+  String get statsThisWeek;
+
+  /// Total statistics
+  ///
+  /// In en, this message translates to:
+  /// **'Total'**
+  String get statsTotal;
+
+  /// Reading minutes
+  ///
+  /// In en, this message translates to:
+  /// **'{minutes} min'**
+  String statsMinutes(Object minutes);
+
+  /// Reading hours
+  ///
+  /// In en, this message translates to:
+  /// **'{hours} h'**
+  String statsHours(Object hours);
+
+  /// Book count
+  ///
+  /// In en, this message translates to:
+  /// **'{count} books'**
+  String statsBooks(Object count);
+
+  /// Consecutive reading days
+  ///
+  /// In en, this message translates to:
+  /// **'Consecutive Days'**
+  String get statsConsecutiveDays;
+
+  /// Focus time
+  ///
+  /// In en, this message translates to:
+  /// **'Focus Time'**
+  String get statsFocusTime;
+
+  /// This week total
+  ///
+  /// In en, this message translates to:
+  /// **'This Week Total'**
+  String get statsThisWeekTotal;
+
+  /// Keep reading daily tip
+  ///
+  /// In en, this message translates to:
+  /// **'Keep Reading Daily'**
+  String get statsKeepReading;
+
+  /// Maximum session
+  ///
+  /// In en, this message translates to:
+  /// **'Max Session'**
+  String get statsMaxSession;
+
+  /// Weekly reading trend
+  ///
+  /// In en, this message translates to:
+  /// **'Weekly Trend'**
+  String get statsWeeklyTrend;
+
+  /// Reading achievements
+  ///
+  /// In en, this message translates to:
+  /// **'Achievements'**
+  String get statsAchievements;
+
+  /// Reader toolbar menu
+  ///
+  /// In en, this message translates to:
+  /// **'Menu'**
+  String get readerToolbarMenu;
+
+  /// Table of contents
+  ///
+  /// In en, this message translates to:
+  /// **'Table of Contents'**
+  String get readerToolbarTOC;
+
+  /// Reader settings
+  ///
+  /// In en, this message translates to:
+  /// **'Settings'**
+  String get readerToolbarSettings;
+
+  /// Add bookmark
+  ///
+  /// In en, this message translates to:
+  /// **'Add Bookmark'**
+  String get readerAddBookmark;
+
+  /// Add note
+  ///
+  /// In en, this message translates to:
+  /// **'Add Note'**
+  String get readerAddNote;
+
+  /// Share content
+  ///
+  /// In en, this message translates to:
+  /// **'Share'**
+  String get readerShare;
+
+  /// Bookmark added message
+  ///
+  /// In en, this message translates to:
+  /// **'Bookmark added'**
+  String get bookmarkAdded;
+
+  /// Bookmark removed message
+  ///
+  /// In en, this message translates to:
+  /// **'Bookmark removed'**
+  String get bookmarkRemoved;
+
+  /// No description provided for @readerNavigationTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Reading navigation'**
+  String get readerNavigationTitle;
+
+  /// No description provided for @readerNavigationPosition.
+  ///
+  /// In en, this message translates to:
+  /// **'Chapter {current} of {total}'**
+  String readerNavigationPosition(int current, int total);
+
+  /// No description provided for @readerSearchChapters.
+  ///
+  /// In en, this message translates to:
+  /// **'Search chapters'**
+  String get readerSearchChapters;
+
+  /// No description provided for @readerBackToCurrentChapter.
+  ///
+  /// In en, this message translates to:
+  /// **'Back to current chapter'**
+  String get readerBackToCurrentChapter;
+
+  /// No description provided for @readerCurrentChapter.
+  ///
+  /// In en, this message translates to:
+  /// **'Current'**
+  String get readerCurrentChapter;
+
+  /// No description provided for @readerCurrentPosition.
+  ///
+  /// In en, this message translates to:
+  /// **'Current position'**
+  String get readerCurrentPosition;
+
+  /// No description provided for @readerNoChapterResults.
+  ///
+  /// In en, this message translates to:
+  /// **'No matching chapters'**
+  String get readerNoChapterResults;
+
+  /// No description provided for @readerNoChapterResultsHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Try another word from the chapter title.'**
+  String get readerNoChapterResultsHint;
+
+  /// No description provided for @readerNoBookmarks.
+  ///
+  /// In en, this message translates to:
+  /// **'No bookmarks yet'**
+  String get readerNoBookmarks;
+
+  /// No description provided for @readerNoBookmarksHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap the bookmark button in the top-right corner to save your place.'**
+  String get readerNoBookmarksHint;
+
+  /// No description provided for @readerBookmarkRequiresShelf.
+  ///
+  /// In en, this message translates to:
+  /// **'Add this book to the shelf before saving bookmarks'**
+  String get readerBookmarkRequiresShelf;
+
+  /// Blue theme name
+  ///
+  /// In en, this message translates to:
+  /// **'Ocean Blue'**
+  String get themeBlue;
+
+  /// Purple theme name
+  ///
+  /// In en, this message translates to:
+  /// **'Mystic Purple'**
+  String get themePurple;
+
+  /// Green theme name
+  ///
+  /// In en, this message translates to:
+  /// **'Forest Green'**
+  String get themeGreen;
+
+  /// Orange theme name
+  ///
+  /// In en, this message translates to:
+  /// **'Vibrant Orange'**
+  String get themeOrange;
+
+  /// Red theme name
+  ///
+  /// In en, this message translates to:
+  /// **'Passionate Red'**
+  String get themeRed;
+
+  /// Custom theme name
+  ///
+  /// In en, this message translates to:
+  /// **'Custom'**
+  String get themeCustom;
+
+  /// Left/Right tap zone
+  ///
+  /// In en, this message translates to:
+  /// **'Left/Right'**
+  String get tapZoneLeftRight;
+
+  /// Left/Center/Right tap zone
+  ///
+  /// In en, this message translates to:
+  /// **'Left/Center/Right'**
+  String get tapZoneLeftCenterRight;
+
+  /// Homepage app tagline under title
+  ///
+  /// In en, this message translates to:
+  /// **'Read beautifully'**
+  String get homeTagline;
+
+  /// Home dashboard page title
+  ///
+  /// In en, this message translates to:
+  /// **'Reading Stats'**
+  String get homeReadingStatsTitle;
+
+  /// Hero card title for today reading
+  ///
+  /// In en, this message translates to:
+  /// **'Today\'s Reading Moment'**
+  String get homeTodayReadingMoment;
+
+  /// Encouragement text with today minutes
+  ///
+  /// In en, this message translates to:
+  /// **'Read {minutes} minutes, keep going'**
+  String homeReadMinutesKeepGoing(int minutes);
+
+  /// Prompt when there is no reading today
+  ///
+  /// In en, this message translates to:
+  /// **'Start your reading journey today'**
+  String get homeTodayReadingJourneyStart;
+
+  /// Prompt when today reading is positive
+  ///
+  /// In en, this message translates to:
+  /// **'You are on track today, keep the rhythm'**
+  String get homeTodayReadingKeepRhythm;
+
+  /// Generic reading prompt text
+  ///
+  /// In en, this message translates to:
+  /// **'Save some time for reading today'**
+  String get homeTodayReadingPrompt;
+
+  /// Total reading hours text with value
+  ///
+  /// In en, this message translates to:
+  /// **'Total reading {hours} hours'**
+  String homeTotalReadingHours(String hours);
+
+  /// Weekly reading label
+  ///
+  /// In en, this message translates to:
+  /// **'This Week'**
+  String get homeWeeklyReading;
+
+  /// Total reading label
+  ///
+  /// In en, this message translates to:
+  /// **'Total Reading'**
+  String get homeTotalReading;
+
+  /// Library books count label
+  ///
+  /// In en, this message translates to:
+  /// **'Library Books'**
+  String get homeLibraryCount;
+
+  /// Short label for collection count
+  ///
+  /// In en, this message translates to:
+  /// **'Collection'**
+  String get homeCollectionCount;
+
+  /// Section title for key metrics
+  ///
+  /// In en, this message translates to:
+  /// **'Key Metrics'**
+  String get homeKeyMetrics;
+
+  /// Section title for reading rhythm
+  ///
+  /// In en, this message translates to:
+  /// **'Reading Rhythm'**
+  String get homeReadingRhythm;
+
+  /// Section title for achievements
+  ///
+  /// In en, this message translates to:
+  /// **'Reading Achievements'**
+  String get homeAchievements;
+
+  /// Achievement title consecutive reading
+  ///
+  /// In en, this message translates to:
+  /// **'Consecutive Reading'**
+  String get homeConsecutiveReading;
+
+  /// Achievement description for consecutive reading
+  ///
+  /// In en, this message translates to:
+  /// **'Keep a daily reading habit'**
+  String get homeConsecutiveReadingDesc;
+
+  /// Achievement title for focus duration
+  ///
+  /// In en, this message translates to:
+  /// **'Focus Duration'**
+  String get homeFocusDuration;
+
+  /// Achievement description for focus duration
+  ///
+  /// In en, this message translates to:
+  /// **'Longest single reading session'**
+  String get homeFocusDurationDesc;
+
+  /// Achievement title for weekly total
+  ///
+  /// In en, this message translates to:
+  /// **'Weekly Total'**
+  String get homeWeeklyTotal;
+
+  /// Achievement description for weekly total
+  ///
+  /// In en, this message translates to:
+  /// **'Reading time this week'**
+  String get homeWeeklyTotalDesc;
+
+  /// Section title for recent reading books
+  ///
+  /// In en, this message translates to:
+  /// **'Recent Reading'**
+  String get homeRecentReading;
+
+  /// Chart title for weekly trend
+  ///
+  /// In en, this message translates to:
+  /// **'Weekly Reading Trend'**
+  String get homeWeeklyTrend;
+
+  /// Bar chart tooltip text for minutes
+  ///
+  /// In en, this message translates to:
+  /// **'{minutes} min'**
+  String homeBarTooltipMinutes(int minutes);
+
+  /// Minute unit label
+  ///
+  /// In en, this message translates to:
+  /// **'min'**
+  String get unitMinute;
+
+  /// Hour unit label
+  ///
+  /// In en, this message translates to:
+  /// **'hour'**
+  String get unitHour;
+
+  /// Book unit label
+  ///
+  /// In en, this message translates to:
+  /// **'books'**
+  String get unitBook;
+
+  /// Day unit label
+  ///
+  /// In en, this message translates to:
+  /// **'days'**
+  String get unitDay;
+
+  /// Short label for Monday
+  ///
+  /// In en, this message translates to:
+  /// **'Mon'**
+  String get weekdayMonShort;
+
+  /// Short label for Tuesday
+  ///
+  /// In en, this message translates to:
+  /// **'Tue'**
+  String get weekdayTueShort;
+
+  /// Short label for Wednesday
+  ///
+  /// In en, this message translates to:
+  /// **'Wed'**
+  String get weekdayWedShort;
+
+  /// Short label for Thursday
+  ///
+  /// In en, this message translates to:
+  /// **'Thu'**
+  String get weekdayThuShort;
+
+  /// Short label for Friday
+  ///
+  /// In en, this message translates to:
+  /// **'Fri'**
+  String get weekdayFriShort;
+
+  /// Short label for Saturday
+  ///
+  /// In en, this message translates to:
+  /// **'Sat'**
+  String get weekdaySatShort;
+
+  /// Short label for Sunday
+  ///
+  /// In en, this message translates to:
+  /// **'Sun'**
+  String get weekdaySunShort;
+
+  /// Tagline badge under the app title on the user agreement page
+  ///
+  /// In en, this message translates to:
+  /// **'Immersive Reading · AI Assistant · Local First'**
+  String get agreementTagline;
+
+  /// Title of the agreement content card
+  ///
+  /// In en, this message translates to:
+  /// **'User Service Agreement'**
+  String get agreementCardTitle;
+
+  /// Subtitle under the agreement card title
+  ///
+  /// In en, this message translates to:
+  /// **'Please read the following carefully'**
+  String get agreementCardSubtitle;
+
+  /// Welcome heading inside the agreement content
+  ///
+  /// In en, this message translates to:
+  /// **'Welcome to OpenReading'**
+  String get agreementWelcomeTitle;
+
+  /// Welcome paragraph asking the user to read and agree to the agreement
+  ///
+  /// In en, this message translates to:
+  /// **'To ensure a stable and predictable reading experience, please read and agree to the following agreement first.'**
+  String get agreementWelcomeBody;
+
+  /// Feature item title: supported book formats
+  ///
+  /// In en, this message translates to:
+  /// **'Multi-Format Support'**
+  String get agreementFeatureFormatsTitle;
+
+  /// Feature item description: supported book formats
+  ///
+  /// In en, this message translates to:
+  /// **'EPUB, PDF, TXT, MOBI and more'**
+  String get agreementFeatureFormatsBody;
+
+  /// Feature item title: reading customization
+  ///
+  /// In en, this message translates to:
+  /// **'Personalized Reading'**
+  String get agreementFeatureCustomizationTitle;
+
+  /// Feature item description: reading customization
+  ///
+  /// In en, this message translates to:
+  /// **'Customize fonts, colors, typography and more'**
+  String get agreementFeatureCustomizationBody;
+
+  /// Feature item title: local-first storage
+  ///
+  /// In en, this message translates to:
+  /// **'Local First'**
+  String get agreementFeatureSyncTitle;
+
+  /// Feature item description: local-first storage
+  ///
+  /// In en, this message translates to:
+  /// **'Books, progress, and notes stay on the device you control'**
+  String get agreementFeatureSyncBody;
+
+  /// Feature item title: TTS read-aloud
+  ///
+  /// In en, this message translates to:
+  /// **'Text-to-Speech'**
+  String get agreementFeatureTtsTitle;
+
+  /// Feature item description: TTS read-aloud
+  ///
+  /// In en, this message translates to:
+  /// **'Smart voice narration frees your eyes so you can listen anywhere'**
+  String get agreementFeatureTtsBody;
+
+  /// Hint explaining what tapping the agree button means
+  ///
+  /// In en, this message translates to:
+  /// **'By tapping \"Agree and Continue\", you confirm that you have read and agree to use this app'**
+  String get agreementTapToAgreeHint;
+
+  /// Decline button label and exit confirmation dialog title
+  ///
+  /// In en, this message translates to:
+  /// **'Exit App'**
+  String get agreementExitApp;
+
+  /// Primary button to accept the agreement and continue
+  ///
+  /// In en, this message translates to:
+  /// **'Agree and Continue'**
+  String get agreementAgreeAndContinue;
+
+  /// Body of the exit confirmation dialog shown when declining the agreement
+  ///
+  /// In en, this message translates to:
+  /// **'If you do not agree to the user agreement, you will not be able to use this app. Are you sure you want to exit?'**
+  String get agreementExitDialogContent;
+
+  /// Confirm button in the exit dialog
+  ///
+  /// In en, this message translates to:
+  /// **'Exit'**
+  String get agreementConfirmExit;
+
+  /// Toast shown when opening a book whose file is missing
+  ///
+  /// In en, this message translates to:
+  /// **'Book file not found. Please re-import it.'**
+  String get readerFileMissing;
+
+  /// Toast shown when opening an unsupported book format
+  ///
+  /// In en, this message translates to:
+  /// **'This format can\'t be read yet.'**
+  String get readerUnsupportedFormat;
+
+  /// Error shown when opening a DRM-encrypted MOBI/AZW/AZW3 book
+  ///
+  /// In en, this message translates to:
+  /// **'This Kindle book is DRM-protected and can\'t be read here. Only DRM-free books are supported.'**
+  String get readerKindleDrmProtected;
+
+  /// Error shown when a CBZ comic contains no readable images
+  ///
+  /// In en, this message translates to:
+  /// **'No image pages were found in this comic archive.'**
+  String get readerComicNoPages;
+
+  /// Error shown when a comic archive turns out to be a real RAR container, which has no pure-Dart extractor
+  ///
+  /// In en, this message translates to:
+  /// **'This CBR comic uses real RAR compression and isn\'t readable yet. Please convert it to CBZ.'**
+  String get readerComicCbrUnsupported;
+
+  /// Error shown when a comic archive uses an unsupported container such as 7z or an unrecognized file header
+  ///
+  /// In en, this message translates to:
+  /// **'This comic\'s archive format isn\'t readable yet. Please convert it to CBZ.'**
+  String get readerComicArchiveUnsupported;
+
+  /// Title of the comic/PDF reader settings sheet and its bottom-bar entry
+  ///
+  /// In en, this message translates to:
+  /// **'Reading settings'**
+  String get imageReaderSettings;
+
+  /// Section label for the comic/PDF page-turn direction choice
+  ///
+  /// In en, this message translates to:
+  /// **'Reading direction'**
+  String get imageReaderDirectionTitle;
+
+  /// Standard left-to-right page-turn direction option
+  ///
+  /// In en, this message translates to:
+  /// **'Left to right'**
+  String get imageReaderDirectionLtr;
+
+  /// Right-to-left page-turn direction option used by Japanese manga
+  ///
+  /// In en, this message translates to:
+  /// **'Right to left (manga)'**
+  String get imageReaderDirectionRtl;
+
+  /// Label and dialog title for jumping to a page number in the comic/PDF reader
+  ///
+  /// In en, this message translates to:
+  /// **'Go to page'**
+  String get imageReaderJumpToPage;
+
+  /// Section label for the comic/PDF letterbox background color
+  ///
+  /// In en, this message translates to:
+  /// **'Page background'**
+  String get imageReaderBackgroundTitle;
+
+  /// Black background option for the comic/PDF reader
+  ///
+  /// In en, this message translates to:
+  /// **'Black'**
+  String get imageReaderBackgroundBlack;
+
+  /// Gray background option for the comic/PDF reader
+  ///
+  /// In en, this message translates to:
+  /// **'Gray'**
+  String get imageReaderBackgroundGray;
+
+  /// White background option for the comic/PDF reader
+  ///
+  /// In en, this message translates to:
+  /// **'White'**
+  String get imageReaderBackgroundWhite;
+
+  /// Toast shown when opening a PDF on Linux, where the PDF engine has no implementation
+  ///
+  /// In en, this message translates to:
+  /// **'PDF reading isn\'t available on Linux yet.'**
+  String get readerPdfLinuxUnsupported;
+
+  /// Startup error when the data/cache services fail to initialize
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to initialize the data system'**
+  String get bootstrapDataServiceFailed;
+
+  /// Startup error when the book image manager fails to initialize
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to initialize the image manager'**
+  String get bootstrapImageManagerFailed;
+
+  /// Toast shown when a focus timer finishes
+  ///
+  /// In en, this message translates to:
+  /// **'{minutes}-minute focus session complete. Well done!'**
+  String homeFocusCompleted(int minutes);
+
+  /// Title of the daily reading goal picker bottom sheet
+  ///
+  /// In en, this message translates to:
+  /// **'Daily Reading Goal'**
+  String get homeDailyReadingGoal;
+
+  /// Section label for the AI reading advice card
+  ///
+  /// In en, this message translates to:
+  /// **'AI Reading Advice'**
+  String get homeAiAdviceSection;
+
+  /// Section label for the today summary row
+  ///
+  /// In en, this message translates to:
+  /// **'Today at a Glance'**
+  String get homeTodayGlance;
+
+  /// Header of the daily reading plan section
+  ///
+  /// In en, this message translates to:
+  /// **'Today\'s Reading Plan'**
+  String get homeTodayReadingPlan;
+
+  /// Action to open the full detailed stats page
+  ///
+  /// In en, this message translates to:
+  /// **'View All'**
+  String get homeViewAll;
+
+  /// Hero card title while the reading plan is loading
+  ///
+  /// In en, this message translates to:
+  /// **'Syncing your reading plan'**
+  String get homeSyncingReadingPlan;
+
+  /// Hero card title when today's reading goal is done
+  ///
+  /// In en, this message translates to:
+  /// **'Today\'s goal is complete — consider a reading review'**
+  String get homeGoalDoneSuggestReview;
+
+  /// Hero card title showing minutes left to today's goal
+  ///
+  /// In en, this message translates to:
+  /// **'Just {minutes} more minutes to reach today\'s goal'**
+  String homeRemainingToGoal(int minutes);
+
+  /// Recommendation shown when no book is suggested
+  ///
+  /// In en, this message translates to:
+  /// **'Pick a book from your shelf to continue and complete 1 focus session first.'**
+  String get homePickBookHint;
+
+  /// Recommendation to continue a specific book
+  ///
+  /// In en, this message translates to:
+  /// **'Continue \"{title}\" first, then switch to other books.'**
+  String homeContinueBookHint(String title);
+
+  /// Title of the hero card with today's suggested actions
+  ///
+  /// In en, this message translates to:
+  /// **'Today\'s Action Plan'**
+  String get homeTodayActionAdvice;
+
+  /// Plan completion percentage badge on the hero card
+  ///
+  /// In en, this message translates to:
+  /// **'{percent}% progress'**
+  String homeProgressPercent(int percent);
+
+  /// Hero chip showing consecutive reading days
+  ///
+  /// In en, this message translates to:
+  /// **'{days}-day streak'**
+  String homeStreakDays(int days);
+
+  /// Hero chip showing minutes read this week
+  ///
+  /// In en, this message translates to:
+  /// **'{minutes} min this week'**
+  String homeWeekMinutes(int minutes);
+
+  /// Hero chip placeholder while the plan is loading
+  ///
+  /// In en, this message translates to:
+  /// **'Plan loading'**
+  String get homePlanLoading;
+
+  /// Hero chip showing the daily goal in minutes
+  ///
+  /// In en, this message translates to:
+  /// **'Goal: {minutes} min/day'**
+  String homeGoalMinutesPerDay(int minutes);
+
+  /// Title of the AI advice card on the mobile dashboard
+  ///
+  /// In en, this message translates to:
+  /// **'AI Reading Advice for You'**
+  String get homeAiAdviceForYou;
+
+  /// Subtitle indicating which book the AI advice is based on
+  ///
+  /// In en, this message translates to:
+  /// **'Based on \"{title}\"'**
+  String homeBasedOnBook(String title);
+
+  /// Caption under today's reading minutes summary number
+  ///
+  /// In en, this message translates to:
+  /// **'Today\'s Reading (min)'**
+  String get homeTodayReadingMinutesLabel;
+
+  /// Caption under total reading minutes summary number
+  ///
+  /// In en, this message translates to:
+  /// **'Total Reading (min)'**
+  String get homeTotalReadingMinutesLabel;
+
+  /// Loading text while the daily plan is being generated
+  ///
+  /// In en, this message translates to:
+  /// **'Generating today\'s reading plan...'**
+  String get homeGeneratingPlan;
+
+  /// Small label under the plan completion percentage ring
+  ///
+  /// In en, this message translates to:
+  /// **'Done'**
+  String get homeCompletedLabel;
+
+  /// Plan card title when today's goal is reached
+  ///
+  /// In en, this message translates to:
+  /// **'Today\'s goal achieved'**
+  String get homeTodayGoalAchieved;
+
+  /// Plan card title showing minutes left to today's goal
+  ///
+  /// In en, this message translates to:
+  /// **'{minutes} minutes to go'**
+  String homeMinutesRemaining(int minutes);
+
+  /// Minutes read out of the daily goal
+  ///
+  /// In en, this message translates to:
+  /// **'Read {read} / {goal} min'**
+  String homeReadOfGoalMinutes(int read, int goal);
+
+  /// Estimated focus sessions needed to complete the daily goal
+  ///
+  /// In en, this message translates to:
+  /// **'About {sessions} focus sessions to finish today\'s goal'**
+  String homeSessionsToFinishGoal(int sessions);
+
+  /// Plan metric badge label for the reading streak
+  ///
+  /// In en, this message translates to:
+  /// **'Streak'**
+  String get homeStreakLabel;
+
+  /// Plan metric badge label for days the goal was met this week
+  ///
+  /// In en, this message translates to:
+  /// **'Weekly goal'**
+  String get homeWeekAchievedLabel;
+
+  /// Plan metric badge label for focus sessions today
+  ///
+  /// In en, this message translates to:
+  /// **'Focus'**
+  String get homeFocusLabel;
+
+  /// Day count value in plan metric badges
+  ///
+  /// In en, this message translates to:
+  /// **'{days} days'**
+  String homeDaysCount(int days);
+
+  /// Times count value in plan metric badges
+  ///
+  /// In en, this message translates to:
+  /// **'{times} times'**
+  String homeTimesCount(int times);
+
+  /// Label above the focus timer progress bar; time is mm:ss
+  ///
+  /// In en, this message translates to:
+  /// **'Focus countdown {time}'**
+  String homeFocusCountdown(String time);
+
+  /// Button when no recommended book is available
+  ///
+  /// In en, this message translates to:
+  /// **'Read from Library'**
+  String get homeGoLibraryRead;
+
+  /// Button to cancel the running focus timer
+  ///
+  /// In en, this message translates to:
+  /// **'End Focus'**
+  String get homeEndFocus;
+
+  /// Button to start a focus session of the given minutes
+  ///
+  /// In en, this message translates to:
+  /// **'Focus {minutes} min'**
+  String homeFocusMinutesButton(int minutes);
+
+  /// Button to open the daily goal picker showing the current goal
+  ///
+  /// In en, this message translates to:
+  /// **'Adjust goal: {minutes} min'**
+  String homeAdjustGoalMinutes(int minutes);
+
+  /// Empty state for the recent reading list
+  ///
+  /// In en, this message translates to:
+  /// **'No recent reading yet. Open a book from your library to get started.'**
+  String get homeNoRecentReading;
+
+  /// Reading progress percentage of a book in the recent list
+  ///
+  /// In en, this message translates to:
+  /// **'Progress {percent}%'**
+  String homeReadingProgressPercent(String percent);
+
+  /// Hint text for the library search field
+  ///
+  /// In en, this message translates to:
+  /// **'Search titles or authors'**
+  String get librarySearchHint;
+
+  /// Filter chip showing total book count
+  ///
+  /// In en, this message translates to:
+  /// **'All {count}'**
+  String libraryFilterAll(int count);
+
+  /// Filter chip showing count of books in progress
+  ///
+  /// In en, this message translates to:
+  /// **'Reading {count}'**
+  String libraryFilterReading(int count);
+
+  /// Filter chip showing count of finished books
+  ///
+  /// In en, this message translates to:
+  /// **'Finished {count}'**
+  String libraryFilterFinished(int count);
+
+  /// No description provided for @libraryFilterTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Filter by reading status'**
+  String get libraryFilterTooltip;
+
+  /// Shown when a library search returns no books
+  ///
+  /// In en, this message translates to:
+  /// **'No matching books'**
+  String get libraryNoMatchingBooks;
+
+  /// Shown when the reading filter has no books
+  ///
+  /// In en, this message translates to:
+  /// **'No books in progress'**
+  String get libraryNoReadingBooks;
+
+  /// Shown when the finished filter has no books
+  ///
+  /// In en, this message translates to:
+  /// **'No finished books'**
+  String get libraryNoFinishedBooks;
+
+  /// Shown when the library has no books for the current filter
+  ///
+  /// In en, this message translates to:
+  /// **'No books yet'**
+  String get libraryNoBooks;
+
+  /// List item subtitle showing reading progress percentage
+  ///
+  /// In en, this message translates to:
+  /// **'{percent}% · Continue reading'**
+  String libraryProgressContinue(int percent);
+
+  /// Current page indicator in book options sheet
+  ///
+  /// In en, this message translates to:
+  /// **'Page {page}'**
+  String libraryPageNumber(int page);
+
+  /// Subtitle when a book has not been started yet
+  ///
+  /// In en, this message translates to:
+  /// **'Start from the beginning'**
+  String get libraryStartFromBeginning;
+
+  /// Book information option and dialog title
+  ///
+  /// In en, this message translates to:
+  /// **'Book Info'**
+  String get libraryBookInfo;
+
+  /// Book format and total page count subtitle
+  ///
+  /// In en, this message translates to:
+  /// **'{format} · {pages} pages'**
+  String libraryFormatAndPages(String format, int pages);
+
+  /// Book format and total chapter count subtitle for online book source books, whose progress is tracked per chapter rather than per page
+  ///
+  /// In en, this message translates to:
+  /// **'{format} · {chapters} chapters'**
+  String libraryFormatAndChapters(String format, int chapters);
+
+  /// Rename book option title and rename dialog title
+  ///
+  /// In en, this message translates to:
+  /// **'Rename'**
+  String get libraryRenameBook;
+
+  /// Subtitle of the rename book option
+  ///
+  /// In en, this message translates to:
+  /// **'Change the title; the file on disk is renamed too'**
+  String get libraryRenameBookHint;
+
+  /// Toast shown after successfully renaming a book
+  ///
+  /// In en, this message translates to:
+  /// **'Renamed'**
+  String get libraryRenameBookSuccess;
+
+  /// Toast shown when renaming a book fails
+  ///
+  /// In en, this message translates to:
+  /// **'Could not rename the book'**
+  String get libraryRenameBookFailed;
+
+  /// Long-press option title for replacing a book cover with a user-picked image
+  ///
+  /// In en, this message translates to:
+  /// **'Custom cover'**
+  String get libraryCustomCover;
+
+  /// Subtitle of the custom cover option
+  ///
+  /// In en, this message translates to:
+  /// **'Pick an image to use as this book\'s cover'**
+  String get libraryCustomCoverHint;
+
+  /// Toast shown after successfully applying a custom cover
+  ///
+  /// In en, this message translates to:
+  /// **'Cover updated'**
+  String get libraryCustomCoverSuccess;
+
+  /// Toast shown when the picked cover image has an unsupported format
+  ///
+  /// In en, this message translates to:
+  /// **'Unsupported image format'**
+  String get libraryCoverUnsupportedFormat;
+
+  /// Toast shown when the picked cover image is too large
+  ///
+  /// In en, this message translates to:
+  /// **'The image exceeds the 20 MB size limit'**
+  String get libraryCoverFileTooLarge;
+
+  /// Toast shown when the picked cover image cannot be read
+  ///
+  /// In en, this message translates to:
+  /// **'Could not read the selected image'**
+  String get libraryCoverReadFailed;
+
+  /// Toast shown when saving the custom cover fails
+  ///
+  /// In en, this message translates to:
+  /// **'Could not save the cover'**
+  String get libraryCoverSaveFailed;
+
+  /// Long-press option title for removing a custom cover
+  ///
+  /// In en, this message translates to:
+  /// **'Restore default cover'**
+  String get libraryResetCover;
+
+  /// Subtitle of the restore default cover option
+  ///
+  /// In en, this message translates to:
+  /// **'Remove the custom cover and restore the original'**
+  String get libraryResetCoverHint;
+
+  /// Toast shown after restoring the default cover
+  ///
+  /// In en, this message translates to:
+  /// **'Default cover restored'**
+  String get libraryResetCoverSuccess;
+
+  /// No description provided for @libraryExportBook.
+  ///
+  /// In en, this message translates to:
+  /// **'Export book'**
+  String get libraryExportBook;
+
+  /// No description provided for @libraryExportOriginalHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Copy the original file to another location'**
+  String get libraryExportOriginalHint;
+
+  /// No description provided for @libraryExportDownloadedTxtHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Export the downloaded book as a generated TXT file'**
+  String get libraryExportDownloadedTxtHint;
+
+  /// No description provided for @bookExportSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Exported to {location}'**
+  String bookExportSuccess(String location);
+
+  /// No description provided for @bookExportSourceMissing.
+  ///
+  /// In en, this message translates to:
+  /// **'The book file is missing and cannot be exported'**
+  String get bookExportSourceMissing;
+
+  /// No description provided for @bookExportUnsupported.
+  ///
+  /// In en, this message translates to:
+  /// **'Book export is not supported on this platform yet'**
+  String get bookExportUnsupported;
+
+  /// No description provided for @bookExportFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not export the book'**
+  String get bookExportFailed;
+
+  /// No description provided for @bookExportInProgress.
+  ///
+  /// In en, this message translates to:
+  /// **'Exporting book…'**
+  String get bookExportInProgress;
+
+  /// No description provided for @incomingBooksImporting.
+  ///
+  /// In en, this message translates to:
+  /// **'Importing a book from another app…'**
+  String get incomingBooksImporting;
+
+  /// No description provided for @incomingBooksNoBookFile.
+  ///
+  /// In en, this message translates to:
+  /// **'The shared content does not contain an importable book file'**
+  String get incomingBooksNoBookFile;
+
+  /// No description provided for @incomingBooksPermissionExpired.
+  ///
+  /// In en, this message translates to:
+  /// **'File access has expired. Share or open the file again'**
+  String get incomingBooksPermissionExpired;
+
+  /// No description provided for @incomingBooksUnsupportedFormat.
+  ///
+  /// In en, this message translates to:
+  /// **'This book format is not supported'**
+  String get incomingBooksUnsupportedFormat;
+
+  /// No description provided for @incomingBooksFileTooLarge.
+  ///
+  /// In en, this message translates to:
+  /// **'The file exceeds the 100 MB import limit'**
+  String get incomingBooksFileTooLarge;
+
+  /// No description provided for @incomingBooksTooManyFiles.
+  ///
+  /// In en, this message translates to:
+  /// **'Too many book files were shared at once. Add them in smaller batches'**
+  String get incomingBooksTooManyFiles;
+
+  /// No description provided for @incomingBooksSomeFilesSkipped.
+  ///
+  /// In en, this message translates to:
+  /// **'Some files could not be recognized; the remaining books will continue'**
+  String get incomingBooksSomeFilesSkipped;
+
+  /// No description provided for @incomingBooksContentMismatch.
+  ///
+  /// In en, this message translates to:
+  /// **'The file format does not match its content'**
+  String get incomingBooksContentMismatch;
+
+  /// No description provided for @incomingBooksImportFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not import the book from another app'**
+  String get incomingBooksImportFailed;
+
+  /// Subtitle of the delete book option
+  ///
+  /// In en, this message translates to:
+  /// **'This book will be permanently deleted'**
+  String get libraryDeleteBookHint;
+
+  /// Book title label in the book info dialog
+  ///
+  /// In en, this message translates to:
+  /// **'Title'**
+  String get libraryBookTitle;
+
+  /// Book format label in the book info dialog
+  ///
+  /// In en, this message translates to:
+  /// **'Format'**
+  String get libraryFormat;
+
+  /// Page count value in the book info dialog
+  ///
+  /// In en, this message translates to:
+  /// **'{pages} pages'**
+  String libraryPagesCount(int pages);
+
+  /// Total chapter count label in the book info dialog, shown for online book source books
+  ///
+  /// In en, this message translates to:
+  /// **'Total chapters'**
+  String get totalChapters;
+
+  /// Current chapter label in the book info dialog, shown for online book source books
+  ///
+  /// In en, this message translates to:
+  /// **'Current chapter'**
+  String get currentChapter;
+
+  /// Chapter count value in the book info dialog
+  ///
+  /// In en, this message translates to:
+  /// **'{chapters} chapters'**
+  String libraryChaptersCount(int chapters);
+
+  /// Close button in the book info dialog
+  ///
+  /// In en, this message translates to:
+  /// **'Close'**
+  String get libraryClose;
+
+  /// Title of the delete book confirmation dialog
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm Deletion'**
+  String get libraryConfirmDeleteTitle;
+
+  /// Delete book confirmation message with book title
+  ///
+  /// In en, this message translates to:
+  /// **'Delete \"{title}\"? The file will be permanently removed from your device.'**
+  String libraryDeleteBookMessage(String title);
+
+  /// Progress dialog message while deleting a book
+  ///
+  /// In en, this message translates to:
+  /// **'Deleting \"{title}\"...'**
+  String libraryDeletingBook(String title);
+
+  /// Toast shown after a book is deleted
+  ///
+  /// In en, this message translates to:
+  /// **'\"{title}\" deleted'**
+  String libraryBookDeletedToast(String title);
+
+  /// Toast shown when deleting a book fails
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to delete: {error}'**
+  String libraryDeleteFailed(String error);
+
+  /// Badge on a book cover indicating the book is in progress
+  ///
+  /// In en, this message translates to:
+  /// **'Reading'**
+  String get libraryReadingBadge;
+
+  /// Deletion progress step: removing the book file
+  ///
+  /// In en, this message translates to:
+  /// **'Deleting book file...'**
+  String get libraryDeletingBookFile;
+
+  /// Deletion progress step: removing the cover image
+  ///
+  /// In en, this message translates to:
+  /// **'Deleting cover image...'**
+  String get libraryDeletingCoverImage;
+
+  /// Deletion progress step: removing database records
+  ///
+  /// In en, this message translates to:
+  /// **'Cleaning up database records...'**
+  String get libraryCleaningDatabase;
+
+  /// Deletion progress step: finished
+  ///
+  /// In en, this message translates to:
+  /// **'Deletion complete'**
+  String get libraryDeleteComplete;
+
+  /// Chapter title for TXT content that appears before the first detected chapter heading
+  ///
+  /// In en, this message translates to:
+  /// **'Front Matter'**
+  String get readerPrefaceTitle;
+
+  /// Page mode option: content split into pages turned instantly by tapping
+  ///
+  /// In en, this message translates to:
+  /// **'No Animation'**
+  String get readerModeHorizontalPage;
+
+  /// Subtitle explaining the vertical scroll page mode
+  ///
+  /// In en, this message translates to:
+  /// **'Slide through pre-paginated pages vertically; swipe sideways to change chapters'**
+  String get readerModeVerticalScrollHint;
+
+  /// Subtitle explaining whole-book continuous vertical scrolling
+  ///
+  /// In en, this message translates to:
+  /// **'Pre-paginated chapters form one positionable vertical list'**
+  String get readerModeWholeBookScrollHint;
+
+  /// Switch controlling whether vertical scrolling is limited to one chapter
+  ///
+  /// In en, this message translates to:
+  /// **'Scroll by chapter'**
+  String get readerScrollByChapterTitle;
+
+  /// Subtitle when chapter-scoped vertical scrolling is enabled
+  ///
+  /// In en, this message translates to:
+  /// **'Slide through one chapter page by page, then swipe sideways to change chapters'**
+  String get readerScrollByChapterOnHint;
+
+  /// Subtitle when whole-book vertical scrolling is enabled
+  ///
+  /// In en, this message translates to:
+  /// **'All chapters connect page by page in one positionable vertical list'**
+  String get readerScrollByChapterOffHint;
+
+  /// Subtitle explaining the horizontal paging mode
+  ///
+  /// In en, this message translates to:
+  /// **'Tap the left side for the previous page, the right side for the next page'**
+  String get readerModeHorizontalPageHint;
+
+  /// Subtitle explaining the horizontal slide page mode
+  ///
+  /// In en, this message translates to:
+  /// **'Pages follow your finger horizontally and snap into place'**
+  String get readerModeHorizontalSlideHint;
+
+  /// Page mode option where the current page slides away over the next one like a stacked sheet
+  ///
+  /// In en, this message translates to:
+  /// **'Cover'**
+  String get readerModeCoverSlide;
+
+  /// Subtitle explaining the cover page turn mode
+  ///
+  /// In en, this message translates to:
+  /// **'The current page slides off to the left, uncovering the next page beneath it'**
+  String get readerModeCoverSlideHint;
+
+  /// Page mode option with an interactive simulated paper curl
+  ///
+  /// In en, this message translates to:
+  /// **'Page Curl'**
+  String get readerModePageCurl;
+
+  /// Subtitle explaining the simulated page curl mode
+  ///
+  /// In en, this message translates to:
+  /// **'Drag sideways to curl the page, then release to turn or rebound'**
+  String get readerModePageCurlHint;
+
+  /// Slider label showing the current reader font size
+  ///
+  /// In en, this message translates to:
+  /// **'Font size  {size}'**
+  String readerFontSizeValue(int size);
+
+  /// Slider label showing the current left/right page margin
+  ///
+  /// In en, this message translates to:
+  /// **'Horizontal margin  {margin}'**
+  String readerHorizontalMarginValue(int margin);
+
+  /// No description provided for @readerHorizontalMarginLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Horizontal margin'**
+  String get readerHorizontalMarginLabel;
+
+  /// No description provided for @readerTopMarginLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Top margin'**
+  String get readerTopMarginLabel;
+
+  /// No description provided for @readerBottomMarginLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Bottom margin'**
+  String get readerBottomMarginLabel;
+
+  /// No description provided for @readerVerticalMarginLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Vertical margin'**
+  String get readerVerticalMarginLabel;
+
+  /// Slider label showing the current top/bottom page margin
+  ///
+  /// In en, this message translates to:
+  /// **'Vertical margin  {margin}'**
+  String readerVerticalMarginValue(int margin);
+
+  /// Total chapter count shown in the table of contents header
+  ///
+  /// In en, this message translates to:
+  /// **'{count} chapters'**
+  String readerChapterCount(int count);
+
+  /// Fallback title for a chapter without a title, 1-based index
+  ///
+  /// In en, this message translates to:
+  /// **'Chapter {number}'**
+  String readerChapterFallback(int number);
+
+  /// Error message when a book fails to load in the native reader
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to open: {error}'**
+  String readerOpenFailed(String error);
+
+  /// Shown when a book parses successfully but contains no displayable text
+  ///
+  /// In en, this message translates to:
+  /// **'This book has no readable content'**
+  String get readerNoContent;
+
+  /// Bottom status bar in paged modes: current chapter and page position
+  ///
+  /// In en, this message translates to:
+  /// **'Chapter {chapter}/{chapterCount} · Page {page}/{pageCount}'**
+  String readerStatusPaged(
+    int chapter,
+    int chapterCount,
+    int page,
+    int pageCount,
+  );
+
+  /// Bottom status bar in vertical scroll mode: current chapter position
+  ///
+  /// In en, this message translates to:
+  /// **'Chapter {chapter}/{chapterCount} · Vertical scroll'**
+  String readerStatusScroll(int chapter, int chapterCount);
+
+  /// Progress message shown when a local file import starts
+  ///
+  /// In en, this message translates to:
+  /// **'Preparing import...'**
+  String get importPreparing;
+
+  /// Toast shown when importing a book throws an exception
+  ///
+  /// In en, this message translates to:
+  /// **'Import failed: {error}'**
+  String importFailedWithError(String error);
+
+  /// Button label to import a book from local device storage
+  ///
+  /// In en, this message translates to:
+  /// **'Local Files'**
+  String get importLocalFile;
+
+  /// Temperature range hint for the MiniMax AI provider
+  ///
+  /// In en, this message translates to:
+  /// **'Temperature: MiniMax recommends 0.01 ~ 1.00'**
+  String get settingsAiTempHintMinimax;
+
+  /// Title of the custom AI config dialog
+  ///
+  /// In en, this message translates to:
+  /// **'Custom AI Configuration'**
+  String get settingsAiCustomConfigTitle;
+
+  /// Shows the currently selected AI provider in the custom config dialog
+  ///
+  /// In en, this message translates to:
+  /// **'Current provider: {provider}'**
+  String settingsAiCurrentProvider(String provider);
+
+  /// Validation error for MiniMax temperature range
+  ///
+  /// In en, this message translates to:
+  /// **'MiniMax Temperature must be between 0.01 and 1.00'**
+  String get settingsAiTempErrorMinimax;
+
+  /// Validation error for temperature out of allowed range
+  ///
+  /// In en, this message translates to:
+  /// **'Temperature is out of range, please follow the hint'**
+  String get settingsAiTempErrorOutOfRange;
+
+  /// Apply button in the custom AI config dialog
+  ///
+  /// In en, this message translates to:
+  /// **'Apply'**
+  String get settingsApply;
+
+  /// Toast after applying custom AI parameters
+  ///
+  /// In en, this message translates to:
+  /// **'Custom parameters applied, remember to save the configuration'**
+  String get settingsAiCustomApplied;
+
+  /// Validation error when API key is empty
+  ///
+  /// In en, this message translates to:
+  /// **'API Key cannot be empty'**
+  String get settingsAiApiKeyRequired;
+
+  /// Validation error when model is empty
+  ///
+  /// In en, this message translates to:
+  /// **'Model cannot be empty'**
+  String get settingsAiModelRequired;
+
+  /// Validation error for invalid base URL
+  ///
+  /// In en, this message translates to:
+  /// **'Base URL must be a valid http/https address'**
+  String get settingsAiBaseUrlInvalid;
+
+  /// Toast after saving AI settings
+  ///
+  /// In en, this message translates to:
+  /// **'AI settings saved'**
+  String get settingsAiSettingsSaved;
+
+  /// Error message when saving settings fails
+  ///
+  /// In en, this message translates to:
+  /// **'Save failed: {error}'**
+  String settingsSaveFailed(String error);
+
+  /// Switch title for volume-key page turning
+  ///
+  /// In en, this message translates to:
+  /// **'Volume key page turning'**
+  String get settingsVolumeKeyTurnTitle;
+
+  /// Switch subtitle for volume-key page turning
+  ///
+  /// In en, this message translates to:
+  /// **'Use volume keys in paged reading modes'**
+  String get settingsVolumeKeyTurnSubtitle;
+
+  /// Switch title for automatically reopening the last-read book on app launch
+  ///
+  /// In en, this message translates to:
+  /// **'Resume reading on launch'**
+  String get settingsAutoResumeReadingTitle;
+
+  /// Switch subtitle for automatically reopening the last-read book on app launch
+  ///
+  /// In en, this message translates to:
+  /// **'If you leave the app while reading, the next launch returns to where you left off'**
+  String get settingsAutoResumeReadingSubtitle;
+
+  /// Switch title for showing system status bar in reader
+  ///
+  /// In en, this message translates to:
+  /// **'Show system status bar while reading'**
+  String get settingsShowStatusBarTitle;
+
+  /// Subtitle when system status bar is shown in reader
+  ///
+  /// In en, this message translates to:
+  /// **'Reader battery/time UI hidden'**
+  String get settingsShowStatusBarOnSubtitle;
+
+  /// Subtitle when system status bar is hidden in reader
+  ///
+  /// In en, this message translates to:
+  /// **'Using reader battery/time UI'**
+  String get settingsShowStatusBarOffSubtitle;
+
+  /// Title for selecting the reader top information style
+  ///
+  /// In en, this message translates to:
+  /// **'Top information'**
+  String get readerTopBarStyleTitle;
+
+  /// No description provided for @readerTopBarStyleSystem.
+  ///
+  /// In en, this message translates to:
+  /// **'System status bar'**
+  String get readerTopBarStyleSystem;
+
+  /// No description provided for @readerTopBarStyleSystemHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Show the system time, signal, and battery'**
+  String get readerTopBarStyleSystemHint;
+
+  /// No description provided for @readerTopBarStyleReader.
+  ///
+  /// In en, this message translates to:
+  /// **'Reader information bar'**
+  String get readerTopBarStyleReader;
+
+  /// No description provided for @readerTopBarStyleReaderHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Show time, chapter title, and battery'**
+  String get readerTopBarStyleReaderHint;
+
+  /// No description provided for @readerTopBarStyleFloating.
+  ///
+  /// In en, this message translates to:
+  /// **'Floating info bar'**
+  String get readerTopBarStyleFloating;
+
+  /// No description provided for @readerTopBarStyleFloatingHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Show time and battery in the status bar area without taking reading space'**
+  String get readerTopBarStyleFloatingHint;
+
+  /// No description provided for @readerTopBarStyleHidden.
+  ///
+  /// In en, this message translates to:
+  /// **'Fully immersive'**
+  String get readerTopBarStyleHidden;
+
+  /// No description provided for @readerTopBarStyleHiddenHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Show no information at the top'**
+  String get readerTopBarStyleHiddenHint;
+
+  /// Section title for AI assistant settings
+  ///
+  /// In en, this message translates to:
+  /// **'AI Reading Assistant'**
+  String get settingsAiAssistantTitle;
+
+  /// Section title for system settings
+  ///
+  /// In en, this message translates to:
+  /// **'System Settings'**
+  String get settingsSystemSettingsTitle;
+
+  /// Section title grouping appearance and font settings
+  ///
+  /// In en, this message translates to:
+  /// **'Appearance & Fonts'**
+  String get settingsSectionAppearanceFonts;
+
+  /// Section title grouping book sources, sync, cache and AI
+  ///
+  /// In en, this message translates to:
+  /// **'Data & Services'**
+  String get settingsSectionDataServices;
+
+  /// Section title grouping language and system toggles
+  ///
+  /// In en, this message translates to:
+  /// **'General'**
+  String get settingsSectionGeneral;
+
+  /// Section title grouping donation, about info and contributors
+  ///
+  /// In en, this message translates to:
+  /// **'About & Support'**
+  String get settingsSectionAboutSupport;
+
+  /// Switch title for keeping screen on
+  ///
+  /// In en, this message translates to:
+  /// **'Keep screen on'**
+  String get settingsKeepScreenOnTitle;
+
+  /// Switch subtitle for keeping screen on
+  ///
+  /// In en, this message translates to:
+  /// **'Prevent the screen from turning off while reading'**
+  String get settingsKeepScreenOnSubtitle;
+
+  /// Switch title for auto save
+  ///
+  /// In en, this message translates to:
+  /// **'Auto save'**
+  String get settingsAutoSaveTitle;
+
+  /// Switch subtitle for auto save
+  ///
+  /// In en, this message translates to:
+  /// **'Automatically save reading progress'**
+  String get settingsAutoSaveSubtitle;
+
+  /// Placeholder toast for the help button
+  ///
+  /// In en, this message translates to:
+  /// **'Help information can go here'**
+  String get settingsHelpPlaceholder;
+
+  /// Status text when AI is configured
+  ///
+  /// In en, this message translates to:
+  /// **'AI configured'**
+  String get settingsAiConfigured;
+
+  /// Status text when AI API key is missing
+  ///
+  /// In en, this message translates to:
+  /// **'API Key not configured yet'**
+  String get settingsAiNotConfigured;
+
+  /// Badge when AI settings are complete
+  ///
+  /// In en, this message translates to:
+  /// **'Ready to use'**
+  String get settingsAiReadyToUse;
+
+  /// Badge when AI settings are incomplete
+  ///
+  /// In en, this message translates to:
+  /// **'Pending setup'**
+  String get settingsAiPendingConfig;
+
+  /// Shows the matched AI model preset
+  ///
+  /// In en, this message translates to:
+  /// **'Current preset: {preset}'**
+  String settingsAiCurrentPreset(String preset);
+
+  /// Shows the custom AI model in use
+  ///
+  /// In en, this message translates to:
+  /// **'Current configuration: custom · {model}'**
+  String settingsAiCurrentCustom(String model);
+
+  /// Intro text explaining AI presets
+  ///
+  /// In en, this message translates to:
+  /// **'Common providers and models are built in; usually you only need to pick a preset and enter an API Key.'**
+  String get settingsAiPresetIntro;
+
+  /// Label of the AI provider dropdown
+  ///
+  /// In en, this message translates to:
+  /// **'Provider'**
+  String get settingsAiProviderLabel;
+
+  /// Hint of the AI preset dropdown
+  ///
+  /// In en, this message translates to:
+  /// **'Select a preset model'**
+  String get settingsAiPresetHint;
+
+  /// Label of the AI preset dropdown
+  ///
+  /// In en, this message translates to:
+  /// **'Preset model'**
+  String get settingsAiPresetLabel;
+
+  /// Button opening the custom AI config dialog
+  ///
+  /// In en, this message translates to:
+  /// **'Custom'**
+  String get settingsAiCustomButton;
+
+  /// Hint shown when a preset is selected
+  ///
+  /// In en, this message translates to:
+  /// **'After selecting a preset, just enter an API Key to start using it.'**
+  String get settingsAiPresetSelectedHint;
+
+  /// Hint shown when custom AI parameters are active
+  ///
+  /// In en, this message translates to:
+  /// **'Custom parameters are in use; you can switch back to a preset at any time.'**
+  String get settingsAiCustomActiveHint;
+
+  /// Hint text of the API key input
+  ///
+  /// In en, this message translates to:
+  /// **'Enter to enable the current preset'**
+  String get settingsAiApiKeyHint;
+
+  /// Tooltip to reveal the API key
+  ///
+  /// In en, this message translates to:
+  /// **'Show'**
+  String get settingsShow;
+
+  /// Tooltip to hide the API key
+  ///
+  /// In en, this message translates to:
+  /// **'Hide'**
+  String get settingsHide;
+
+  /// Button label while AI settings are being saved
+  ///
+  /// In en, this message translates to:
+  /// **'Saving...'**
+  String get settingsAiSaving;
+
+  /// Button label to save AI settings
+  ///
+  /// In en, this message translates to:
+  /// **'Save AI configuration'**
+  String get settingsAiSaveConfig;
+
+  /// Subtitle under the settings page title
+  ///
+  /// In en, this message translates to:
+  /// **'Only the options that shape your reading experience.'**
+  String get settingsPageIntro;
+
+  /// Settings section title for voluntary donations
+  ///
+  /// In en, this message translates to:
+  /// **'Support development'**
+  String get settingsSupportDevelopmentTitle;
+
+  /// Primary action on the first-home developer support introduction
+  ///
+  /// In en, this message translates to:
+  /// **'Support now'**
+  String get firstHomeSupportNow;
+
+  /// Dismiss action on the first-home developer support introduction
+  ///
+  /// In en, this message translates to:
+  /// **'Maybe later'**
+  String get firstHomeSupportLater;
+
+  /// Accessibility label for the paper shown in the first-home support introduction
+  ///
+  /// In en, this message translates to:
+  /// **'A letter from the Open Reading developer asking for voluntary support'**
+  String get firstHomeSupportPaperSemanticLabel;
+
+  /// Title of the voluntary developer support card
+  ///
+  /// In en, this message translates to:
+  /// **'Support continued development'**
+  String get settingsSupportDevelopmentCardTitle;
+
+  /// Explanation shown on the voluntary developer support card
+  ///
+  /// In en, this message translates to:
+  /// **'Building and maintaining Open Reading takes substantial time and effort. If it helps you, voluntary donations are welcome.'**
+  String get settingsSupportDevelopmentCardSubtitle;
+
+  /// Action label that opens the WeChat donation QR code
+  ///
+  /// In en, this message translates to:
+  /// **'Donate with WeChat'**
+  String get settingsDonationAction;
+
+  /// Action label that opens the Alipay donation QR code
+  ///
+  /// In en, this message translates to:
+  /// **'Donate with Alipay'**
+  String get settingsAlipayDonationAction;
+
+  /// Title of the WeChat donation QR code dialog
+  ///
+  /// In en, this message translates to:
+  /// **'WeChat donation'**
+  String get settingsDonationDialogTitle;
+
+  /// Instructions shown above the WeChat donation QR code
+  ///
+  /// In en, this message translates to:
+  /// **'Scan the QR code with WeChat to support continued development. Thank you.'**
+  String get settingsDonationDialogHint;
+
+  /// Title of the Alipay donation QR code dialog
+  ///
+  /// In en, this message translates to:
+  /// **'Alipay donation'**
+  String get settingsAlipayDonationDialogTitle;
+
+  /// Instructions shown above the Alipay donation QR code
+  ///
+  /// In en, this message translates to:
+  /// **'Scan the QR code with Alipay to support continued development. Thank you.'**
+  String get settingsAlipayDonationDialogHint;
+
+  /// Notice clarifying that donations are voluntary and do not unlock features
+  ///
+  /// In en, this message translates to:
+  /// **'Donations are entirely optional. They do not unlock features or constitute a purchase or service agreement.'**
+  String get settingsDonationVoluntaryNotice;
+
+  /// Accessibility label for the WeChat donation QR code image
+  ///
+  /// In en, this message translates to:
+  /// **'WeChat donation QR code'**
+  String get settingsDonationQrCodeLabel;
+
+  /// Accessibility label for the Alipay donation QR code image
+  ///
+  /// In en, this message translates to:
+  /// **'Alipay donation QR code'**
+  String get settingsAlipayDonationQrCodeLabel;
+
+  /// Hint above the horizontal AI model card list
+  ///
+  /// In en, this message translates to:
+  /// **'Swipe through models, tap to switch, long-press to edit or delete.'**
+  String get settingsAiSwipeHint;
+
+  /// Intro text on the legacy AI settings page
+  ///
+  /// In en, this message translates to:
+  /// **'Choose a provider and model, then enter your API key.'**
+  String get settingsAiLegacyIntro;
+
+  /// Label of the AI model dropdown
+  ///
+  /// In en, this message translates to:
+  /// **'Model'**
+  String get settingsAiModelLabel;
+
+  /// Helper text when no preset matches the current AI settings
+  ///
+  /// In en, this message translates to:
+  /// **'Using custom model settings'**
+  String get settingsAiUsingCustomParams;
+
+  /// Hint of the API key field about local-only storage
+  ///
+  /// In en, this message translates to:
+  /// **'Stored on this device only'**
+  String get settingsAiApiKeyStoredLocally;
+
+  /// Button label to save and enable AI settings
+  ///
+  /// In en, this message translates to:
+  /// **'Save and enable'**
+  String get settingsAiSaveAndEnable;
+
+  /// Tagline under the app name in the about card
+  ///
+  /// In en, this message translates to:
+  /// **'Open source, cross-platform, focused on reading'**
+  String get settingsAboutTagline;
+
+  /// Version label in the about card
+  ///
+  /// In en, this message translates to:
+  /// **'Version'**
+  String get settingsVersionLabel;
+
+  /// No description provided for @changelogHistoryTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Version history'**
+  String get changelogHistoryTitle;
+
+  /// No description provided for @changelogHistorySubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'View changes from every release'**
+  String get changelogHistorySubtitle;
+
+  /// No description provided for @openSourceLicensesTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Open-source licenses'**
+  String get openSourceLicensesTitle;
+
+  /// No description provided for @openSourceLicensesSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'View licenses for the app, bundled fonts, and third-party software'**
+  String get openSourceLicensesSubtitle;
+
+  /// No description provided for @openSourceLicensesIntro.
+  ///
+  /// In en, this message translates to:
+  /// **'These license texts are available offline in the app. Open Reading, bundled fonts, and third-party software remain subject to their respective licenses.'**
+  String get openSourceLicensesIntro;
+
+  /// No description provided for @openSourceProjectSection.
+  ///
+  /// In en, this message translates to:
+  /// **'Project licenses'**
+  String get openSourceProjectSection;
+
+  /// No description provided for @openSourceLegacyLicenseTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Earlier releases'**
+  String get openSourceLegacyLicenseTitle;
+
+  /// No description provided for @openSourceFontsSection.
+  ///
+  /// In en, this message translates to:
+  /// **'Bundled fonts'**
+  String get openSourceFontsSection;
+
+  /// No description provided for @openSourceDependenciesSection.
+  ///
+  /// In en, this message translates to:
+  /// **'Third-party software'**
+  String get openSourceDependenciesSection;
+
+  /// No description provided for @openSourceDependenciesTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Flutter and Dart dependencies'**
+  String get openSourceDependenciesTitle;
+
+  /// No description provided for @openSourceDependenciesSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'View third-party licenses collected automatically by Flutter'**
+  String get openSourceDependenciesSubtitle;
+
+  /// No description provided for @openSourceLicenseLegalese.
+  ///
+  /// In en, this message translates to:
+  /// **'Open Reading and third-party components remain subject to their respective licenses.'**
+  String get openSourceLicenseLegalese;
+
+  /// No description provided for @openSourceLicenseLoadFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not load the license text.'**
+  String get openSourceLicenseLoadFailed;
+
+  /// No description provided for @changelogPageTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Release history'**
+  String get changelogPageTitle;
+
+  /// No description provided for @changelogCurrentVersion.
+  ///
+  /// In en, this message translates to:
+  /// **'Current version'**
+  String get changelogCurrentVersion;
+
+  /// No description provided for @changelogLoadFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not load release history'**
+  String get changelogLoadFailed;
+
+  /// Maintainer label in the about card
+  ///
+  /// In en, this message translates to:
+  /// **'Maintainer'**
+  String get settingsMaintainerLabel;
+
+  /// License label in the about card
+  ///
+  /// In en, this message translates to:
+  /// **'License'**
+  String get settingsLicenseLabel;
+
+  /// Subtitle of the GitHub repository row
+  ///
+  /// In en, this message translates to:
+  /// **'View open-source project'**
+  String get settingsViewSourceSubtitle;
+
+  /// Row title to join the QQ group
+  ///
+  /// In en, this message translates to:
+  /// **'Join QQ group'**
+  String get settingsJoinQqGroup;
+
+  /// Toast when the QQ link fails to open
+  ///
+  /// In en, this message translates to:
+  /// **'Could not open QQ. Please make sure QQ is installed.'**
+  String get settingsQqOpenFailed;
+
+  /// Title of the contributors card
+  ///
+  /// In en, this message translates to:
+  /// **'Contributors'**
+  String get contributorsTitle;
+
+  /// Subtitle of the contributors card
+  ///
+  /// In en, this message translates to:
+  /// **'Thanks to everyone making Open Reading better'**
+  String get contributorsSubtitle;
+
+  /// Toast when a contributor profile link fails to open
+  ///
+  /// In en, this message translates to:
+  /// **'Could not open contributor profile'**
+  String get contributorsOpenProfileFailed;
+
+  /// Empty state of the contributors card
+  ///
+  /// In en, this message translates to:
+  /// **'No contributors to show yet'**
+  String get contributorsEmpty;
+
+  /// Error state of the contributors card
+  ///
+  /// In en, this message translates to:
+  /// **'Could not load contributors'**
+  String get contributorsLoadFailed;
+
+  /// Title of the theme mode setting and modal
+  ///
+  /// In en, this message translates to:
+  /// **'Night mode'**
+  String get settingsDarkModeTitle;
+
+  /// Generic subtitle showing the current value of a setting
+  ///
+  /// In en, this message translates to:
+  /// **'Current: {value}'**
+  String settingsCurrentValue(String value);
+
+  /// Title of the glass effect toggle
+  ///
+  /// In en, this message translates to:
+  /// **'Glass effect'**
+  String get settingsUiStyleTitle;
+
+  /// Description of the glass effect toggle
+  ///
+  /// In en, this message translates to:
+  /// **'Use translucent surfaces, background blur, and floating depth'**
+  String get settingsGlassEffectSubtitle;
+
+  /// Title of the mobile bottom navigation label visibility toggle
+  ///
+  /// In en, this message translates to:
+  /// **'Hide bottom navigation labels'**
+  String get settingsHideNavigationLabelsTitle;
+
+  /// Description of the mobile bottom navigation label visibility toggle
+  ///
+  /// In en, this message translates to:
+  /// **'Show icons only in the mobile bottom navigation'**
+  String get settingsHideNavigationLabelsSubtitle;
+
+  /// Title of the floating home navigation settings page
+  ///
+  /// In en, this message translates to:
+  /// **'Floating navigation bar'**
+  String get settingsFloatingNavigationTitle;
+
+  /// Description of the floating home navigation settings entry
+  ///
+  /// In en, this message translates to:
+  /// **'Adjust the display style and destination order'**
+  String get settingsFloatingNavigationSubtitle;
+
+  /// No description provided for @floatingNavigationPreviewTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Preview'**
+  String get floatingNavigationPreviewTitle;
+
+  /// No description provided for @floatingNavigationDisplayModeTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Display style'**
+  String get floatingNavigationDisplayModeTitle;
+
+  /// No description provided for @floatingNavigationIconsOnly.
+  ///
+  /// In en, this message translates to:
+  /// **'Icons only'**
+  String get floatingNavigationIconsOnly;
+
+  /// No description provided for @floatingNavigationIconsAndLabels.
+  ///
+  /// In en, this message translates to:
+  /// **'Icons and labels'**
+  String get floatingNavigationIconsAndLabels;
+
+  /// No description provided for @floatingNavigationOrderTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Navigation order'**
+  String get floatingNavigationOrderTitle;
+
+  /// No description provided for @floatingNavigationOrderHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Hold the handle on the right to reorder'**
+  String get floatingNavigationOrderHint;
+
+  /// No description provided for @floatingNavigationSyncHint.
+  ///
+  /// In en, this message translates to:
+  /// **'The order also applies to swipe navigation and the wide-screen sidebar'**
+  String get floatingNavigationSyncHint;
+
+  /// No description provided for @floatingNavigationResetOrder.
+  ///
+  /// In en, this message translates to:
+  /// **'Restore default order'**
+  String get floatingNavigationResetOrder;
+
+  /// No description provided for @floatingNavigationResetDone.
+  ///
+  /// In en, this message translates to:
+  /// **'Default order restored'**
+  String get floatingNavigationResetDone;
+
+  /// Title of the library layout selector
+  ///
+  /// In en, this message translates to:
+  /// **'Library layout'**
+  String get settingsLibraryLayoutTitle;
+
+  /// Description of the card and cover-only grid library layouts
+  ///
+  /// In en, this message translates to:
+  /// **'Choose cards or a compact grid, then adjust the grid details'**
+  String get settingsLibraryLayoutSubtitle;
+
+  /// Card layout option for the library
+  ///
+  /// In en, this message translates to:
+  /// **'Cards'**
+  String get settingsLibraryLayoutCard;
+
+  /// Cover-only grid layout option for the library
+  ///
+  /// In en, this message translates to:
+  /// **'Grid'**
+  String get settingsLibraryLayoutGrid;
+
+  /// Title of the mobile library grid column selector
+  ///
+  /// In en, this message translates to:
+  /// **'Covers per row on phones'**
+  String get settingsLibraryGridColumnsTitle;
+
+  /// Two-column mobile library grid option
+  ///
+  /// In en, this message translates to:
+  /// **'2 columns'**
+  String get settingsLibraryGridTwoColumns;
+
+  /// Three-column mobile library grid option
+  ///
+  /// In en, this message translates to:
+  /// **'3 columns'**
+  String get settingsLibraryGridThreeColumns;
+
+  /// Toggle for showing book titles and reading progress below grid covers
+  ///
+  /// In en, this message translates to:
+  /// **'Show title and progress'**
+  String get settingsLibraryGridShowDetailsTitle;
+
+  /// Description of the grid title and progress toggle
+  ///
+  /// In en, this message translates to:
+  /// **'Add one title line and a compact progress bar below each cover'**
+  String get settingsLibraryGridShowDetailsSubtitle;
+
+  /// Accent summary when following the app theme
+  ///
+  /// In en, this message translates to:
+  /// **'Accent color: follow theme'**
+  String get settingsAccentFollowTheme;
+
+  /// Accent summary showing the chosen color name
+  ///
+  /// In en, this message translates to:
+  /// **'Accent color: {name}'**
+  String settingsAccentValue(String name);
+
+  /// Title of the app theme setting
+  ///
+  /// In en, this message translates to:
+  /// **'App theme'**
+  String get settingsAppThemeTitle;
+
+  /// Subtitle combining the current theme name and accent summary
+  ///
+  /// In en, this message translates to:
+  /// **'Current: {theme} · {accent}'**
+  String settingsCurrentThemeSummary(String theme, String accent);
+
+  /// Accent color subtitle when no custom accent is set
+  ///
+  /// In en, this message translates to:
+  /// **'Follow app theme'**
+  String get settingsFollowAppTheme;
+
+  /// Title of the accent color setting and modal
+  ///
+  /// In en, this message translates to:
+  /// **'Accent color'**
+  String get settingsAccentColorTitle;
+
+  /// Hint for system theme mode
+  ///
+  /// In en, this message translates to:
+  /// **'Switch automatically with the system appearance'**
+  String get settingsThemeModeSystemHint;
+
+  /// Hint for light theme mode
+  ///
+  /// In en, this message translates to:
+  /// **'Always use the light appearance'**
+  String get settingsThemeModeLightHint;
+
+  /// Hint for dark theme mode
+  ///
+  /// In en, this message translates to:
+  /// **'Always use the dark appearance'**
+  String get settingsThemeModeDarkHint;
+
+  /// Title of the app theme picker modal
+  ///
+  /// In en, this message translates to:
+  /// **'Choose app theme'**
+  String get settingsSelectAppTheme;
+
+  /// Done button in theme/accent modals
+  ///
+  /// In en, this message translates to:
+  /// **'Done'**
+  String get settingsDone;
+
+  /// Advice text in the accent color modal
+  ///
+  /// In en, this message translates to:
+  /// **'The accent color generates the complete Material 3 light and dark color schemes.'**
+  String get settingsAccentColorAdvice;
+
+  /// No description provided for @settingsAccentPresetColors.
+  ///
+  /// In en, this message translates to:
+  /// **'Quick colors'**
+  String get settingsAccentPresetColors;
+
+  /// No description provided for @settingsAccentCustomColor.
+  ///
+  /// In en, this message translates to:
+  /// **'Custom color'**
+  String get settingsAccentCustomColor;
+
+  /// No description provided for @settingsAccentSaturationBrightness.
+  ///
+  /// In en, this message translates to:
+  /// **'Saturation and brightness color field'**
+  String get settingsAccentSaturationBrightness;
+
+  /// No description provided for @settingsAccentHue.
+  ///
+  /// In en, this message translates to:
+  /// **'Hue'**
+  String get settingsAccentHue;
+
+  /// No description provided for @settingsAccentPreview.
+  ///
+  /// In en, this message translates to:
+  /// **'Theme palette preview'**
+  String get settingsAccentPreview;
+
+  /// Option title to follow the theme accent
+  ///
+  /// In en, this message translates to:
+  /// **'Follow theme'**
+  String get settingsAccentFollowThemeOption;
+
+  /// Description for the follow-theme accent option
+  ///
+  /// In en, this message translates to:
+  /// **'Use the current app theme\'s default accent color'**
+  String get settingsAccentFollowThemeDesc;
+
+  /// Title of the about card
+  ///
+  /// In en, this message translates to:
+  /// **'About'**
+  String get settingsAboutTitle;
+
+  /// Display name of the app in the about card
+  ///
+  /// In en, this message translates to:
+  /// **'Open Reading'**
+  String get settingsAppName;
+
+  /// Author line in the about card
+  ///
+  /// In en, this message translates to:
+  /// **'Maintainer: 小元Niki'**
+  String get settingsAuthor;
+
+  /// Link label to the GitHub repository
+  ///
+  /// In en, this message translates to:
+  /// **'GitHub repository'**
+  String get settingsGithubRepo;
+
+  /// New Year greeting in the about card
+  ///
+  /// In en, this message translates to:
+  /// **'A focused, restrained, and freely modifiable cross-platform reader.'**
+  String get settingsNewYearGreeting;
+
+  /// Toast when the GitHub link fails to open
+  ///
+  /// In en, this message translates to:
+  /// **'Could not open the GitHub link'**
+  String get settingsGithubOpenFailed;
+
+  /// No description provided for @settingsOfficialWebsite.
+  ///
+  /// In en, this message translates to:
+  /// **'Official website'**
+  String get settingsOfficialWebsite;
+
+  /// No description provided for @settingsOfficialWebsiteSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Download and install from open.xxread.top'**
+  String get settingsOfficialWebsiteSubtitle;
+
+  /// No description provided for @settingsOfficialWebsiteOpenFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not open the official website'**
+  String get settingsOfficialWebsiteOpenFailed;
+
+  /// No description provided for @updateCheckNow.
+  ///
+  /// In en, this message translates to:
+  /// **'Check for updates'**
+  String get updateCheckNow;
+
+  /// No description provided for @updateCheckNowSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Get the latest version from GitHub or the official website'**
+  String get updateCheckNowSubtitle;
+
+  /// No description provided for @updateAvailableTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'A new version is available'**
+  String get updateAvailableTitle;
+
+  /// No description provided for @updateVersionSummary.
+  ///
+  /// In en, this message translates to:
+  /// **'Current version: {currentVersion}\nLatest version: {latestVersion}'**
+  String updateVersionSummary(String currentVersion, String latestVersion);
+
+  /// No description provided for @updateNotesTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'What\'s new'**
+  String get updateNotesTitle;
+
+  /// No description provided for @updateNotesEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'No release notes were provided for this version.'**
+  String get updateNotesEmpty;
+
+  /// No description provided for @updateLater.
+  ///
+  /// In en, this message translates to:
+  /// **'Later'**
+  String get updateLater;
+
+  /// No description provided for @updateSkipVersion.
+  ///
+  /// In en, this message translates to:
+  /// **'Skip this version'**
+  String get updateSkipVersion;
+
+  /// No description provided for @updateGoToDownload.
+  ///
+  /// In en, this message translates to:
+  /// **'Go to update'**
+  String get updateGoToDownload;
+
+  /// No description provided for @updateFromGithub.
+  ///
+  /// In en, this message translates to:
+  /// **'Update from GitHub'**
+  String get updateFromGithub;
+
+  /// No description provided for @updateFromWebsite.
+  ///
+  /// In en, this message translates to:
+  /// **'Open official website'**
+  String get updateFromWebsite;
+
+  /// No description provided for @updateFromWebsiteInstall.
+  ///
+  /// In en, this message translates to:
+  /// **'Download from website'**
+  String get updateFromWebsiteInstall;
+
+  /// No description provided for @updateWebsiteUnavailable.
+  ///
+  /// In en, this message translates to:
+  /// **'The official website package is not available for this device yet'**
+  String get updateWebsiteUnavailable;
+
+  /// No description provided for @updateDownloadingTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Downloading update'**
+  String get updateDownloadingTitle;
+
+  /// No description provided for @updateDownloadProgress.
+  ///
+  /// In en, this message translates to:
+  /// **'Downloaded {percent}%'**
+  String updateDownloadProgress(int percent);
+
+  /// No description provided for @updatePreparingInstaller.
+  ///
+  /// In en, this message translates to:
+  /// **'Verifying the package and preparing the system installer…'**
+  String get updatePreparingInstaller;
+
+  /// No description provided for @updateDownloadFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not download the update from the official website'**
+  String get updateDownloadFailed;
+
+  /// No description provided for @updateIntegrityFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'The downloaded update failed its integrity check and was deleted'**
+  String get updateIntegrityFailed;
+
+  /// No description provided for @updateInstallFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'The update package could not be installed. Check installation permissions and try again.'**
+  String get updateInstallFailed;
+
+  /// No description provided for @updateAlreadyLatest.
+  ///
+  /// In en, this message translates to:
+  /// **'You\'re already using the latest version'**
+  String get updateAlreadyLatest;
+
+  /// No description provided for @updateCheckFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not check for updates. Please try again later.'**
+  String get updateCheckFailed;
+
+  /// No description provided for @updateOpenFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not open the link'**
+  String get updateOpenFailed;
+
+  /// Toast when using an iOS-only feature on another platform
+  ///
+  /// In en, this message translates to:
+  /// **'This feature is only available on iOS'**
+  String get settingsIosOnlyFeature;
+
+  /// Toast summarizing the iOS sync result
+  ///
+  /// In en, this message translates to:
+  /// **'Synced to {storage}\n{books} books, {files} files copied'**
+  String settingsIosSyncResult(String storage, int books, int files);
+
+  /// Default reason in the restart dialog
+  ///
+  /// In en, this message translates to:
+  /// **'This settings change requires an app restart to take full effect.'**
+  String get settingsRestartRequiredReason;
+
+  /// Title of the restart dialog
+  ///
+  /// In en, this message translates to:
+  /// **'Restart required'**
+  String get settingsRestartRequiredTitle;
+
+  /// Body of the restart dialog combining the reason and the question
+  ///
+  /// In en, this message translates to:
+  /// **'{reason}\n\nRestart the app now?'**
+  String settingsRestartPrompt(String reason);
+
+  /// Button to postpone the restart
+  ///
+  /// In en, this message translates to:
+  /// **'Later'**
+  String get settingsRestartLater;
+
+  /// Button to restart the app immediately
+  ///
+  /// In en, this message translates to:
+  /// **'Restart'**
+  String get settingsRestartNow;
+
+  /// Detailed stats page title
+  ///
+  /// In en, this message translates to:
+  /// **'Detailed Statistics'**
+  String get statsDetailedTitle;
+
+  /// Time range option: last 7 days
+  ///
+  /// In en, this message translates to:
+  /// **'7 days'**
+  String get statsRange7Days;
+
+  /// Time range option: last 30 days
+  ///
+  /// In en, this message translates to:
+  /// **'30 days'**
+  String get statsRange30Days;
+
+  /// Time range option: last 90 days
+  ///
+  /// In en, this message translates to:
+  /// **'90 days'**
+  String get statsRange90Days;
+
+  /// Time range option: last year
+  ///
+  /// In en, this message translates to:
+  /// **'1 year'**
+  String get statsRange1Year;
+
+  /// Time range option: all time
+  ///
+  /// In en, this message translates to:
+  /// **'All'**
+  String get statsRangeAll;
+
+  /// Stats tab title: overview
+  ///
+  /// In en, this message translates to:
+  /// **'Overview'**
+  String get statsTabOverview;
+
+  /// Stats tab title: charts
+  ///
+  /// In en, this message translates to:
+  /// **'Charts'**
+  String get statsTabCharts;
+
+  /// Stats tab title: books
+  ///
+  /// In en, this message translates to:
+  /// **'Books'**
+  String get statsTabBooks;
+
+  /// Stats tab title: achievements
+  ///
+  /// In en, this message translates to:
+  /// **'Achievements'**
+  String get statsTabAchievements;
+
+  /// Hero panel title on the overview tab
+  ///
+  /// In en, this message translates to:
+  /// **'Reading Overview'**
+  String get statsReadingOverview;
+
+  /// Hero headline: cumulative reading hours (hours is a preformatted decimal string)
+  ///
+  /// In en, this message translates to:
+  /// **'Total {hours} hours'**
+  String statsCumulativeHours(Object hours);
+
+  /// Hero subtitle encouraging the current reading streak
+  ///
+  /// In en, this message translates to:
+  /// **'Keep the rhythm — you have read {days} days in a row'**
+  String statsStreakEncouragement(Object days);
+
+  /// Overview chip label: total reading time
+  ///
+  /// In en, this message translates to:
+  /// **'Total Time'**
+  String get statsTotalDuration;
+
+  /// Overview chip label: average single-session duration
+  ///
+  /// In en, this message translates to:
+  /// **'Avg Session'**
+  String get statsAvgSession;
+
+  /// A number of days with unit
+  ///
+  /// In en, this message translates to:
+  /// **'{count} days'**
+  String statsDaysCount(Object count);
+
+  /// Shown when there is no statistics data
+  ///
+  /// In en, this message translates to:
+  /// **'No data'**
+  String get statsNoData;
+
+  /// Best reading period label: early morning
+  ///
+  /// In en, this message translates to:
+  /// **'Early morning 05:00-08:59'**
+  String get statsPeriodEarlyMorning;
+
+  /// Best reading period label: morning
+  ///
+  /// In en, this message translates to:
+  /// **'Morning 09:00-11:59'**
+  String get statsPeriodMorning;
+
+  /// Best reading period label: afternoon
+  ///
+  /// In en, this message translates to:
+  /// **'Afternoon 12:00-17:59'**
+  String get statsPeriodAfternoon;
+
+  /// Best reading period label: evening
+  ///
+  /// In en, this message translates to:
+  /// **'Evening 18:00-21:59'**
+  String get statsPeriodEvening;
+
+  /// Best reading period label: late night
+  ///
+  /// In en, this message translates to:
+  /// **'Late night 22:00-04:59'**
+  String get statsPeriodLateNight;
+
+  /// Stats grid card title: total reading time
+  ///
+  /// In en, this message translates to:
+  /// **'Total Reading Time'**
+  String get statsTotalReadingTime;
+
+  /// Stats grid card title: total pages read
+  ///
+  /// In en, this message translates to:
+  /// **'Total Pages Read'**
+  String get statsTotalPagesRead;
+
+  /// Stats grid card title: number of books read
+  ///
+  /// In en, this message translates to:
+  /// **'Books Read'**
+  String get statsBooksReadCount;
+
+  /// Unit suffix for pages
+  ///
+  /// In en, this message translates to:
+  /// **'pages'**
+  String get statsUnitPage;
+
+  /// Card title: today's reading progress
+  ///
+  /// In en, this message translates to:
+  /// **'Today\'s Reading Progress'**
+  String get statsTodayProgress;
+
+  /// Progress vs target in minutes
+  ///
+  /// In en, this message translates to:
+  /// **'{current} / {target} min'**
+  String statsMinutesOfTarget(Object current, Object target);
+
+  /// Label for pages read (progress row and chart type selector)
+  ///
+  /// In en, this message translates to:
+  /// **'Pages Read'**
+  String get statsPagesRead;
+
+  /// Progress vs target in pages
+  ///
+  /// In en, this message translates to:
+  /// **'{current} / {target} pages'**
+  String statsPagesOfTarget(Object current, Object target);
+
+  /// Card title: reading habits analysis
+  ///
+  /// In en, this message translates to:
+  /// **'Reading Habits'**
+  String get statsReadingHabits;
+
+  /// Habit item label: best reading period of the day
+  ///
+  /// In en, this message translates to:
+  /// **'Best Reading Time'**
+  String get statsBestReadingPeriod;
+
+  /// Habit item label: average single reading session
+  ///
+  /// In en, this message translates to:
+  /// **'Avg Session Reading'**
+  String get statsAvgSessionReading;
+
+  /// Habit item label: longest consecutive reading days
+  ///
+  /// In en, this message translates to:
+  /// **'Longest Streak'**
+  String get statsMaxStreakDays;
+
+  /// Habit item label: reading focus score
+  ///
+  /// In en, this message translates to:
+  /// **'Reading Focus'**
+  String get statsFocusScore;
+
+  /// Chart type selector: number of books
+  ///
+  /// In en, this message translates to:
+  /// **'Book Count'**
+  String get statsBookCount;
+
+  /// Chart title: reading trend analysis
+  ///
+  /// In en, this message translates to:
+  /// **'Reading Trend Analysis'**
+  String get statsTrendAnalysis;
+
+  /// Chart axis label: minutes (compact)
+  ///
+  /// In en, this message translates to:
+  /// **'{value} min'**
+  String statsAxisMinutes(Object value);
+
+  /// Chart axis label: pages (compact)
+  ///
+  /// In en, this message translates to:
+  /// **'{value} pg'**
+  String statsAxisPages(Object value);
+
+  /// Chart axis label: books (compact)
+  ///
+  /// In en, this message translates to:
+  /// **'{value} bk'**
+  String statsAxisBooks(Object value);
+
+  /// Chart axis label: hour of day (compact)
+  ///
+  /// In en, this message translates to:
+  /// **'{hour}h'**
+  String statsAxisHour(Object hour);
+
+  /// Chart title: hourly reading time distribution
+  ///
+  /// In en, this message translates to:
+  /// **'Reading Time Distribution'**
+  String get statsTimeDistribution;
+
+  /// Chart title: book format distribution pie chart
+  ///
+  /// In en, this message translates to:
+  /// **'Book Format Distribution'**
+  String get statsFormatDistribution;
+
+  /// Books summary: completed books
+  ///
+  /// In en, this message translates to:
+  /// **'Completed'**
+  String get statsCompleted;
+
+  /// Books summary: books currently being read
+  ///
+  /// In en, this message translates to:
+  /// **'In Progress'**
+  String get statsInProgress;
+
+  /// Books ranking title when real durations exist
+  ///
+  /// In en, this message translates to:
+  /// **'Reading Time Ranking'**
+  String get statsDurationRanking;
+
+  /// Books ranking title when only progress data exists
+  ///
+  /// In en, this message translates to:
+  /// **'Reading Progress Ranking'**
+  String get statsProgressRanking;
+
+  /// A number of pages with unit
+  ///
+  /// In en, this message translates to:
+  /// **'{count} pages'**
+  String statsPagesCount(Object count);
+
+  /// Number of reading sessions
+  ///
+  /// In en, this message translates to:
+  /// **'{count} sessions'**
+  String statsSessionCount(Object count);
+
+  /// Achievements overview subtitle
+  ///
+  /// In en, this message translates to:
+  /// **'Earned {achieved} achievements, {remaining} more to unlock'**
+  String statsAchievementsSummary(Object achieved, Object remaining);
+
+  /// Achievement title: first reading session
+  ///
+  /// In en, this message translates to:
+  /// **'First Read'**
+  String get statsAchievementFirstReadTitle;
+
+  /// Achievement description: first reading session
+  ///
+  /// In en, this message translates to:
+  /// **'Complete your first reading session'**
+  String get statsAchievementFirstReadDesc;
+
+  /// Achievement title: 10 hours total
+  ///
+  /// In en, this message translates to:
+  /// **'Reading Novice'**
+  String get statsAchievementNoviceTitle;
+
+  /// Achievement description: 10 hours total
+  ///
+  /// In en, this message translates to:
+  /// **'Read for a total of 10 hours'**
+  String get statsAchievementNoviceDesc;
+
+  /// Achievement title: 100 hours total
+  ///
+  /// In en, this message translates to:
+  /// **'Bookworm'**
+  String get statsAchievementBookwormTitle;
+
+  /// Achievement description: 100 hours total
+  ///
+  /// In en, this message translates to:
+  /// **'Read for a total of 100 hours'**
+  String get statsAchievementBookwormDesc;
+
+  /// Achievement title: 7-day streak
+  ///
+  /// In en, this message translates to:
+  /// **'Reading Expert'**
+  String get statsAchievementExpertTitle;
+
+  /// Achievement description: 7-day streak
+  ///
+  /// In en, this message translates to:
+  /// **'Read 7 days in a row'**
+  String get statsAchievementExpertDesc;
+
+  /// Achievement title: 10000 pages
+  ///
+  /// In en, this message translates to:
+  /// **'Ocean of Knowledge'**
+  String get statsAchievementOceanTitle;
+
+  /// Achievement description: 10000 pages
+  ///
+  /// In en, this message translates to:
+  /// **'Read 10,000 pages'**
+  String get statsAchievementOceanDesc;
+
+  /// Achievement title: 10 different books
+  ///
+  /// In en, this message translates to:
+  /// **'Polymath'**
+  String get statsAchievementScholarTitle;
+
+  /// Achievement description: 10 different books
+  ///
+  /// In en, this message translates to:
+  /// **'Read 10 different books'**
+  String get statsAchievementScholarDesc;
+
+  /// Achievement title: 30-day streak
+  ///
+  /// In en, this message translates to:
+  /// **'Reading Marathon'**
+  String get statsAchievementMarathonTitle;
+
+  /// Achievement description: 30-day streak
+  ///
+  /// In en, this message translates to:
+  /// **'Read 30 days in a row'**
+  String get statsAchievementMarathonDesc;
+
+  /// Achievement title: 500 hours total
+  ///
+  /// In en, this message translates to:
+  /// **'Focus Master'**
+  String get statsAchievementFocusTitle;
+
+  /// Achievement description: 500 hours total
+  ///
+  /// In en, this message translates to:
+  /// **'Read for a total of 500 hours'**
+  String get statsAchievementFocusDesc;
+
+  /// Achievement progress percentage
+  ///
+  /// In en, this message translates to:
+  /// **'Progress: {percent}%'**
+  String statsProgressPercent(Object percent);
+
+  /// Chart title: reading goal progress
+  ///
+  /// In en, this message translates to:
+  /// **'Reading Goal Progress'**
+  String get statsGoalProgress;
+
+  /// Goal row label: this month's reading time
+  ///
+  /// In en, this message translates to:
+  /// **'This Month\'s Reading Time'**
+  String get statsMonthlyReadingTime;
+
+  /// Goal row label: this week's reading time
+  ///
+  /// In en, this message translates to:
+  /// **'This Week\'s Reading Time'**
+  String get statsWeeklyReadingTime;
+
+  /// Goal row label: average daily pages over the last 7 days
+  ///
+  /// In en, this message translates to:
+  /// **'Daily Avg Pages (Last 7 Days)'**
+  String get statsAvgDailyPages7d;
+
+  /// A number of hours with unit
+  ///
+  /// In en, this message translates to:
+  /// **'{count} hours'**
+  String statsHoursCount(Object count);
+
+  /// Chart title: reading speed trend
+  ///
+  /// In en, this message translates to:
+  /// **'Reading Speed Trend'**
+  String get statsSpeedTrend;
+
+  /// Average reading speed badge (speed is a preformatted decimal string)
+  ///
+  /// In en, this message translates to:
+  /// **'Avg: {speed} pages/min'**
+  String statsAvgSpeed(Object speed);
+
+  /// Heatmap card title: reading continuity
+  ///
+  /// In en, this message translates to:
+  /// **'Reading Continuity'**
+  String get statsReadingContinuity;
+
+  /// Current consecutive reading days badge
+  ///
+  /// In en, this message translates to:
+  /// **'Current streak: {days} days'**
+  String statsCurrentStreak(Object days);
+
+  /// Heatmap legend: low intensity
+  ///
+  /// In en, this message translates to:
+  /// **'Less'**
+  String get statsHeatmapLess;
+
+  /// Heatmap legend: high intensity
+  ///
+  /// In en, this message translates to:
+  /// **'More'**
+  String get statsHeatmapMore;
+
+  /// Heatmap column header: week number
+  ///
+  /// In en, this message translates to:
+  /// **'Week {week}'**
+  String statsWeekNumber(Object week);
+
+  /// No description provided for @bookSourceAddToShelf.
+  ///
+  /// In en, this message translates to:
+  /// **'Add to shelf'**
+  String get bookSourceAddToShelf;
+
+  /// No description provided for @bookSourceAddOnline.
+  ///
+  /// In en, this message translates to:
+  /// **'Add online'**
+  String get bookSourceAddOnline;
+
+  /// No description provided for @bookSourceAddOnlineHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Read from the source and cache chapters as you go'**
+  String get bookSourceAddOnlineHint;
+
+  /// No description provided for @bookSourceDownloadLocal.
+  ///
+  /// In en, this message translates to:
+  /// **'Download locally'**
+  String get bookSourceDownloadLocal;
+
+  /// No description provided for @bookSourceDownloadLocalHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Download every chapter and add a local TXT copy'**
+  String get bookSourceDownloadLocalHint;
+
+  /// No description provided for @bookSourceAddedOnline.
+  ///
+  /// In en, this message translates to:
+  /// **'Added to shelf as an online book'**
+  String get bookSourceAddedOnline;
+
+  /// No description provided for @bookSourceAlreadyOnShelf.
+  ///
+  /// In en, this message translates to:
+  /// **'This book is already on your shelf'**
+  String get bookSourceAlreadyOnShelf;
+
+  /// No description provided for @bookSourceDownloading.
+  ///
+  /// In en, this message translates to:
+  /// **'Downloading locally'**
+  String get bookSourceDownloading;
+
+  /// No description provided for @bookSourceFetchingCatalog.
+  ///
+  /// In en, this message translates to:
+  /// **'Fetching chapter catalog…'**
+  String get bookSourceFetchingCatalog;
+
+  /// No description provided for @bookSourceDownloadProgress.
+  ///
+  /// In en, this message translates to:
+  /// **'{completed}/{total} chapters'**
+  String bookSourceDownloadProgress(int completed, int total);
+
+  /// No description provided for @bookSourceDownloadComplete.
+  ///
+  /// In en, this message translates to:
+  /// **'Download complete and added to the local shelf'**
+  String get bookSourceDownloadComplete;
+
+  /// No description provided for @bookSourceDownloadConverted.
+  ///
+  /// In en, this message translates to:
+  /// **'Download complete. This is now a local book'**
+  String get bookSourceDownloadConverted;
+
+  /// No description provided for @bookSourceDownloadFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Download failed: {error}'**
+  String bookSourceDownloadFailed(String error);
+
+  /// No description provided for @downloadTasksTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Downloads'**
+  String get downloadTasksTitle;
+
+  /// No description provided for @downloadTasksEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'No download tasks'**
+  String get downloadTasksEmpty;
+
+  /// No description provided for @downloadTaskQueued.
+  ///
+  /// In en, this message translates to:
+  /// **'Waiting to download'**
+  String get downloadTaskQueued;
+
+  /// No description provided for @downloadTaskDownloading.
+  ///
+  /// In en, this message translates to:
+  /// **'Downloading in background'**
+  String get downloadTaskDownloading;
+
+  /// No description provided for @downloadTaskCompleted.
+  ///
+  /// In en, this message translates to:
+  /// **'Download complete'**
+  String get downloadTaskCompleted;
+
+  /// No description provided for @downloadTaskFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Download failed'**
+  String get downloadTaskFailed;
+
+  /// No description provided for @downloadTaskCancelled.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancelled'**
+  String get downloadTaskCancelled;
+
+  /// No description provided for @downloadTaskCancel.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel task'**
+  String get downloadTaskCancel;
+
+  /// No description provided for @downloadContinueInBackground.
+  ///
+  /// In en, this message translates to:
+  /// **'Continue in background'**
+  String get downloadContinueInBackground;
+
+  /// No description provided for @downloadRunningInBackground.
+  ///
+  /// In en, this message translates to:
+  /// **'Download continues in the background'**
+  String get downloadRunningInBackground;
+
+  /// No description provided for @bookSourceExitAddTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Add to shelf?'**
+  String get bookSourceExitAddTitle;
+
+  /// No description provided for @bookSourceExitAddMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Add “{title}” to your shelf as an online book? Your reading progress will be kept.'**
+  String bookSourceExitAddMessage(String title);
+
+  /// No description provided for @bookSourceNotNow.
+  ///
+  /// In en, this message translates to:
+  /// **'Not now'**
+  String get bookSourceNotNow;
+
+  /// No description provided for @bookSourceOnlineBadge.
+  ///
+  /// In en, this message translates to:
+  /// **'Online'**
+  String get bookSourceOnlineBadge;
+
+  /// No description provided for @bookSourceOnlineDataBroken.
+  ///
+  /// In en, this message translates to:
+  /// **'Online book data is invalid: {error}'**
+  String bookSourceOnlineDataBroken(String error);
+
+  /// Title of the reader-only theme selector
+  ///
+  /// In en, this message translates to:
+  /// **'Reading theme'**
+  String get readerThemeTitle;
+
+  /// Explains that reading themes are independent from the app theme
+  ///
+  /// In en, this message translates to:
+  /// **'Only changes the reading page and its controls'**
+  String get readerThemeDescription;
+
+  /// Reader settings sheet tab with the theme picker and top bar style
+  ///
+  /// In en, this message translates to:
+  /// **'Theme'**
+  String get readerSettingsTabTheme;
+
+  /// Reader settings sheet tab with font size, line height and alignment
+  ///
+  /// In en, this message translates to:
+  /// **'Text'**
+  String get readerSettingsTabText;
+
+  /// Reader settings sheet tab with the page margins
+  ///
+  /// In en, this message translates to:
+  /// **'Layout'**
+  String get readerSettingsTabLayout;
+
+  /// Reader settings sheet tab with page-turning behavior
+  ///
+  /// In en, this message translates to:
+  /// **'Paging'**
+  String get readerSettingsTabPaging;
+
+  /// Collapsed section holding letter spacing, first-line indent and paragraph spacing
+  ///
+  /// In en, this message translates to:
+  /// **'Advanced typography'**
+  String get readerSettingsAdvancedTypography;
+
+  /// Day reading theme name
+  ///
+  /// In en, this message translates to:
+  /// **'Day'**
+  String get readerThemeDay;
+
+  /// Reading theme that switches between day and pure black with system brightness
+  ///
+  /// In en, this message translates to:
+  /// **'Follow system'**
+  String get readerThemeFollowSystem;
+
+  /// No description provided for @readerThemeMist.
+  ///
+  /// In en, this message translates to:
+  /// **'Mist'**
+  String get readerThemeMist;
+
+  /// No description provided for @readerThemeGreen.
+  ///
+  /// In en, this message translates to:
+  /// **'Eye care'**
+  String get readerThemeGreen;
+
+  /// No description provided for @readerThemeRose.
+  ///
+  /// In en, this message translates to:
+  /// **'Rose'**
+  String get readerThemeRose;
+
+  /// No description provided for @readerThemeNavy.
+  ///
+  /// In en, this message translates to:
+  /// **'Deep blue'**
+  String get readerThemeNavy;
+
+  /// Night reading theme name
+  ///
+  /// In en, this message translates to:
+  /// **'Night'**
+  String get readerThemeNight;
+
+  /// Pure black reading theme name
+  ///
+  /// In en, this message translates to:
+  /// **'Pure black'**
+  String get readerThemePureBlack;
+
+  /// Parchment reading theme name
+  ///
+  /// In en, this message translates to:
+  /// **'Parchment'**
+  String get readerThemeParchment;
+
+  /// No description provided for @readerThemeCustom.
+  ///
+  /// In en, this message translates to:
+  /// **'Custom'**
+  String get readerThemeCustom;
+
+  /// No description provided for @readerPullBookmarkTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Pull-down bookmark'**
+  String get readerPullBookmarkTitle;
+
+  /// No description provided for @readerPullBookmarkHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Pull down from the top edge and release to add or remove a bookmark for this page'**
+  String get readerPullBookmarkHint;
+
+  /// No description provided for @readerPullBookmarkAddHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Pull farther to add bookmark'**
+  String get readerPullBookmarkAddHint;
+
+  /// No description provided for @readerPullBookmarkRemoveHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Pull farther to remove bookmark'**
+  String get readerPullBookmarkRemoveHint;
+
+  /// No description provided for @readerPullBookmarkReleaseHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Release to finish'**
+  String get readerPullBookmarkReleaseHint;
+
+  /// No description provided for @readerTapAnimationTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap animation'**
+  String get readerTapAnimationTitle;
+
+  /// No description provided for @readerTapAnimationHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Use the current page-turn animation for side taps; turn off to refresh instantly'**
+  String get readerTapAnimationHint;
+
+  /// No description provided for @readerTabletTwoPageTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Tablet two-page layout'**
+  String get readerTabletTwoPageTitle;
+
+  /// No description provided for @readerTabletTwoPageHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Show left and right pages side by side in landscape; turn off to always use a single page'**
+  String get readerTabletTwoPageHint;
+
+  /// No description provided for @readerCustomThemeTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Custom reading theme'**
+  String get readerCustomThemeTitle;
+
+  /// No description provided for @readerCustomThemeReset.
+  ///
+  /// In en, this message translates to:
+  /// **'Reset'**
+  String get readerCustomThemeReset;
+
+  /// No description provided for @readerCustomThemeColors.
+  ///
+  /// In en, this message translates to:
+  /// **'Theme colors'**
+  String get readerCustomThemeColors;
+
+  /// No description provided for @readerCustomThemeTextColor.
+  ///
+  /// In en, this message translates to:
+  /// **'Text color'**
+  String get readerCustomThemeTextColor;
+
+  /// No description provided for @readerCustomThemeTextColorHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Body text, headings, and primary icons'**
+  String get readerCustomThemeTextColorHint;
+
+  /// No description provided for @readerCustomThemeBackground.
+  ///
+  /// In en, this message translates to:
+  /// **'Reading background'**
+  String get readerCustomThemeBackground;
+
+  /// No description provided for @readerCustomThemeBackgroundHint.
+  ///
+  /// In en, this message translates to:
+  /// **'The paper and reading canvas color'**
+  String get readerCustomThemeBackgroundHint;
+
+  /// No description provided for @readerCustomThemeControlBar.
+  ///
+  /// In en, this message translates to:
+  /// **'Control bar color'**
+  String get readerCustomThemeControlBar;
+
+  /// No description provided for @readerCustomThemeControlBarHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Top and bottom controls and settings surfaces'**
+  String get readerCustomThemeControlBarHint;
+
+  /// No description provided for @readerCustomThemeContrastGood.
+  ///
+  /// In en, this message translates to:
+  /// **'Text has clear contrast for comfortable long reading'**
+  String get readerCustomThemeContrastGood;
+
+  /// No description provided for @readerCustomThemeContrastLow.
+  ///
+  /// In en, this message translates to:
+  /// **'Text contrast is low and may cause reading fatigue'**
+  String get readerCustomThemeContrastLow;
+
+  /// No description provided for @readerCustomThemeSave.
+  ///
+  /// In en, this message translates to:
+  /// **'Save and use'**
+  String get readerCustomThemeSave;
+
+  /// No description provided for @readerCustomThemePreview.
+  ///
+  /// In en, this message translates to:
+  /// **'Live preview'**
+  String get readerCustomThemePreview;
+
+  /// No description provided for @readerCustomThemePreviewChapter.
+  ///
+  /// In en, this message translates to:
+  /// **'Chapter One · Wind Between the Pages'**
+  String get readerCustomThemePreviewChapter;
+
+  /// No description provided for @readerCustomThemePreviewBody.
+  ///
+  /// In en, this message translates to:
+  /// **'This is your reading space. Tune the text, paper, and control colors until every page feels distinctly yours.'**
+  String get readerCustomThemePreviewBody;
+
+  /// No description provided for @readerCustomThemeHexInvalid.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a 6-digit hex color, such as #F6F0E4'**
+  String get readerCustomThemeHexInvalid;
+
+  /// No description provided for @readerCustomThemeHexLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Hex color'**
+  String get readerCustomThemeHexLabel;
+
+  /// No description provided for @readerCustomThemesTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Custom reading themes'**
+  String get readerCustomThemesTitle;
+
+  /// No description provided for @readerCustomThemeAdd.
+  ///
+  /// In en, this message translates to:
+  /// **'Add theme'**
+  String get readerCustomThemeAdd;
+
+  /// No description provided for @readerCustomThemeReorderHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Hold the handle on the right to reorder themes. The same order appears in reading settings.'**
+  String get readerCustomThemeReorderHint;
+
+  /// No description provided for @readerCustomThemeUse.
+  ///
+  /// In en, this message translates to:
+  /// **'Use selected theme'**
+  String get readerCustomThemeUse;
+
+  /// No description provided for @readerCustomThemeDeleteTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete reading theme?'**
+  String get readerCustomThemeDeleteTitle;
+
+  /// No description provided for @readerCustomThemeDeleteMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'“{name}” will be removed from your themes, along with its saved background image.'**
+  String readerCustomThemeDeleteMessage(String name);
+
+  /// No description provided for @readerCustomThemeEmptyTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'No custom themes yet'**
+  String get readerCustomThemeEmptyTitle;
+
+  /// No description provided for @readerCustomThemeEmptyHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Create your own combination of type, paper color, and background image.'**
+  String get readerCustomThemeEmptyHint;
+
+  /// No description provided for @readerCustomThemeNewTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'New reading theme'**
+  String get readerCustomThemeNewTitle;
+
+  /// No description provided for @readerCustomThemeEditTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit reading theme'**
+  String get readerCustomThemeEditTitle;
+
+  /// No description provided for @readerCustomThemeName.
+  ///
+  /// In en, this message translates to:
+  /// **'Theme name'**
+  String get readerCustomThemeName;
+
+  /// No description provided for @readerCustomThemeNameHint.
+  ///
+  /// In en, this message translates to:
+  /// **'For example, Rainy night or Afternoon paper'**
+  String get readerCustomThemeNameHint;
+
+  /// No description provided for @readerCustomThemeBackgroundImage.
+  ///
+  /// In en, this message translates to:
+  /// **'Background image'**
+  String get readerCustomThemeBackgroundImage;
+
+  /// No description provided for @readerCustomThemeBackgroundImageHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Supports JPG, PNG, and WebP. The image is copied into app storage.'**
+  String get readerCustomThemeBackgroundImageHint;
+
+  /// No description provided for @readerCustomThemeChooseImage.
+  ///
+  /// In en, this message translates to:
+  /// **'Upload image'**
+  String get readerCustomThemeChooseImage;
+
+  /// No description provided for @readerCustomThemeReplaceImage.
+  ///
+  /// In en, this message translates to:
+  /// **'Replace image'**
+  String get readerCustomThemeReplaceImage;
+
+  /// No description provided for @readerCustomThemeRemoveImage.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove image'**
+  String get readerCustomThemeRemoveImage;
+
+  /// No description provided for @readerCustomThemeImageStrength.
+  ///
+  /// In en, this message translates to:
+  /// **'Background image strength'**
+  String get readerCustomThemeImageStrength;
+
+  /// No description provided for @readerCustomThemeImageUnsupported.
+  ///
+  /// In en, this message translates to:
+  /// **'Background image import is not supported on this platform'**
+  String get readerCustomThemeImageUnsupported;
+
+  /// No description provided for @readerCustomThemeImageTooLarge.
+  ///
+  /// In en, this message translates to:
+  /// **'The image must be no larger than 20 MB'**
+  String get readerCustomThemeImageTooLarge;
+
+  /// No description provided for @readerCustomThemeImageFormat.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose a JPG, PNG, or WebP image'**
+  String get readerCustomThemeImageFormat;
+
+  /// No description provided for @readerCustomThemeImageFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not import the background image. Try again.'**
+  String get readerCustomThemeImageFailed;
+
+  /// No description provided for @importSourceTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Add books'**
+  String get importSourceTitle;
+
+  /// No description provided for @importSourceDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose several files first. Review the queue before starting the import.'**
+  String get importSourceDescription;
+
+  /// No description provided for @importSelectFiles.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose files'**
+  String get importSelectFiles;
+
+  /// No description provided for @importIosSharedDocuments.
+  ///
+  /// In en, this message translates to:
+  /// **'On My iPhone · Open Reading'**
+  String get importIosSharedDocuments;
+
+  /// No description provided for @importICloudDrive.
+  ///
+  /// In en, this message translates to:
+  /// **'iCloud Drive · Open Reading'**
+  String get importICloudDrive;
+
+  /// No description provided for @importICloudUnavailable.
+  ///
+  /// In en, this message translates to:
+  /// **'iCloud Drive is unavailable'**
+  String get importICloudUnavailable;
+
+  /// No description provided for @importAndroidFolder.
+  ///
+  /// In en, this message translates to:
+  /// **'Authorize a book folder'**
+  String get importAndroidFolder;
+
+  /// No description provided for @importAndroidRescan.
+  ///
+  /// In en, this message translates to:
+  /// **'Scan authorized folders'**
+  String get importAndroidRescan;
+
+  /// No description provided for @importFolderPermissionAvailable.
+  ///
+  /// In en, this message translates to:
+  /// **'Authorized · tap to scan'**
+  String get importFolderPermissionAvailable;
+
+  /// No description provided for @importFolderPermissionLost.
+  ///
+  /// In en, this message translates to:
+  /// **'Permission lost · authorize again to restore access'**
+  String get importFolderPermissionLost;
+
+  /// No description provided for @importRemoveFolder.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove folder'**
+  String get importRemoveFolder;
+
+  /// No description provided for @importQueueTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Import queue ({count})'**
+  String importQueueTitle(int count);
+
+  /// No description provided for @importQueueHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove files selected by mistake, then import them one at a time.'**
+  String get importQueueHint;
+
+  /// No description provided for @importQueueEmptyTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'No books selected'**
+  String get importQueueEmptyTitle;
+
+  /// No description provided for @importQueueEmptyBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose EPUB, PDF, TXT, MOBI or another supported book file.'**
+  String get importQueueEmptyBody;
+
+  /// No description provided for @importAction.
+  ///
+  /// In en, this message translates to:
+  /// **'Import {count} books'**
+  String importAction(int count);
+
+  /// No description provided for @importRetryFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Retry {count} failed'**
+  String importRetryFailed(int count);
+
+  /// No description provided for @importStatusQueued.
+  ///
+  /// In en, this message translates to:
+  /// **'Waiting'**
+  String get importStatusQueued;
+
+  /// No description provided for @importStatusPreparing.
+  ///
+  /// In en, this message translates to:
+  /// **'Preparing file'**
+  String get importStatusPreparing;
+
+  /// No description provided for @importStatusChecking.
+  ///
+  /// In en, this message translates to:
+  /// **'Checking'**
+  String get importStatusChecking;
+
+  /// No description provided for @importStatusCopying.
+  ///
+  /// In en, this message translates to:
+  /// **'Copying'**
+  String get importStatusCopying;
+
+  /// No description provided for @importStatusAnalyzing.
+  ///
+  /// In en, this message translates to:
+  /// **'Analyzing'**
+  String get importStatusAnalyzing;
+
+  /// No description provided for @importStatusSaving.
+  ///
+  /// In en, this message translates to:
+  /// **'Saving'**
+  String get importStatusSaving;
+
+  /// No description provided for @importStatusImported.
+  ///
+  /// In en, this message translates to:
+  /// **'Imported'**
+  String get importStatusImported;
+
+  /// No description provided for @importStatusSkipped.
+  ///
+  /// In en, this message translates to:
+  /// **'Already exists, skipped'**
+  String get importStatusSkipped;
+
+  /// No description provided for @importStatusFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Import failed'**
+  String get importStatusFailed;
+
+  /// No description provided for @importRemove.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove'**
+  String get importRemove;
+
+  /// No description provided for @importRetry.
+  ///
+  /// In en, this message translates to:
+  /// **'Retry'**
+  String get importRetry;
+
+  /// No description provided for @importClearCompleted.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear completed'**
+  String get importClearCompleted;
+
+  /// No description provided for @importDone.
+  ///
+  /// In en, this message translates to:
+  /// **'Done'**
+  String get importDone;
+
+  /// No description provided for @importSummary.
+  ///
+  /// In en, this message translates to:
+  /// **'{succeeded} imported · {skipped} skipped · {failed} failed'**
+  String importSummary(int succeeded, int skipped, int failed);
+
+  /// No description provided for @importNoSupportedFiles.
+  ///
+  /// In en, this message translates to:
+  /// **'No supported book files were found'**
+  String get importNoSupportedFiles;
+
+  /// No description provided for @importScanning.
+  ///
+  /// In en, this message translates to:
+  /// **'Scanning files…'**
+  String get importScanning;
+
+  /// Status text shown when an API key has been configured for a quick AI model card
+  ///
+  /// In en, this message translates to:
+  /// **'API Key configured'**
+  String get settingsAiApiKeyConfigured;
+
+  /// Hint shown when an API key is not yet configured for a quick AI model card
+  ///
+  /// In en, this message translates to:
+  /// **'Tap to complete setup'**
+  String get settingsAiApiKeyTapToConfigure;
+
+  /// Button label to add a new AI model
+  ///
+  /// In en, this message translates to:
+  /// **'Add model'**
+  String get settingsAiAddModel;
+
+  /// Toast shown after switching to a different AI model
+  ///
+  /// In en, this message translates to:
+  /// **'Switched to {model}'**
+  String settingsAiSwitchedToModel(String model);
+
+  /// Error shown when trying to fetch models without a Base URL or API Key
+  ///
+  /// In en, this message translates to:
+  /// **'Please fill in Base URL and API Key first'**
+  String get settingsAiFillBaseUrlAndApiKey;
+
+  /// Title shown when editing an existing AI model configuration
+  ///
+  /// In en, this message translates to:
+  /// **'Configure model'**
+  String get settingsAiEditModelTitle;
+
+  /// Subtitle explaining that each quick AI card maps to a single model
+  ///
+  /// In en, this message translates to:
+  /// **'Each quick card binds to one model'**
+  String get settingsAiQuickCardSubtitle;
+
+  /// Label for the preset model segment in the AI model configuration sheet
+  ///
+  /// In en, this message translates to:
+  /// **'Preset model'**
+  String get settingsAiPresetModel;
+
+  /// Input label for the AI provider Base URL field
+  ///
+  /// In en, this message translates to:
+  /// **'Base URL'**
+  String get settingsAiBaseUrlLabel;
+
+  /// Input label for the AI provider API Key field
+  ///
+  /// In en, this message translates to:
+  /// **'API Key'**
+  String get settingsAiApiKeyLabel;
+
+  /// Input label for the AI model name field
+  ///
+  /// In en, this message translates to:
+  /// **'Model name'**
+  String get settingsAiModelNameLabel;
+
+  /// Tooltip for the button that fetches available models from the provider
+  ///
+  /// In en, this message translates to:
+  /// **'Auto-fetch models'**
+  String get settingsAiFetchModelsTooltip;
+
+  /// Button label to auto-fetch the list of available models
+  ///
+  /// In en, this message translates to:
+  /// **'Auto-fetch model list'**
+  String get settingsAiFetchModelsList;
+
+  /// Prompt shown above the fetched model list dropdown
+  ///
+  /// In en, this message translates to:
+  /// **'Select a model'**
+  String get settingsAiSelectModel;
+
+  /// Input label for the AI temperature parameter field
+  ///
+  /// In en, this message translates to:
+  /// **'Temperature'**
+  String get settingsAiTemperatureLabel;
+
+  /// Button label to add a new AI model and enable it immediately
+  ///
+  /// In en, this message translates to:
+  /// **'Add and enable'**
+  String get settingsAiAddAndEnable;
+
+  /// Validation error when a Claude model name does not start with claude
+  ///
+  /// In en, this message translates to:
+  /// **'Claude provider model names usually start with \"claude\". Please check that provider and model match.'**
+  String get settingsAiModelMismatchClaude;
+
+  /// Validation error when a Gemini model name does not contain gemini
+  ///
+  /// In en, this message translates to:
+  /// **'Gemini provider model names usually contain \"gemini\". Please check that provider and model match.'**
+  String get settingsAiModelMismatchGemini;
+
+  /// Validation error when a GLM model name does not start with glm
+  ///
+  /// In en, this message translates to:
+  /// **'GLM provider model names usually start with \"glm\". Please check that provider and model match.'**
+  String get settingsAiModelMismatchGlm;
+
+  /// Validation error when a MiniMax model name does not contain MiniMax
+  ///
+  /// In en, this message translates to:
+  /// **'MiniMax provider model names usually contain \"MiniMax\". Please check that provider and model match.'**
+  String get settingsAiModelMismatchMinimax;
+
+  /// AIServiceException when the model list response body is not a Map
+  ///
+  /// In en, this message translates to:
+  /// **'Model list response format not recognized'**
+  String get settingsAiModelListFormatUnrecognized;
+
+  /// AIServiceException when the model list response has no data or models field
+  ///
+  /// In en, this message translates to:
+  /// **'Server returned no available model list'**
+  String get settingsAiNoModelsReturned;
+
+  /// AIServiceException when the fetched model list is empty
+  ///
+  /// In en, this message translates to:
+  /// **'No models available'**
+  String get settingsAiNoModelsAvailable;
+
+  /// AIServiceException wrapping an unexpected error during model fetching
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to fetch models: {error}'**
+  String settingsAiFetchModelsFailed(String error);
+
+  /// Switch title: let AI read imported books and build a summary knowledge base
+  ///
+  /// In en, this message translates to:
+  /// **'AI book preprocessing'**
+  String get settingsAiPreprocessTitle;
+
+  /// Subtitle of the AI preprocessing switch
+  ///
+  /// In en, this message translates to:
+  /// **'After importing a book, let AI read it and build a local summary knowledge base automatically'**
+  String get settingsAiPreprocessSubtitle;
+
+  /// Confirmation shown before enabling AI book preprocessing
+  ///
+  /// In en, this message translates to:
+  /// **'Preprocessing sends the whole book to the AI model in chunks. It consumes a large number of tokens and takes a while. Enable anyway?'**
+  String get settingsAiPreprocessWarning;
+
+  /// Error shown when enabling preprocessing without a configured AI model
+  ///
+  /// In en, this message translates to:
+  /// **'Configure a working AI model with an API key first'**
+  String get settingsAiPreprocessNeedModel;
+
+  /// Long-press menu action that runs AI preprocessing for one book
+  ///
+  /// In en, this message translates to:
+  /// **'AI preprocessing'**
+  String get libraryAiPreprocess;
+
+  /// Confirmation before manually preprocessing one book
+  ///
+  /// In en, this message translates to:
+  /// **'Let AI read \"{title}\" and build a summary knowledge base? This consumes a large number of tokens.'**
+  String libraryAiPreprocessConfirm(String title);
+
+  /// Progress text while AI preprocessing runs
+  ///
+  /// In en, this message translates to:
+  /// **'AI is reading this book… (step {done}/{total})'**
+  String libraryAiPreprocessProgress(int done, int total);
+
+  /// Toast when AI preprocessing finishes
+  ///
+  /// In en, this message translates to:
+  /// **'AI knowledge base generated'**
+  String get libraryAiPreprocessDone;
+
+  /// Toast when AI preprocessing fails
+  ///
+  /// In en, this message translates to:
+  /// **'AI preprocessing failed: {error}'**
+  String libraryAiPreprocessFailed(String error);
+
+  /// Toast when the book format cannot be preprocessed
+  ///
+  /// In en, this message translates to:
+  /// **'This book format doesn\'t support AI preprocessing yet'**
+  String get libraryAiPreprocessUnsupported;
+
+  /// Toast after a book is queued for background AI preprocessing
+  ///
+  /// In en, this message translates to:
+  /// **'Added to the AI preprocessing queue. Check progress in Download Tasks.'**
+  String get libraryAiPreprocessQueued;
+
+  /// First tab of the background tasks page: online book downloads
+  ///
+  /// In en, this message translates to:
+  /// **'Downloads'**
+  String get downloadTasksTabDownloads;
+
+  /// Status of a running AI preprocessing task
+  ///
+  /// In en, this message translates to:
+  /// **'AI is reading…'**
+  String get aiPreprocessTaskRunning;
+
+  /// Empty state of the AI preprocessing task list
+  ///
+  /// In en, this message translates to:
+  /// **'No AI preprocessing tasks'**
+  String get aiPreprocessTasksEmpty;
+
+  /// Button that removes finished AI preprocessing tasks from the list
+  ///
+  /// In en, this message translates to:
+  /// **'Clear finished'**
+  String get aiPreprocessClearFinished;
+
+  /// Button that starts a new AI chat from the AI page
+  ///
+  /// In en, this message translates to:
+  /// **'New chat'**
+  String get aiChatNewChat;
+
+  /// Chip label prompting to pick a book for AI chat context
+  ///
+  /// In en, this message translates to:
+  /// **'Link a book'**
+  String get aiChatSelectBook;
+
+  /// Option that clears the linked book in the AI chat book picker
+  ///
+  /// In en, this message translates to:
+  /// **'No linked book'**
+  String get aiChatNoBook;
+
+  /// Label of the AI destination in home navigation
+  ///
+  /// In en, this message translates to:
+  /// **'AI'**
+  String get navAi;
+
+  /// Title of the AI chat history page
+  ///
+  /// In en, this message translates to:
+  /// **'AI Chats'**
+  String get aiHistoryTitle;
+
+  /// Empty state of the AI chat history page
+  ///
+  /// In en, this message translates to:
+  /// **'No AI chats yet.\nTap Ask AI while reading to start your first conversation.'**
+  String get aiHistoryEmpty;
+
+  /// Message count shown in an AI chat history list item
+  ///
+  /// In en, this message translates to:
+  /// **'{count} messages'**
+  String aiHistoryMessageCount(int count);
+
+  /// Button that deletes all AI chat history
+  ///
+  /// In en, this message translates to:
+  /// **'Clear all'**
+  String get aiHistoryClearAll;
+
+  /// Confirmation message before clearing all AI chat history
+  ///
+  /// In en, this message translates to:
+  /// **'Delete all AI chat history? This cannot be undone.'**
+  String get aiHistoryClearAllConfirm;
+
+  /// Confirmation message before deleting one AI chat session
+  ///
+  /// In en, this message translates to:
+  /// **'Delete this chat?'**
+  String get aiHistoryDeleteConfirm;
+
+  /// Hint explaining the visibility switches in floating navigation settings
+  ///
+  /// In en, this message translates to:
+  /// **'Turn a switch off to hide that page; Settings can\'t be hidden.'**
+  String get floatingNavigationVisibilityHint;
+
+  /// Label for the Ask AI action in the reader control bar and text-selection toolbar
+  ///
+  /// In en, this message translates to:
+  /// **'Ask AI'**
+  String get readerAskAi;
+
+  /// Hint text in the Ask AI panel input field
+  ///
+  /// In en, this message translates to:
+  /// **'Ask about this book…'**
+  String get readerAiInputHint;
+
+  /// Tooltip of the send button in the Ask AI panel
+  ///
+  /// In en, this message translates to:
+  /// **'Send'**
+  String get readerAiSendButton;
+
+  /// Progress label shown while the AI request is in flight
+  ///
+  /// In en, this message translates to:
+  /// **'Thinking…'**
+  String get readerAiThinking;
+
+  /// Notice shown in the Ask AI panel when no provider has an API key configured
+  ///
+  /// In en, this message translates to:
+  /// **'No AI model is configured yet. Go to Settings → AI Reading Assistant to add a model and API key.'**
+  String get readerAiNotConfiguredHint;
+
+  /// Placeholder shown in the Ask AI panel before any message is sent
+  ///
+  /// In en, this message translates to:
+  /// **'Ask the AI about the current page or anything in this book.'**
+  String get readerAiEmptyHint;
+
+  /// Display label of the auto-generated question when the panel opens from the selection toolbar
+  ///
+  /// In en, this message translates to:
+  /// **'Explain this selection'**
+  String get readerAiSelectionQuestionLabel;
+
+  /// Prompt sent to the AI when asking about a text selection
+  ///
+  /// In en, this message translates to:
+  /// **'Explain the selected passage below and give 3 key points.\n\nSelected text:\n{selection}\n\nContext before:\n{before}\n\nContext after:\n{after}'**
+  String readerAiSelectionPrompt(String selection, String before, String after);
+
+  /// AIServiceException when no user message is present in the chat
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter a question before sending'**
+  String get readerAiEnterQuestionFirst;
+
+  /// AIServiceException when the AI response text is empty
+  ///
+  /// In en, this message translates to:
+  /// **'Model returned empty response, please retry'**
+  String get readerAiEmptyResponse;
+
+  /// AIServiceException for a generic request failure
+  ///
+  /// In en, this message translates to:
+  /// **'Request failed: {error}'**
+  String readerAiRequestFailed(String error);
+
+  /// Fallback error text when the raw error string is empty
+  ///
+  /// In en, this message translates to:
+  /// **'Unknown error'**
+  String get readerAiUnknownError;
+
+  /// AIServiceException when the response body is empty
+  ///
+  /// In en, this message translates to:
+  /// **'Server response is empty. This is usually caused by an incorrect Base URL, a gateway that does not forward to the model endpoint, or the server closing the connection early.\nRequest URL: {endpoint}'**
+  String readerAiEmptyResponseError(String endpoint);
+
+  /// AIServiceException when the response body cannot be parsed as JSON
+  ///
+  /// In en, this message translates to:
+  /// **'Server response is not valid JSON. The current endpoint may be incompatible with the {provider} configuration.\nRequest URL: {endpoint}\nResponse snippet: {snippet}'**
+  String readerAiInvalidJsonError(
+    String provider,
+    String endpoint,
+    String snippet,
+  );
+
+  /// AIServiceException when the response body cannot be read; {status} is either empty or '(code)'
+  ///
+  /// In en, this message translates to:
+  /// **'Request failed{status}: could not read the server response. This is usually caused by an incorrect Base URL, the endpoint returning empty content, or the network truncating the response.\nRequest URL: {endpoint}'**
+  String readerAiFailedReadBody(String status, String endpoint);
+
+  /// AIServiceException for a Dio network error; {status} is either empty or '(code)'
+  ///
+  /// In en, this message translates to:
+  /// **'Network request failed{status}: {error}\nRequest URL: {endpoint}'**
+  String readerAiNetworkRequestFailed(
+    String status,
+    String error,
+    String endpoint,
+  );
+
+  /// AIServiceException with MiniMax-specific debugging hints
+  ///
+  /// In en, this message translates to:
+  /// **'Request failed({status}): {text}\nSuggestions: 1) MiniMax temperature must be in (0,1]; 2) check that the model name matches the endpoint; 3) use only a single system instruction.\nRequest URL: {endpoint}'**
+  String readerAiRequestFailedMinimaxHint(
+    String status,
+    String text,
+    String endpoint,
+  );
+
+  /// AIServiceException with Claude-specific debugging hints
+  ///
+  /// In en, this message translates to:
+  /// **'Request failed({status}): {text}\nTip: Claude requires the anthropic-version request header.\nRequest URL: {endpoint}'**
+  String readerAiRequestFailedClaudeHint(
+    String status,
+    String text,
+    String endpoint,
+  );
+
+  /// AIServiceException hinting that the provider and API key may be mismatched
+  ///
+  /// In en, this message translates to:
+  /// **'Request failed({status}): {text}\nTip: Please confirm that the provider and API Key match; they cannot be mixed.\nRequest URL: {endpoint}'**
+  String readerAiRequestFailedProviderMismatchHint(
+    String status,
+    String text,
+    String endpoint,
+  );
+
+  /// Generic AIServiceException for a non-200 response with body text
+  ///
+  /// In en, this message translates to:
+  /// **'Request failed({status}): {text}\nRequest URL: {endpoint}'**
+  String readerAiRequestFailedGeneric(
+    String status,
+    String text,
+    String endpoint,
+  );
+
+  /// Mock AI response shown when AI is not configured, for a text selection query
+  ///
+  /// In en, this message translates to:
+  /// **'AI (mock): The text you selected is \"{selectedText}\".\n\nBefore: {before}\nAfter: {after}'**
+  String readerAiMockSelectionResponse(
+    String selectedText,
+    String before,
+    String after,
+  );
+
+  /// Mock AI response shown when AI is not configured, for a page analysis query
+  ///
+  /// In en, this message translates to:
+  /// **'AI (mock): This page has {chars} characters. Focus on the arguments at the beginning and end of paragraphs.'**
+  String readerAiMockPageAnalysis(int chars);
+
+  /// Mock AI greeting shown when no chat history exists
+  ///
+  /// In en, this message translates to:
+  /// **'Hello'**
+  String get readerAiMockGreeting;
+
+  /// Mock AI response shown when AI is not configured, for a chat question
+  ///
+  /// In en, this message translates to:
+  /// **'AI (mock): You asked \"{question}\".\n\nI have read the current page ({chars} characters). You can continue asking.'**
+  String readerAiMockChatResponse(String question, int chars);
+
+  /// Heading written into the AI response buffer for the book memory summary section
+  ///
+  /// In en, this message translates to:
+  /// **'[Book memory summary]'**
+  String get readerAiMemorySummaryHeading;
+
+  /// Heading written into the AI response buffer for the reading advice section
+  ///
+  /// In en, this message translates to:
+  /// **'[Reading advice for you]'**
+  String get readerAiReadingAdviceHeading;
+
+  /// Heading written into the AI response buffer for indexed snippet hits
+  ///
+  /// In en, this message translates to:
+  /// **'[Indexed hit snippets]'**
+  String get readerAiIndexedSnippetsHeading;
+
+  /// Intro line shown when no online AI key is configured and a local fallback answer is given
+  ///
+  /// In en, this message translates to:
+  /// **'No online AI Key configured, answering based on local memory and index:'**
+  String get readerAiLocalFallbackIntro;
+
+  /// Heading for the related content section in the local fallback response
+  ///
+  /// In en, this message translates to:
+  /// **'[Related content]'**
+  String get readerAiRelatedContentHeading;
+
+  /// Shown when the local fallback has no related snippets and no summary
+  ///
+  /// In en, this message translates to:
+  /// **'[Related content] No usable snippets hit.'**
+  String get readerAiNoRelatedContent;
+
+  /// Heading for the snippet location list in the local fallback response
+  ///
+  /// In en, this message translates to:
+  /// **'[Related content location]'**
+  String get readerAiRelatedContentLocationHeading;
+
+  /// A single snippet location line in the local fallback response
+  ///
+  /// In en, this message translates to:
+  /// **'- Location: {chapterId} ({startOffset}-{endOffset})'**
+  String readerAiSnippetLocation(
+    String chapterId,
+    int startOffset,
+    int endOffset,
+  );
+
+  /// Heading for the reading suggestion section in the local fallback response
+  ///
+  /// In en, this message translates to:
+  /// **'[How to read]'**
+  String get readerAiReadingSuggestionHeading;
+
+  /// Heading for the next-step section in the local fallback response
+  ///
+  /// In en, this message translates to:
+  /// **'[Next step]'**
+  String get readerAiNextStepHeading;
+
+  /// First next-step instruction in the local fallback response
+  ///
+  /// In en, this message translates to:
+  /// **'1) Read the hit snippet above first.'**
+  String get readerAiNextStepReadSnippet;
+
+  /// Second next-step instruction in the local fallback response
+  ///
+  /// In en, this message translates to:
+  /// **'2) Ask again with \"why/how/example\" and I will continue locating by index.'**
+  String get readerAiNextStepAskFollowUp;
+
+  /// Fallback label for the current TTS voice when no voice is selected
+  ///
+  /// In en, this message translates to:
+  /// **'System default'**
+  String get ttsSystemDefault;
+
+  /// Error message when the system TTS engine is not available
+  ///
+  /// In en, this message translates to:
+  /// **'System TTS unavailable'**
+  String get ttsUnavailable;
+
+  /// Error message when the requested TTS language is not supported
+  ///
+  /// In en, this message translates to:
+  /// **'System does not support language: {language}'**
+  String ttsUnsupportedLanguage(String language);
+
+  /// Fallback error text when a TTS exception has an empty message
+  ///
+  /// In en, this message translates to:
+  /// **'System TTS call failed'**
+  String get ttsCallFailed;
+
+  /// BookImportFailure message for a missing source file
+  ///
+  /// In en, this message translates to:
+  /// **'Source file does not exist'**
+  String get importErrorSourceMissing;
+
+  /// BookImportFailure message when file hashing fails
+  ///
+  /// In en, this message translates to:
+  /// **'Cannot verify file content'**
+  String get importErrorHashFailed;
+
+  /// BookImportFailure message when no available target filename can be found
+  ///
+  /// In en, this message translates to:
+  /// **'Cannot allocate available name for import file'**
+  String get importErrorTargetNameExhausted;
+
+  /// BookImportFailure message when the source file has not been materialized locally
+  ///
+  /// In en, this message translates to:
+  /// **'Source file not yet on local storage'**
+  String get importErrorSourceNotMaterialized;
+
+  /// BookImportFailure message when the copied file hash differs from the source
+  ///
+  /// In en, this message translates to:
+  /// **'Copied file does not match source'**
+  String get importErrorCopyVerificationFailed;
+
+  /// BookImportFailure message when the file exceeds the size limit
+  ///
+  /// In en, this message translates to:
+  /// **'File exceeds 100MB import limit'**
+  String get importErrorFileTooLarge;
+
+  /// BookImportFailure message when the source file cannot be prepared
+  ///
+  /// In en, this message translates to:
+  /// **'Cannot prepare import file'**
+  String get importErrorSourcePrepareFailed;
+
+  /// BookImportFailure message for a generic import failure
+  ///
+  /// In en, this message translates to:
+  /// **'Book import failed'**
+  String get importErrorFailed;
+
+  /// Fallback title used when no title can be extracted from a TXT file
+  ///
+  /// In en, this message translates to:
+  /// **'Unknown title'**
+  String get importUnknownTitle;
+
+  /// Fallback author used when no author can be extracted from a TXT file
+  ///
+  /// In en, this message translates to:
+  /// **'Unknown author'**
+  String get importUnknownAuthor;
+
+  /// Fallback title used when a book has no title
+  ///
+  /// In en, this message translates to:
+  /// **'Untitled'**
+  String get bookUntitled;
+
+  /// Reading plan task title for completing the daily reading goal
+  ///
+  /// In en, this message translates to:
+  /// **'Complete today\'s goal'**
+  String get homePlanTaskCompleteDailyGoal;
+
+  /// Reading plan task detail for reading a number of minutes
+  ///
+  /// In en, this message translates to:
+  /// **'Read {minutes} minutes'**
+  String homePlanTaskReadMinutes(int minutes);
+
+  /// Reading plan task title for completing a focus reading session
+  ///
+  /// In en, this message translates to:
+  /// **'Complete focus reading'**
+  String get homePlanTaskCompleteFocusReading;
+
+  /// Reading plan task detail for completing a focus session
+  ///
+  /// In en, this message translates to:
+  /// **'At least 1 focus session of {minutes} minutes'**
+  String homePlanTaskFocusSession(int minutes);
+
+  /// Reading plan task title for maintaining the weekly reading rhythm
+  ///
+  /// In en, this message translates to:
+  /// **'Keep the rhythm'**
+  String get homePlanTaskKeepRhythm;
+
+  /// Reading plan task detail for the weekly achieved-days target
+  ///
+  /// In en, this message translates to:
+  /// **'Weekly achieved days ≥ 5'**
+  String get homePlanTaskWeekAchievedDays;
+
+  /// Note highlight color name: light blue
+  ///
+  /// In en, this message translates to:
+  /// **'Light Blue'**
+  String get noteColorLightBlue;
+
+  /// Note highlight color name: red
+  ///
+  /// In en, this message translates to:
+  /// **'Red'**
+  String get noteColorRed;
+
+  /// Note highlight color name: green
+  ///
+  /// In en, this message translates to:
+  /// **'Green'**
+  String get noteColorGreen;
+
+  /// Note highlight color name: purple
+  ///
+  /// In en, this message translates to:
+  /// **'Purple'**
+  String get noteColorPurple;
+
+  /// Note highlight color name: gold
+  ///
+  /// In en, this message translates to:
+  /// **'Gold'**
+  String get noteColorGold;
+
+  /// Note highlight color name: orange
+  ///
+  /// In en, this message translates to:
+  /// **'Orange'**
+  String get noteColorOrange;
+
+  /// Note highlight color name: yellow
+  ///
+  /// In en, this message translates to:
+  /// **'Yellow'**
+  String get noteColorYellow;
+
+  /// Note highlight color name: dark green
+  ///
+  /// In en, this message translates to:
+  /// **'Dark Green'**
+  String get noteColorDarkGreen;
+
+  /// Note highlight color name: custom color
+  ///
+  /// In en, this message translates to:
+  /// **'Custom'**
+  String get noteColorCustom;
+
+  /// Share text header line with book title and author
+  ///
+  /// In en, this message translates to:
+  /// **'📖 《{title}》 - {author}'**
+  String noteShareBookHeader(String title, String author);
+
+  /// Share text line for the reader's note
+  ///
+  /// In en, this message translates to:
+  /// **'💭 Note: {note}'**
+  String noteShareNoteLabel(String note);
+
+  /// Share text line for the chapter name
+  ///
+  /// In en, this message translates to:
+  /// **'📍 {chapter}'**
+  String noteShareChapterLabel(String chapter);
+
+  /// Share text line for the page number
+  ///
+  /// In en, this message translates to:
+  /// **'📄 Page {page}'**
+  String noteSharePageLabel(int page);
+
+  /// Share text hashtags line with the note type name
+  ///
+  /// In en, this message translates to:
+  /// **'#BookNotes #{type}'**
+  String noteShareHashtags(String type);
+
+  /// Accent color display name: elegant purple
+  ///
+  /// In en, this message translates to:
+  /// **'Elegant Purple'**
+  String get accentPurple;
+
+  /// Accent color display name: cherry pink
+  ///
+  /// In en, this message translates to:
+  /// **'Cherry Pink'**
+  String get accentPink;
+
+  /// Accent color display name: fresh cyan
+  ///
+  /// In en, this message translates to:
+  /// **'Fresh Cyan'**
+  String get accentCyan;
+
+  /// Accent color display name: classic brown
+  ///
+  /// In en, this message translates to:
+  /// **'Classic Brown'**
+  String get accentBrown;
+
+  /// Accent color display name: elegant grey
+  ///
+  /// In en, this message translates to:
+  /// **'Elegant Grey'**
+  String get accentGrey;
+
+  /// Accent color display name: charming purple
+  ///
+  /// In en, this message translates to:
+  /// **'Charming Purple'**
+  String get accentDeepPurple;
+
+  /// Accent color display name: amber gold
+  ///
+  /// In en, this message translates to:
+  /// **'Amber Gold'**
+  String get accentAmber;
+
+  /// Accent color display name: vivid green
+  ///
+  /// In en, this message translates to:
+  /// **'Vivid Green'**
+  String get accentLightGreen;
+
+  /// Accent color display name: sunshine yellow
+  ///
+  /// In en, this message translates to:
+  /// **'Sunshine Yellow'**
+  String get accentYellow;
+
+  /// Accent color display name: minimal grey
+  ///
+  /// In en, this message translates to:
+  /// **'Minimal Grey'**
+  String get accentNeutralGrey;
+
+  /// Accent color display name: deep indigo
+  ///
+  /// In en, this message translates to:
+  /// **'Deep Indigo'**
+  String get accentIndigo;
+
+  /// Accent color display name: flame orange
+  ///
+  /// In en, this message translates to:
+  /// **'Flame Orange'**
+  String get accentDeepOrange;
+
+  /// Glass effect preset name: clear mode (higher opacity, less blur)
+  ///
+  /// In en, this message translates to:
+  /// **'Clear mode'**
+  String get glassPresetClear;
+
+  /// Glass effect preset name: standard mode (default blur and opacity)
+  ///
+  /// In en, this message translates to:
+  /// **'Standard mode'**
+  String get glassPresetStandard;
+
+  /// Glass effect preset name: dreamy mode (lower opacity, more blur)
+  ///
+  /// In en, this message translates to:
+  /// **'Dreamy mode'**
+  String get glassPresetDreamy;
+
+  /// User agreement V2 hero title
+  ///
+  /// In en, this message translates to:
+  /// **'Keep reading on your own device.'**
+  String get agreementV2HeroTitle;
+
+  /// User agreement V2 hero body paragraph
+  ///
+  /// In en, this message translates to:
+  /// **'OpenReading is an open-source, cross-platform, local-first ebook reader. It provides reading tools; it does not provide, host, or review books you import.'**
+  String get agreementV2HeroBody;
+
+  /// User agreement V2 local-first principle title
+  ///
+  /// In en, this message translates to:
+  /// **'Local first'**
+  String get agreementV2LocalTitle;
+
+  /// User agreement V2 local-first principle body
+  ///
+  /// In en, this message translates to:
+  /// **'Books, progress, and notes generally remain on your device for you to manage and back up.'**
+  String get agreementV2LocalBody;
+
+  /// User agreement V2 open-source principle title
+  ///
+  /// In en, this message translates to:
+  /// **'AGPL-3.0 licensed'**
+  String get agreementV2OpenSourceTitle;
+
+  /// User agreement V2 open-source principle body
+  ///
+  /// In en, this message translates to:
+  /// **'Source code is provided under GNU AGPL v3.0 and the software is supplied “as is,” without warranties.'**
+  String get agreementV2OpenSourceBody;
+
+  /// User agreement V2 version label with version placeholder
+  ///
+  /// In en, this message translates to:
+  /// **'Terms version {version}'**
+  String agreementV2VersionLabel(String version);
+
+  /// User agreement V2 panel title
+  ///
+  /// In en, this message translates to:
+  /// **'Terms of Use & Privacy Notice'**
+  String get agreementV2Title;
+
+  /// User agreement V2 panel subtitle
+  ///
+  /// In en, this message translates to:
+  /// **'Please read before using OpenReading'**
+  String get agreementV2Subtitle;
+
+  /// User agreement V2 important notice callout
+  ///
+  /// In en, this message translates to:
+  /// **'Important: The official OpenReading app does not preinstall, bundle, or recommend any third-party book source, and its developers do not operate, represent, or host source content. You choose every imported file and source you add; use only content you are authorized to access.'**
+  String get agreementV2ImportantNotice;
+
+  /// User agreement V2 source boundary card title
+  ///
+  /// In en, this message translates to:
+  /// **'Third-party source boundary'**
+  String get agreementV2SourceBoundaryTitle;
+
+  /// User agreement V2 source boundary point 1
+  ///
+  /// In en, this message translates to:
+  /// **'The official project provides open-source reader software and the Open Reading Source Protocol only. It provides no source addresses or official source directory.'**
+  String get agreementV2SourceBoundaryPoint1;
+
+  /// User agreement V2 source boundary point 2
+  ///
+  /// In en, this message translates to:
+  /// **'Every source address must be entered and added by you. The app connects directly to that independent service without routing content through a developer-operated server.'**
+  String get agreementV2SourceBoundaryPoint2;
+
+  /// User agreement V2 source boundary point 3
+  ///
+  /// In en, this message translates to:
+  /// **'Protocol compatibility means only that an interface can connect; it does not prove legality or licensing. Source operators are responsible for their content, and you must review and use it lawfully.'**
+  String get agreementV2SourceBoundaryPoint3;
+
+  /// User agreement V2 section 1 title
+  ///
+  /// In en, this message translates to:
+  /// **'Scope and acceptance'**
+  String get agreementV2Section1Title;
+
+  /// User agreement V2 section 1 body
+  ///
+  /// In en, this message translates to:
+  /// **'These terms apply to your download, installation, and use of OpenReading and its included features. By selecting “Agree and continue,” you confirm that you have read, understood, and accepted them. If you do not agree, stop using and exit the app. A guardian must consent where required by local law.'**
+  String get agreementV2Section1Body;
+
+  /// User agreement V2 section 2 title
+  ///
+  /// In en, this message translates to:
+  /// **'Open-source license'**
+  String get agreementV2Section2Title;
+
+  /// User agreement V2 section 2 body
+  ///
+  /// In en, this message translates to:
+  /// **'Future OpenReading versions are released under the GNU Affero General Public License v3.0. You may use, copy, modify, distribute, or sell the software under that license. A distributed modified version must provide its complete corresponding source under AGPL-3.0, and a modified version used to provide a network service must also offer corresponding source to users interacting with it. MIT rights already granted for v1.0.0 and earlier versions remain valid and are not revoked. These terms do not restrict rights granted by the open-source license. Third-party components remain subject to their own licenses.'**
+  String get agreementV2Section2Body;
+
+  /// User agreement V2 section 3 title
+  ///
+  /// In en, this message translates to:
+  /// **'User content and rights'**
+  String get agreementV2Section3Title;
+
+  /// User agreement V2 section 3 body
+  ///
+  /// In en, this message translates to:
+  /// **'“User content” includes books, documents, images, metadata, links, and other material you import, download, open, convert, cache, annotate, or read aloud. You must have all rights and permissions required to use it. You are solely responsible for copyright, trademark, privacy, defamation, unlawful-content, malware, and other claims or losses involving user content. The software and its developers do not upload, sell, license, endorse, or review that content, and format support does not imply lawful permission to use a file.'**
+  String get agreementV2Section3Body;
+
+  /// User agreement V2 section 4 title
+  ///
+  /// In en, this message translates to:
+  /// **'Prohibited use'**
+  String get agreementV2Section4Title;
+
+  /// User agreement V2 section 4 body
+  ///
+  /// In en, this message translates to:
+  /// **'You may not use the software to infringe intellectual property or other rights; distribute unlawful, harmful, or malicious content; bypass digital rights management, access controls, or paywalls; attack or disrupt third-party systems; or engage in activity prohibited by applicable law. You are responsible for complaints, claims, penalties, and losses resulting from your conduct.'**
+  String get agreementV2Section4Body;
+
+  /// User agreement V2 section 5 title
+  ///
+  /// In en, this message translates to:
+  /// **'Book sources and third parties'**
+  String get agreementV2Section5Title;
+
+  /// User agreement V2 section 5 body
+  ///
+  /// In en, this message translates to:
+  /// **'The official app does not preinstall, distribute, or recommend book sources and does not operate an official source directory. Sources, network APIs, external links, online content, system text-to-speech, AI services, and other integrations you add are independently provided and controlled by third parties. They are not operated, represented, licensed, endorsed, or reviewed by the developers. Source operators are legally responsible for the content they provide. Before adding one, you must review its origin, content rights, privacy policy, and terms, and you are responsible for your own access, downloads, caching, distribution, and other use. To the fullest extent permitted by applicable law, the developers are not liable for third-party content, charges, data practices, outages, or infringement disputes.'**
+  String get agreementV2Section5Body;
+
+  /// User agreement V2 section 6 title
+  ///
+  /// In en, this message translates to:
+  /// **'Data and privacy'**
+  String get agreementV2Section6Title;
+
+  /// User agreement V2 section 6 body
+  ///
+  /// In en, this message translates to:
+  /// **'OpenReading is local-first. Books, reading progress, notes, and settings are normally stored on your device. Unless you enable a network book source, AI, sync, or another online feature, the app does not need to send book text to the developers to provide local reading. Automatic and manual update checks contact GitHub and the official site at open.xxread.top with necessary technical parameters such as platform, processor architecture, and release channel; their servers process your IP address and User-Agent as part of ordinary network communication. When you download an installer from the official site, the backend records the version, architecture, download time, IP address, and User-Agent for download counts, security protection, and troubleshooting. Download-event records containing a raw IP are retained for no more than 30 days and then deleted; only aggregate statistics without raw IP addresses are kept longer. Update requests do not include book text, your library, notes, an account, or a unique device identifier. GitHub requests are also governed by GitHub’s privacy terms. When another online feature is used, queries, selected text, network information, or necessary parameters may be sent to the provider you selected under that provider’s policies. Protect your device, API keys, and backups; uninstalling, clearing data, device failure, or user error may permanently erase data.'**
+  String get agreementV2Section6Body;
+
+  /// User agreement V2 section 7 title
+  ///
+  /// In en, this message translates to:
+  /// **'AI and automated output'**
+  String get agreementV2Section7Title;
+
+  /// User agreement V2 section 7 body
+  ///
+  /// In en, this message translates to:
+  /// **'AI summaries, answers, translations, recommendations, and other generated output may be inaccurate, incomplete, outdated, or misleading. They are reading aids only and are not legal, medical, financial, academic, or other professional advice. Verify output independently and do not rely on it for high-risk decisions. Material submitted to an AI provider is also governed by that provider’s terms.'**
+  String get agreementV2Section7Body;
+
+  /// User agreement V2 section 8 title
+  ///
+  /// In en, this message translates to:
+  /// **'Disclaimer of warranties'**
+  String get agreementV2Section8Title;
+
+  /// User agreement V2 section 8 body
+  ///
+  /// In en, this message translates to:
+  /// **'To the fullest extent permitted by law, the software and related materials are provided “as is” and “as available,” without express, implied, or statutory warranties, including merchantability, fitness for a particular purpose, title, non-infringement, accuracy, compatibility, security, error-free operation, uninterrupted availability, or preservation of data. Open-source contributors have no duty to maintain, update, support, or fix the software.'**
+  String get agreementV2Section8Body;
+
+  /// User agreement V2 section 9 title
+  ///
+  /// In en, this message translates to:
+  /// **'Limitation of liability'**
+  String get agreementV2Section9Title;
+
+  /// User agreement V2 section 9 body
+  ///
+  /// In en, this message translates to:
+  /// **'To the fullest extent permitted by law, developers, copyright holders, and contributors are not liable for direct, indirect, incidental, special, punitive, or consequential loss arising from installation, use, inability to use, user content, third-party services, data loss, device issues, business interruption, or security incidents, whether under contract, tort, or another theory. Liability that cannot legally be excluded remains limited to the minimum extent permitted by law.'**
+  String get agreementV2Section9Body;
+
+  /// User agreement V2 section 10 title
+  ///
+  /// In en, this message translates to:
+  /// **'Indemnity'**
+  String get agreementV2Section10Title;
+
+  /// User agreement V2 section 10 body
+  ///
+  /// In en, this message translates to:
+  /// **'To the extent permitted by applicable law, you are responsible for and will hold developers, copyright holders, and contributors harmless from third-party claims, investigations, penalties, losses, and reasonable costs arising from your user content, unlawful or infringing conduct, breach of these terms, or use of third-party services.'**
+  String get agreementV2Section10Body;
+
+  /// User agreement V2 section 11 title
+  ///
+  /// In en, this message translates to:
+  /// **'Changes, termination, and law'**
+  String get agreementV2Section11Title;
+
+  /// User agreement V2 section 11 body
+  ///
+  /// In en, this message translates to:
+  /// **'Features, maintenance status, and these terms may change as the open-source project, law, or risk controls evolve. Material updates may require renewed consent; if you disagree, stop using the app. You may uninstall at any time. Disputes should first be resolved informally. Subject to mandatory consumer protections, the law of the developer’s location and courts with lawful jurisdiction apply. If one provision is unenforceable, the rest remain effective.'**
+  String get agreementV2Section11Body;
+
+  /// User agreement V2 terms consent checkbox label
+  ///
+  /// In en, this message translates to:
+  /// **'I have read and agree to the Terms of Use and Privacy Notice.'**
+  String get agreementV2ConfirmLabel;
+
+  /// User agreement V2 source boundary consent checkbox label
+  ///
+  /// In en, this message translates to:
+  /// **'I understand that the official project provides no book sources; sources and content I add come from independent third parties, and I will verify authorization and remain responsible for my own use.'**
+  String get agreementV2SourceConfirmLabel;
+
+  /// User agreement V2 exit/decline button label
+  ///
+  /// In en, this message translates to:
+  /// **'Decline'**
+  String get agreementV2ExitLabel;
+
+  /// User agreement V2 agree-and-continue button label
+  ///
+  /// In en, this message translates to:
+  /// **'Agree and continue'**
+  String get agreementV2ContinueLabel;
+
+  /// User agreement V2 exit dialog title
+  ///
+  /// In en, this message translates to:
+  /// **'Decline the terms?'**
+  String get agreementV2ExitDialogTitle;
+
+  /// User agreement V2 exit dialog body
+  ///
+  /// In en, this message translates to:
+  /// **'You must accept the Terms of Use to continue using OpenReading. If you do not agree, please exit the app.'**
+  String get agreementV2ExitDialogBody;
+
+  /// User agreement V2 exit dialog cancel button label
+  ///
+  /// In en, this message translates to:
+  /// **'Go back'**
+  String get agreementV2CancelLabel;
+
+  /// User agreement V2 exit dialog confirm button label
+  ///
+  /// In en, this message translates to:
+  /// **'Exit'**
+  String get agreementV2ConfirmExitLabel;
+
+  /// User agreement V2 save-failed snackbar message
+  ///
+  /// In en, this message translates to:
+  /// **'Could not save your consent. Please try again.'**
+  String get agreementV2SaveFailed;
+
+  /// Settings section title for data and sync
+  ///
+  /// In en, this message translates to:
+  /// **'Data & sync'**
+  String get settingsDataSyncTitle;
+
+  /// No description provided for @settingsCacheManagementTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Cache management'**
+  String get settingsCacheManagementTitle;
+
+  /// Cache management entry subtitle with current total usage
+  ///
+  /// In en, this message translates to:
+  /// **'Using {size} · View details and clear caches'**
+  String settingsCacheManagementSubtitle(String size);
+
+  /// Title above the cache usage chart
+  ///
+  /// In en, this message translates to:
+  /// **'Cache usage'**
+  String get settingsCacheUsageTitle;
+
+  /// Label below the total cache size in the usage chart
+  ///
+  /// In en, this message translates to:
+  /// **'Total used'**
+  String get settingsCacheTotalUsage;
+
+  /// Explains the safety boundary of cache management
+  ///
+  /// In en, this message translates to:
+  /// **'Only safely removable caches are shown. Books, reading progress, and settings are not included.'**
+  String get settingsCacheSafeHint;
+
+  /// No description provided for @settingsCacheSourceCovers.
+  ///
+  /// In en, this message translates to:
+  /// **'Source cover cache'**
+  String get settingsCacheSourceCovers;
+
+  /// No description provided for @settingsCacheSourceCoversSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Downloaded source covers · {size}'**
+  String settingsCacheSourceCoversSubtitle(String size);
+
+  /// No description provided for @settingsCacheSourceData.
+  ///
+  /// In en, this message translates to:
+  /// **'Source chapter cache'**
+  String get settingsCacheSourceData;
+
+  /// No description provided for @settingsCacheSourceDataSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Safely removable online chapter cache · {size}'**
+  String settingsCacheSourceDataSubtitle(String size);
+
+  /// No description provided for @settingsCacheTemporaryFiles.
+  ///
+  /// In en, this message translates to:
+  /// **'Temporary files'**
+  String get settingsCacheTemporaryFiles;
+
+  /// No description provided for @settingsCacheTemporaryFilesSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Disposable update and temporary files · {size}'**
+  String settingsCacheTemporaryFilesSubtitle(String size);
+
+  /// No description provided for @settingsCacheClearAll.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear all safe caches'**
+  String get settingsCacheClearAll;
+
+  /// No description provided for @settingsCacheClearAllSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Clears only the categories above · {size}'**
+  String settingsCacheClearAllSubtitle(String size);
+
+  /// No description provided for @settingsCacheCalculating.
+  ///
+  /// In en, this message translates to:
+  /// **'Calculating…'**
+  String get settingsCacheCalculating;
+
+  /// No description provided for @settingsCacheClearConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'This removes only temporary cache data. Books, saved covers, reading progress, databases, settings, and credentials are preserved.'**
+  String get settingsCacheClearConfirm;
+
+  /// No description provided for @settingsCacheClearAction.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear'**
+  String get settingsCacheClearAction;
+
+  /// No description provided for @settingsCacheCleared.
+  ///
+  /// In en, this message translates to:
+  /// **'Cache cleared'**
+  String get settingsCacheCleared;
+
+  /// No description provided for @settingsCacheClearFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not clear the cache'**
+  String get settingsCacheClearFailed;
+
+  /// WebDAV sync settings entry title
+  ///
+  /// In en, this message translates to:
+  /// **'WebDAV sync'**
+  String get settingsWebDavSyncTitle;
+
+  /// WebDAV unconfigured status
+  ///
+  /// In en, this message translates to:
+  /// **'Not configured'**
+  String get webDavNotConfigured;
+
+  /// WebDAV entry subtitle before setup
+  ///
+  /// In en, this message translates to:
+  /// **'Sync reading data to your own WebDAV storage'**
+  String get webDavConfigureSubtitle;
+
+  /// WebDAV beta stability badge
+  ///
+  /// In en, this message translates to:
+  /// **'Beta · May be unstable'**
+  String get webDavBetaBadge;
+
+  /// WebDAV overview page title
+  ///
+  /// In en, this message translates to:
+  /// **'WebDAV sync'**
+  String get webDavPageTitle;
+
+  /// WebDAV connected status
+  ///
+  /// In en, this message translates to:
+  /// **'Connected'**
+  String get webDavConnected;
+
+  /// WebDAV syncing status
+  ///
+  /// In en, this message translates to:
+  /// **'Syncing'**
+  String get webDavSyncing;
+
+  /// WebDAV partial failure status
+  ///
+  /// In en, this message translates to:
+  /// **'Some items need attention'**
+  String get webDavPartialFailure;
+
+  /// WebDAV failed status
+  ///
+  /// In en, this message translates to:
+  /// **'Sync failed'**
+  String get webDavSyncFailed;
+
+  /// Count of pending WebDAV changes
+  ///
+  /// In en, this message translates to:
+  /// **'{count} changes waiting to sync'**
+  String webDavPendingChanges(int count);
+
+  /// Last successful WebDAV sync time
+  ///
+  /// In en, this message translates to:
+  /// **'Last sync: {time}'**
+  String webDavLastSync(String time);
+
+  /// WebDAV has never synced
+  ///
+  /// In en, this message translates to:
+  /// **'Not synced yet'**
+  String get webDavNeverSynced;
+
+  /// Manual WebDAV sync button
+  ///
+  /// In en, this message translates to:
+  /// **'Sync now'**
+  String get webDavSyncNow;
+
+  /// Open WebDAV setup button
+  ///
+  /// In en, this message translates to:
+  /// **'Set up WebDAV'**
+  String get webDavSetUp;
+
+  /// WebDAV connection section title
+  ///
+  /// In en, this message translates to:
+  /// **'Connection'**
+  String get webDavConnectionTitle;
+
+  /// WebDAV server URL field label
+  ///
+  /// In en, this message translates to:
+  /// **'WebDAV address'**
+  String get webDavServerUrl;
+
+  /// WebDAV username field label
+  ///
+  /// In en, this message translates to:
+  /// **'Username'**
+  String get webDavUsername;
+
+  /// WebDAV password field label
+  ///
+  /// In en, this message translates to:
+  /// **'App password'**
+  String get webDavPassword;
+
+  /// WebDAV password storage hint
+  ///
+  /// In en, this message translates to:
+  /// **'Stored securely on this device only'**
+  String get webDavPasswordHint;
+
+  /// WebDAV root folder field label
+  ///
+  /// In en, this message translates to:
+  /// **'Remote folder'**
+  String get webDavRootPath;
+
+  /// WebDAV connection test button
+  ///
+  /// In en, this message translates to:
+  /// **'Test connection'**
+  String get webDavTestConnection;
+
+  /// WebDAV connection test progress
+  ///
+  /// In en, this message translates to:
+  /// **'Testing connection…'**
+  String get webDavTestingConnection;
+
+  /// WebDAV connection test success
+  ///
+  /// In en, this message translates to:
+  /// **'Connection and write access verified'**
+  String get webDavConnectionSuccess;
+
+  /// WebDAV connection test failure
+  ///
+  /// In en, this message translates to:
+  /// **'Connection test failed: {reason}'**
+  String webDavConnectionFailed(String reason);
+
+  /// Save WebDAV configuration button
+  ///
+  /// In en, this message translates to:
+  /// **'Save configuration'**
+  String get webDavSaveConfiguration;
+
+  /// Automatic WebDAV sync switch
+  ///
+  /// In en, this message translates to:
+  /// **'Automatic sync'**
+  String get webDavAutomaticSync;
+
+  /// Automatic WebDAV sync explanation
+  ///
+  /// In en, this message translates to:
+  /// **'Sync after launch or when the app returns to the foreground'**
+  String get webDavAutomaticSyncHint;
+
+  /// WebDAV scope section title
+  ///
+  /// In en, this message translates to:
+  /// **'Sync content'**
+  String get webDavSyncContent;
+
+  /// Sync scope for registered book sources
+  ///
+  /// In en, this message translates to:
+  /// **'Book sources'**
+  String get webDavScopeBookSources;
+
+  /// Sync scope for book metadata
+  ///
+  /// In en, this message translates to:
+  /// **'Library and online books'**
+  String get webDavScopeBooks;
+
+  /// Sync scope for reading progress
+  ///
+  /// In en, this message translates to:
+  /// **'Reading progress'**
+  String get webDavScopeProgress;
+
+  /// Sync scope for bookmarks
+  ///
+  /// In en, this message translates to:
+  /// **'Bookmarks'**
+  String get webDavScopeBookmarks;
+
+  /// Sync scope for reading sessions
+  ///
+  /// In en, this message translates to:
+  /// **'Reading statistics'**
+  String get webDavScopeReadingSessions;
+
+  /// Sync scope for book files
+  ///
+  /// In en, this message translates to:
+  /// **'Book files'**
+  String get webDavScopeBookFiles;
+
+  /// Book file sync scope explanation
+  ///
+  /// In en, this message translates to:
+  /// **'Choose which books to upload or download'**
+  String get webDavBookFilesHint;
+
+  /// Book file transfer feature-gate explanation
+  ///
+  /// In en, this message translates to:
+  /// **'Book file transfer will be enabled after metadata sync is stable'**
+  String get webDavBookFilesUnavailable;
+
+  /// WebDAV non-E2EE disclosure
+  ///
+  /// In en, this message translates to:
+  /// **'Data is sent over HTTPS, but your WebDAV provider can read unencrypted remote content.'**
+  String get webDavSecurityNotice;
+
+  /// Open WebDAV connection settings
+  ///
+  /// In en, this message translates to:
+  /// **'Connection settings'**
+  String get webDavConnectionDetails;
+
+  /// Clear local WebDAV configuration action
+  ///
+  /// In en, this message translates to:
+  /// **'Clear configuration'**
+  String get webDavClearConfiguration;
+
+  /// Clear WebDAV configuration dialog title
+  ///
+  /// In en, this message translates to:
+  /// **'Clear WebDAV configuration?'**
+  String get webDavClearConfigurationTitle;
+
+  /// Clear WebDAV configuration dialog body
+  ///
+  /// In en, this message translates to:
+  /// **'This removes the WebDAV address and login from this device. Local reading data and remote files will not be deleted.'**
+  String get webDavClearConfigurationMessage;
+
+  /// Clear WebDAV configuration confirmation
+  ///
+  /// In en, this message translates to:
+  /// **'Clear from this device'**
+  String get webDavClearConfigurationConfirm;
+
+  /// WebDAV sync activity page title
+  ///
+  /// In en, this message translates to:
+  /// **'Sync activity'**
+  String get webDavActivityTitle;
+
+  /// Empty WebDAV activity state
+  ///
+  /// In en, this message translates to:
+  /// **'No sync activity yet'**
+  String get webDavActivityEmpty;
+
+  /// WebDAV sync result summary
+  ///
+  /// In en, this message translates to:
+  /// **'Uploaded {uploaded}, downloaded {downloaded}'**
+  String webDavSyncCompleteSummary(int uploaded, int downloaded);
+
+  /// WebDAV authentication error
+  ///
+  /// In en, this message translates to:
+  /// **'The username, password, or folder permission is incorrect.'**
+  String get webDavErrorAuthentication;
+
+  /// Invalid WebDAV configuration error
+  ///
+  /// In en, this message translates to:
+  /// **'The WebDAV configuration is incomplete or invalid.'**
+  String get webDavErrorInvalidConfiguration;
+
+  /// Insecure WebDAV connection error
+  ///
+  /// In en, this message translates to:
+  /// **'The connection does not meet the security requirements.'**
+  String get webDavErrorInsecureConnection;
+
+  /// WebDAV certificate error
+  ///
+  /// In en, this message translates to:
+  /// **'The server certificate could not be verified.'**
+  String get webDavErrorCertificate;
+
+  /// WebDAV permission error
+  ///
+  /// In en, this message translates to:
+  /// **'The remote folder is not writable.'**
+  String get webDavErrorPermission;
+
+  /// WebDAV remote path not found error
+  ///
+  /// In en, this message translates to:
+  /// **'The remote sync folder or a required file was not found.'**
+  String get webDavErrorNotFound;
+
+  /// WebDAV conflict error
+  ///
+  /// In en, this message translates to:
+  /// **'Remote data is in conflict. Try syncing again.'**
+  String get webDavErrorConflict;
+
+  /// WebDAV storage full error
+  ///
+  /// In en, this message translates to:
+  /// **'The WebDAV storage is full.'**
+  String get webDavErrorStorageFull;
+
+  /// WebDAV rate limit error
+  ///
+  /// In en, this message translates to:
+  /// **'Too many WebDAV requests were made. Try again later.'**
+  String get webDavErrorRateLimited;
+
+  /// WebDAV timeout error
+  ///
+  /// In en, this message translates to:
+  /// **'The server did not respond in time.'**
+  String get webDavErrorTimeout;
+
+  /// Unsupported WebDAV error
+  ///
+  /// In en, this message translates to:
+  /// **'This WebDAV server does not support safe synchronization.'**
+  String get webDavErrorUnsupported;
+
+  /// WebDAV network error
+  ///
+  /// In en, this message translates to:
+  /// **'The network is unavailable. Changes remain saved on this device.'**
+  String get webDavErrorNetwork;
+
+  /// WebDAV corrupt remote data error
+  ///
+  /// In en, this message translates to:
+  /// **'Some remote sync data is damaged and was not applied.'**
+  String get webDavErrorCorruptData;
+
+  /// WebDAV clock skew error
+  ///
+  /// In en, this message translates to:
+  /// **'This device\'s clock differs too much from the WebDAV server.'**
+  String get webDavErrorClockSkew;
+
+  /// WebDAV secure storage error
+  ///
+  /// In en, this message translates to:
+  /// **'The WebDAV password could not be read from secure storage.'**
+  String get webDavErrorSecureStorage;
+
+  /// Unknown WebDAV error
+  ///
+  /// In en, this message translates to:
+  /// **'WebDAV could not complete the operation.'**
+  String get webDavErrorUnknown;
+
+  /// WebDAV failure phase
+  ///
+  /// In en, this message translates to:
+  /// **'Failed while: {phase}'**
+  String webDavErrorPhase(String phase);
+
+  /// WebDAV connecting phase
+  ///
+  /// In en, this message translates to:
+  /// **'connecting to the remote server'**
+  String get webDavPhaseConnecting;
+
+  /// WebDAV local scan phase
+  ///
+  /// In en, this message translates to:
+  /// **'scanning this device'**
+  String get webDavPhaseScanningLocal;
+
+  /// WebDAV remote read phase
+  ///
+  /// In en, this message translates to:
+  /// **'reading remote data'**
+  String get webDavPhaseReadingRemote;
+
+  /// WebDAV remote apply phase
+  ///
+  /// In en, this message translates to:
+  /// **'merging remote data'**
+  String get webDavPhaseApplyingRemote;
+
+  /// WebDAV local upload phase
+  ///
+  /// In en, this message translates to:
+  /// **'uploading local changes'**
+  String get webDavPhaseUploadingLocal;
+
+  /// WebDAV finishing phase
+  ///
+  /// In en, this message translates to:
+  /// **'finishing synchronization'**
+  String get webDavPhaseFinishing;
+
+  /// Unknown WebDAV phase
+  ///
+  /// In en, this message translates to:
+  /// **'an unknown step'**
+  String get webDavPhaseUnknown;
+
+  /// WebDAV book-file manager title
+  ///
+  /// In en, this message translates to:
+  /// **'Book files'**
+  String get webDavBookFilesTitle;
+
+  /// Book-file pending upload tab
+  ///
+  /// In en, this message translates to:
+  /// **'To upload'**
+  String get webDavFilesPendingUpload;
+
+  /// Book-file available download tab
+  ///
+  /// In en, this message translates to:
+  /// **'Available'**
+  String get webDavFilesAvailableDownload;
+
+  /// Book-file synced tab
+  ///
+  /// In en, this message translates to:
+  /// **'Synced'**
+  String get webDavFilesSynced;
+
+  /// Upload selected books action
+  ///
+  /// In en, this message translates to:
+  /// **'Upload selected'**
+  String get webDavFilesUploadSelected;
+
+  /// Download selected books action
+  ///
+  /// In en, this message translates to:
+  /// **'Download selected'**
+  String get webDavFilesDownloadSelected;
+
+  /// Selected book-file count and size
+  ///
+  /// In en, this message translates to:
+  /// **'{count} selected · {size}'**
+  String webDavFilesSelectedSummary(int count, String size);
+
+  /// Book file exists only locally
+  ///
+  /// In en, this message translates to:
+  /// **'Only on this device'**
+  String get webDavFilesOnlyLocal;
+
+  /// Book file exists only remotely
+  ///
+  /// In en, this message translates to:
+  /// **'File not downloaded to this device'**
+  String get webDavFilesOnlyRemote;
+
+  /// Global permission for explicit book-file uploads
+  ///
+  /// In en, this message translates to:
+  /// **'Allow book file uploads'**
+  String get webDavFilesUploadPermission;
+
+  /// Explains that enabling uploads does not upload every book
+  ///
+  /// In en, this message translates to:
+  /// **'Only selected books are uploaded; WebDAV keeps the original file name and bytes without encryption'**
+  String get webDavFilesUploadPermissionHint;
+
+  /// Title for the legacy WebDAV book directory notice
+  ///
+  /// In en, this message translates to:
+  /// **'Existing WebDAV books remain compatible'**
+  String get webDavLegacyBookDirectoryTitle;
+
+  /// Explains legacy WebDAV book files do not require resync
+  ///
+  /// In en, this message translates to:
+  /// **'You do not need to sync them again. New uploads use a readable Book title - Author/original file name directory.'**
+  String get webDavLegacyBookDirectoryMessage;
+
+  /// Newly imported book file upload policy title
+  ///
+  /// In en, this message translates to:
+  /// **'New book files'**
+  String get webDavNewBookPolicyTitle;
+
+  /// Ask after each import policy
+  ///
+  /// In en, this message translates to:
+  /// **'Ask every time (recommended)'**
+  String get webDavNewBookPolicyAsk;
+
+  /// Ask policy explanation
+  ///
+  /// In en, this message translates to:
+  /// **'Choose which books to upload after an import finishes'**
+  String get webDavNewBookPolicyAskHint;
+
+  /// Automatic new-book upload policy
+  ///
+  /// In en, this message translates to:
+  /// **'Automatically upload new books'**
+  String get webDavNewBookPolicyAutomatic;
+
+  /// Automatic policy explanation
+  ///
+  /// In en, this message translates to:
+  /// **'Upload immediately after import and potentially use mobile data'**
+  String get webDavNewBookPolicyAutomaticHint;
+
+  /// Manual new-book upload policy
+  ///
+  /// In en, this message translates to:
+  /// **'Always choose manually'**
+  String get webDavNewBookPolicyManual;
+
+  /// Manual policy explanation
+  ///
+  /// In en, this message translates to:
+  /// **'Start uploads only from the Book files page'**
+  String get webDavNewBookPolicyManualHint;
+
+  /// Prompt title after importing books
+  ///
+  /// In en, this message translates to:
+  /// **'Sync the {count} books just imported?'**
+  String webDavNewBooksPromptTitle(int count);
+
+  /// Prompt explanation after importing books
+  ///
+  /// In en, this message translates to:
+  /// **'Reading data syncs automatically. Choose the original book files to upload to WebDAV.'**
+  String get webDavNewBooksPromptBody;
+
+  /// Skip new-book upload action
+  ///
+  /// In en, this message translates to:
+  /// **'Not now'**
+  String get webDavNewBooksSkip;
+
+  /// New-book upload progress
+  ///
+  /// In en, this message translates to:
+  /// **'Uploading {count} new books…'**
+  String webDavNewBooksUploading(int count);
+
+  /// New-book upload result
+  ///
+  /// In en, this message translates to:
+  /// **'New-book upload complete: {success} succeeded, {failed} failed'**
+  String webDavNewBooksUploadResult(int success, int failed);
+
+  /// Book file transfer size limit
+  ///
+  /// In en, this message translates to:
+  /// **'Files over 100 MiB are not supported in this release'**
+  String get webDavFilesTooLarge;
+
+  /// Empty book-file category
+  ///
+  /// In en, this message translates to:
+  /// **'No books in this category'**
+  String get webDavFilesEmpty;
+
+  /// Book-file transfer success
+  ///
+  /// In en, this message translates to:
+  /// **'Book-file transfer complete'**
+  String get webDavFilesTransferComplete;
+
+  /// No description provided for @readerAddAnnotation.
+  ///
+  /// In en, this message translates to:
+  /// **'Add annotation'**
+  String get readerAddAnnotation;
+
+  /// No description provided for @readerAnnotationHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Write your thoughts about this passage…'**
+  String get readerAnnotationHint;
+
+  /// No description provided for @readerAnnotationSaved.
+  ///
+  /// In en, this message translates to:
+  /// **'Annotation saved'**
+  String get readerAnnotationSaved;
+
+  /// No description provided for @readerAnnotationDeleted.
+  ///
+  /// In en, this message translates to:
+  /// **'Annotation deleted'**
+  String get readerAnnotationDeleted;
+
+  /// No description provided for @readerAnnotationShelfRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Add this book to the shelf before saving annotations'**
+  String get readerAnnotationShelfRequired;
+
+  /// No description provided for @readerNoAnnotations.
+  ///
+  /// In en, this message translates to:
+  /// **'No annotations yet'**
+  String get readerNoAnnotations;
+
+  /// No description provided for @readerNoAnnotationsHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Select text to highlight or add a comment. Tap an underlined comment to read it again.'**
+  String get readerNoAnnotationsHint;
+}
+
+class _AppLocalizationsDelegate
+    extends LocalizationsDelegate<AppLocalizations> {
+  const _AppLocalizationsDelegate();
+
+  @override
+  Future<AppLocalizations> load(Locale locale) {
+    return SynchronousFuture<AppLocalizations>(lookupAppLocalizations(locale));
+  }
+
+  @override
+  bool isSupported(Locale locale) =>
+      <String>['en', 'ja', 'zh'].contains(locale.languageCode);
+
+  @override
+  bool shouldReload(_AppLocalizationsDelegate old) => false;
+}
+
+AppLocalizations lookupAppLocalizations(Locale locale) {
+  // Lookup logic when language+country codes are specified.
+  switch (locale.languageCode) {
+    case 'zh':
+      {
+        switch (locale.countryCode) {
+          case 'TW':
+            return AppLocalizationsZhTw();
+        }
+        break;
+      }
+  }
+
+  // Lookup logic when only language code is specified.
+  switch (locale.languageCode) {
+    case 'en':
+      return AppLocalizationsEn();
+    case 'ja':
+      return AppLocalizationsJa();
+    case 'zh':
+      return AppLocalizationsZh();
+  }
+
+  throw FlutterError(
+    'AppLocalizations.delegate failed to load unsupported locale "$locale". This is likely '
+    'an issue with the localizations generation tool. Please file an issue '
+    'on GitHub with a reproducible sample app and the gen-l10n configuration '
+    'that was used.',
+  );
+}

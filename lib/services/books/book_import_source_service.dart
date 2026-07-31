@@ -1,0 +1,350 @@
+// 文件说明：发现多文件来源并在导入前将平台文档物化为可读取的本地文件。
+// 技术要点：FilePicker 多选、格式过滤、iOS Documents 扫描、平台桥接。
+
+import 'dart:io';
+
+import 'package:crypto/crypto.dart';
+import 'package:file_picker/file_picker.dart';
+import 'package:flutter/foundation.dart';
+import 'package:path/path.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:xxread/services/books/book_format_support.dart';
+import 'package:xxread/services/books/book_import_models.dart';
+import 'package:xxread/services/storage/platform_storage_bridge.dart';
+
+abstract interface class BookImportSourcePreparer {
+  Future<BookImportSource> prepare(BookImportSource source);
+
+  Future<void> release(BookImportSource source);
+}
+
+class BookImportSourceService implements BookImportSourcePreparer {
+  BookImportSourceService({
+    Future<FilePickerResult?> Function()? filePicker,
+    PlatformStorageBridge? platformBridge,
+    Future<Directory> Function()? documentsDirectory,
+    Future<Directory> Function()? temporaryDirectory,
+  }) : _filePicker = filePicker ?? _pickSupportedFiles,
+       _platformBridge = platformBridge ?? PlatformStorageBridge(),
+       _documentsDirectory =
+           documentsDirectory ?? getApplicationDocumentsDirectory,
+       _temporaryDirectory = temporaryDirectory ?? getTemporaryDirectory;
+
+  /// 与 [BookFormatRegistry.pickerExtensions] 同步；格式变更只改注册表。
+  static Set<String> get supportedExtensions =>
+      BookFormatRegistry.pickerExtensions;
+
+  static const Map<String, String> _extensionsByMimeType = <String, String>{
+    'text/plain': 'txt',
+    'application/epub+zip': 'epub',
+    'application/pdf': 'pdf',
+    'application/x-mobipocket-ebook': 'mobi',
+    'application/vnd.amazon.ebook': 'azw',
+    'application/x-fictionbook+xml': 'fb2',
+    'application/rtf': 'rtf',
+    'text/rtf': 'rtf',
+    'application/msword': 'doc',
+    'application/vnd.openxmlformats-officedocument.wordprocessingml.document':
+        'docx',
+    'application/vnd.comicbook+zip': 'cbz',
+    'application/x-cbz': 'cbz',
+    'application/vnd.comicbook-rar': 'cbr',
+    'application/x-cbr': 'cbr',
+    'application/x-cbt': 'cbt',
+    'application/x-cb7': 'cb7',
+    'text/html': 'html',
+    'application/xhtml+xml': 'xhtml',
+    'text/markdown': 'md',
+  };
+
+  final Future<FilePickerResult?> Function() _filePicker;
+  final PlatformStorageBridge _platformBridge;
+  final Future<Directory> Function() _documentsDirectory;
+  final Future<Directory> Function() _temporaryDirectory;
+
+  static Future<FilePickerResult?> _pickSupportedFiles() {
+    return FilePicker.pickFiles(
+      type: FileType.custom,
+      allowedExtensions: BookFormatRegistry.pickerExtensions.toList(
+        growable: false,
+      ),
+      allowMultiple: true,
+      withData: kIsWeb,
+    );
+  }
+
+  Future<List<BookImportSource>> pickFiles() async {
+    final result = await _filePicker();
+    if (result == null) return const [];
+
+    final sources = <BookImportSource>[];
+    for (final pickedFile in result.files) {
+      final path = pickedFile.path;
+      final fileExtension = _normalizedExtension(
+        pickedFile.extension ?? extension(pickedFile.name),
+      );
+      if (!supportedExtensions.contains(fileExtension)) {
+        continue;
+      }
+      if (kIsWeb) {
+        final bytes = pickedFile.bytes;
+        if (bytes == null) continue;
+        final contentHash = sha256.convert(bytes).toString();
+        final locator = 'web-book://$contentHash';
+        sources.add(
+          BookImportSource.withBytes(
+            id: '${BookImportSourceKind.filePicker.storageValue}:$locator',
+            kind: BookImportSourceKind.filePicker,
+            ownership: BookImportOwnership.externalCopy,
+            displayName: pickedFile.name,
+            extension: fileExtension,
+            locator: locator,
+            localPath: locator,
+            sizeBytes: pickedFile.size,
+            bytes: bytes,
+          ),
+        );
+        continue;
+      }
+      if (path == null) continue;
+      final file = File(path);
+      final stat = await file.stat();
+      sources.add(
+        BookImportSource(
+          id: '${BookImportSourceKind.filePicker.storageValue}:$path',
+          kind: BookImportSourceKind.filePicker,
+          ownership: BookImportOwnership.externalCopy,
+          displayName: pickedFile.name,
+          extension: fileExtension,
+          locator: path,
+          localPath: path,
+          sizeBytes: pickedFile.size,
+          modifiedTime: stat.modified.millisecondsSinceEpoch,
+        ),
+      );
+    }
+    return _deduplicate(sources);
+  }
+
+  Future<List<BookImportSource>> scanIosSharedDocuments() async {
+    final documents = await _documentsDirectory();
+    final books = Directory(join(documents.path, 'books'));
+    if (!await books.exists()) {
+      await books.create(recursive: true);
+      return const [];
+    }
+
+    final sources = <BookImportSource>[];
+    await for (final entity in books.list(recursive: true)) {
+      if (entity is! File) continue;
+      final fileExtension = _normalizedExtension(extension(entity.path));
+      if (!supportedExtensions.contains(fileExtension) ||
+          entity.path.endsWith('.partial')) {
+        continue;
+      }
+      final stat = await entity.stat();
+      sources.add(
+        BookImportSource(
+          id: '${BookImportSourceKind.iosSharedDocuments.storageValue}:${entity.path}',
+          kind: BookImportSourceKind.iosSharedDocuments,
+          ownership: BookImportOwnership.managedInPlace,
+          displayName: basename(entity.path),
+          extension: fileExtension,
+          locator: entity.path,
+          localPath: entity.path,
+          sizeBytes: stat.size,
+          modifiedTime: stat.modified.millisecondsSinceEpoch,
+        ),
+      );
+    }
+    return _deduplicate(sources);
+  }
+
+  Future<List<BookImportSource>> scanAndroidTree(String treeUri) async {
+    final rows = await _platformBridge.listAndroidDocuments(treeUri);
+    return _sourcesFromRows(
+      rows,
+      kind: BookImportSourceKind.androidTree,
+      ownership: BookImportOwnership.externalCopy,
+    );
+  }
+
+  Future<List<BookImportSource>> scanICloudDocuments() async {
+    final rows = await _platformBridge.listICloudDocuments();
+    return _sourcesFromRows(
+      rows,
+      kind: BookImportSourceKind.iosICloud,
+      ownership: BookImportOwnership.externalCopy,
+    );
+  }
+
+  Future<bool> isICloudAvailable() async {
+    final status = await _platformBridge.getICloudStatus();
+    return status['available'] == true;
+  }
+
+  @override
+  Future<BookImportSource> prepare(BookImportSource source) async {
+    if (source.bytes != null) return source;
+    if (source.localPath != null) return source;
+
+    final temporaryRoot = await _temporaryDirectory();
+    final materializedDirectory = Directory(
+      join(temporaryRoot.path, 'book_import_sources'),
+    );
+    await materializedDirectory.create(recursive: true);
+    final destination = await _allocateTemporaryDestination(
+      materializedDirectory,
+      source.displayName,
+    );
+
+    final localPath = switch (source.kind) {
+      BookImportSourceKind.androidTree =>
+        await _platformBridge.materializeAndroidDocument(
+          documentUri: source.locator,
+          destinationPath: destination.path,
+        ),
+      BookImportSourceKind.iosICloud =>
+        await _platformBridge.materializeICloudDocument(
+          locator: source.locator,
+          destinationPath: destination.path,
+        ),
+      BookImportSourceKind.filePicker ||
+      BookImportSourceKind.iosSharedDocuments ||
+      BookImportSourceKind.systemOpen ||
+      BookImportSourceKind.systemShare => throw StateError(
+        '${source.kind.name} 来源缺少本地路径',
+      ),
+    };
+    final materializedFile = File(localPath);
+    final actualBytes = await materializedFile.length();
+    final expectedBytes = source.sizeBytes;
+    if (expectedBytes != null &&
+        expectedBytes >= 0 &&
+        actualBytes != expectedBytes) {
+      if (await materializedFile.exists()) {
+        await materializedFile.delete();
+      }
+      throw BookImportFailure(
+        code: 'copy_verification_failed',
+        message:
+            'Materialized size mismatch: expected=$expectedBytes actual=$actualBytes',
+      );
+    }
+    return source.copyWithLocalPath(localPath);
+  }
+
+  @override
+  Future<void> release(BookImportSource source) async {
+    if (source.bytes != null) return;
+    final isMaterializedDocument =
+        source.kind == BookImportSourceKind.androidTree ||
+        source.kind == BookImportSourceKind.iosICloud;
+    final isIncomingBook =
+        source.kind == BookImportSourceKind.systemOpen ||
+        source.kind == BookImportSourceKind.systemShare;
+    if (!isMaterializedDocument && !isIncomingBook) {
+      return;
+    }
+    final localPath = source.localPath;
+    if (localPath == null) return;
+    final temporaryRoot = await _temporaryDirectory();
+    final materializedRoot = join(
+      temporaryRoot.path,
+      isIncomingBook ? 'incoming_books' : 'book_import_sources',
+    );
+    if (!isWithin(materializedRoot, localPath)) return;
+    final file = File(localPath);
+    if (await file.exists()) {
+      await file.delete();
+    }
+  }
+
+  List<BookImportSource> _sourcesFromRows(
+    List<Map<String, Object?>> rows, {
+    required BookImportSourceKind kind,
+    required BookImportOwnership ownership,
+  }) {
+    final sources = <BookImportSource>[];
+    for (final row in rows) {
+      final locator =
+          row['locator']?.toString() ?? row['documentUri']?.toString() ?? '';
+      final displayName =
+          row['displayName']?.toString() ?? row['name']?.toString() ?? '';
+      final fileExtension = _extensionFromRow(row, displayName);
+      if (locator.isEmpty ||
+          displayName.isEmpty ||
+          !supportedExtensions.contains(fileExtension)) {
+        continue;
+      }
+      sources.add(
+        BookImportSource(
+          id: '${kind.storageValue}:$locator',
+          kind: kind,
+          ownership: ownership,
+          displayName: displayName,
+          extension: fileExtension,
+          locator: locator,
+          localPath: row['localPath']?.toString(),
+          sizeBytes: _asInt(row['sizeBytes'] ?? row['size']),
+          modifiedTime: _asInt(row['modifiedTime']),
+        ),
+      );
+    }
+    return _deduplicate(sources);
+  }
+
+  Future<File> _allocateTemporaryDestination(
+    Directory directory,
+    String displayName,
+  ) async {
+    final safeName = basename(displayName);
+    for (var counter = 0; counter < 1000; counter++) {
+      final candidate = File(
+        join(directory.path, counter == 0 ? safeName : '${counter}_$safeName'),
+      );
+      if (!await candidate.exists()) return candidate;
+    }
+    throw StateError('无法分配临时导入路径');
+  }
+
+  String _normalizedExtension(String value) {
+    return value.replaceFirst(RegExp(r'^\.'), '').toLowerCase();
+  }
+
+  String _extensionFromRow(Map<String, Object?> row, String displayName) {
+    final supplied = _normalizedExtension(row['extension']?.toString() ?? '');
+    if (supplied.isNotEmpty) return supplied;
+
+    final fromName = _normalizedExtension(extension(displayName));
+    if (fromName.isNotEmpty) return fromName;
+
+    final mimeType = row['mimeType']
+        ?.toString()
+        .split(';')
+        .first
+        .trim()
+        .toLowerCase();
+    return _extensionsByMimeType[mimeType] ?? '';
+  }
+
+  int? _asInt(Object? value) {
+    if (value is int) return value;
+    return int.tryParse(value?.toString() ?? '');
+  }
+
+  List<BookImportSource> _deduplicate(Iterable<BookImportSource> sources) {
+    final byId = <String, BookImportSource>{};
+    for (final source in sources) {
+      byId.putIfAbsent(source.id, () => source);
+    }
+    final result = byId.values.toList();
+    result.sort((a, b) {
+      final byName = a.displayName.toLowerCase().compareTo(
+        b.displayName.toLowerCase(),
+      );
+      return byName != 0 ? byName : a.locator.compareTo(b.locator);
+    });
+    return result;
+  }
+}

@@ -1,0 +1,322 @@
+package com.niki.xxread
+
+import io.flutter.embedding.android.FlutterActivity
+import android.os.Bundle
+import android.graphics.Color
+import android.view.View
+import android.view.WindowInsets
+import android.view.WindowInsetsController
+import android.view.KeyEvent
+import android.view.WindowManager
+import androidx.core.view.WindowCompat
+import io.flutter.embedding.engine.FlutterEngine
+import io.flutter.plugin.common.MethodChannel
+import android.util.Log
+import android.content.Intent
+import android.content.IntentFilter
+import android.os.BatteryManager
+
+class MainActivity : FlutterActivity() {
+    private val CHANNEL = "com.niki.xxread/fullscreen"
+    private val READER_KEYS_CHANNEL = "com.niki.xxread/reader_keys"
+    private val READER_STATUS_CHANNEL = "com.niki.xxread/reader_status"
+    private var readerKeysChannel: MethodChannel? = null
+    private var safDirectoryBridge: SafDirectoryBridge? = null
+    private var incomingBookIntentBridge: IncomingBookIntentBridge? = null
+    private var appUpdateBridge: AppUpdateBridge? = null
+    private var backgroundDownloadBridge: BackgroundDownloadBridge? = null
+    private var readerAloudBridge: ReaderAloudBridge? = null
+    @Volatile private var volumePagingEnabled: Boolean = false
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        // 启用 edge-to-edge 模式
+        WindowCompat.setDecorFitsSystemWindows(window, false)
+        configureTransparentSystemBars()
+    }
+
+    override fun configureFlutterEngine(flutterEngine: FlutterEngine) {
+        super.configureFlutterEngine(flutterEngine)
+
+        MethodChannel(flutterEngine.dartExecutor.binaryMessenger, CHANNEL).setMethodCallHandler { call, result ->
+            when (call.method) {
+                "hideSystemUI" -> {
+                    hideSystemUI()
+                    result.success(null)
+                }
+                "showSystemUI" -> {
+                    showSystemUI()
+                    result.success(null)
+                }
+                "showReaderStatusBar" -> {
+                    showReaderStatusBar()
+                    result.success(null)
+                }
+                "enableHighRefreshRate" -> {
+                    enableHighRefreshRate()
+                    result.success(null)
+                }
+                "setKeepScreenOn" -> {
+                    val enabled = call.argument<Boolean>("enabled") ?: false
+                    setKeepScreenOn(enabled)
+                    result.success(null)
+                }
+                else -> {
+                    result.notImplemented()
+                }
+            }
+        }
+
+        readerKeysChannel = MethodChannel(
+            flutterEngine.dartExecutor.binaryMessenger,
+            READER_KEYS_CHANNEL,
+        ).apply {
+            setMethodCallHandler { call, result ->
+                when (call.method) {
+                    "setVolumePagingEnabled" -> {
+                        val enabled = call.argument<Boolean>("enabled") ?: false
+                        volumePagingEnabled = enabled
+                        result.success(null)
+                    }
+                    else -> result.notImplemented()
+                }
+            }
+        }
+
+        MethodChannel(
+            flutterEngine.dartExecutor.binaryMessenger,
+            READER_STATUS_CHANNEL,
+        ).setMethodCallHandler { call, result ->
+            when (call.method) {
+                "getBatteryStatus" -> result.success(readBatteryStatus())
+                else -> result.notImplemented()
+            }
+        }
+
+        safDirectoryBridge = SafDirectoryBridge(
+            this,
+            flutterEngine.dartExecutor.binaryMessenger,
+        )
+        incomingBookIntentBridge = IncomingBookIntentBridge(
+            this,
+            flutterEngine.dartExecutor.binaryMessenger,
+        ).also { bridge ->
+            bridge.handleIntent(intent)
+        }
+        appUpdateBridge = AppUpdateBridge(
+            this,
+            flutterEngine.dartExecutor.binaryMessenger,
+        )
+        backgroundDownloadBridge = BackgroundDownloadBridge(
+            this,
+            flutterEngine.dartExecutor.binaryMessenger,
+        )
+        readerAloudBridge = ReaderAloudBridge(
+            this,
+            flutterEngine.dartExecutor.binaryMessenger,
+        )
+
+    }
+
+    override fun onResume() {
+        super.onResume()
+        appUpdateBridge?.onResume()
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (safDirectoryBridge?.onActivityResult(requestCode, resultCode, data) == true) {
+            return
+        }
+        super.onActivityResult(requestCode, resultCode, data)
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray,
+    ) {
+        if (safDirectoryBridge?.onRequestPermissionsResult(requestCode, grantResults) == true) {
+            return
+        }
+        if (backgroundDownloadBridge?.onRequestPermissionsResult(requestCode, grantResults) == true) {
+            return
+        }
+        if (readerAloudBridge?.onRequestPermissionsResult(requestCode, grantResults) == true) {
+            return
+        }
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+    }
+
+    override fun onNewIntent(intent: Intent) {
+        super.onNewIntent(intent)
+        setIntent(intent)
+        backgroundDownloadBridge?.onNewIntent(intent)
+        incomingBookIntentBridge?.handleIntent(intent)
+    }
+
+    override fun onDestroy() {
+        incomingBookIntentBridge?.dispose()
+        incomingBookIntentBridge = null
+        safDirectoryBridge?.dispose()
+        safDirectoryBridge = null
+        readerAloudBridge?.dispose()
+        readerAloudBridge = null
+        super.onDestroy()
+    }
+
+    override fun dispatchKeyEvent(event: KeyEvent): Boolean {
+        if (volumePagingEnabled &&
+            (event.keyCode == KeyEvent.KEYCODE_VOLUME_DOWN ||
+                event.keyCode == KeyEvent.KEYCODE_VOLUME_UP)
+        ) {
+            if (event.action == KeyEvent.ACTION_DOWN && event.repeatCount == 0) {
+                val direction = if (event.keyCode == KeyEvent.KEYCODE_VOLUME_DOWN) {
+                    "next"
+                } else {
+                    "previous"
+                }
+                try {
+                    readerKeysChannel?.invokeMethod(
+                        "onVolumeKey",
+                        mapOf("direction" to direction),
+                    )
+                } catch (e: Exception) {
+                    Log.w("xxread", "dispatch volume key failed: ${e.message}")
+                }
+            }
+            // 消费事件，避免系统弹出音量面板，保持阅读沉浸。
+            return true
+        }
+        return super.dispatchKeyEvent(event)
+    }
+
+    private fun hideSystemUI() {
+        configureTransparentSystemBars()
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.R) {
+            // Android 11+ (API 30+): 使用 WindowInsetsController
+            window.insetsController?.let { controller ->
+                // 隐藏状态栏和导航栏（包括手势提示线）
+                controller.hide(WindowInsets.Type.statusBars() or WindowInsets.Type.navigationBars())
+                // 使用 IMMERSIVE 模式，确保系统UI完全隐藏且不会自动弹出
+                // BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE: 从边缘滑动时系统栏会短暂显示然后自动隐藏
+                controller.systemBarsBehavior = WindowInsetsController.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
+            }
+
+        } else {
+            // Android 10 及以下: 使用废弃的标志（但仍然有效）
+            @Suppress("DEPRECATION")
+            window.decorView.systemUiVisibility = (
+                View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+                or View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                or View.SYSTEM_UI_FLAG_FULLSCREEN
+            )
+        }
+    }
+
+    private fun showSystemUI() {
+        configureTransparentSystemBars()
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.R) {
+            // Android 11+ (API 30+): 使用 WindowInsetsController
+            window.insetsController?.show(WindowInsets.Type.statusBars() or WindowInsets.Type.navigationBars())
+        } else {
+            // Android 10 及以下: 清除全屏标志
+            @Suppress("DEPRECATION")
+            window.decorView.systemUiVisibility = (
+                View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+            )
+        }
+    }
+
+    private fun showReaderStatusBar() {
+        configureTransparentSystemBars()
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.R) {
+            window.insetsController?.let { controller ->
+                controller.show(WindowInsets.Type.statusBars())
+                controller.hide(WindowInsets.Type.navigationBars())
+                controller.systemBarsBehavior =
+                    WindowInsetsController.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
+            }
+        } else {
+            @Suppress("DEPRECATION")
+            window.decorView.systemUiVisibility = (
+                View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+                or View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+            )
+        }
+    }
+
+    private fun configureTransparentSystemBars() {
+        WindowCompat.setDecorFitsSystemWindows(window, false)
+        window.statusBarColor = Color.TRANSPARENT
+        window.navigationBarColor = Color.TRANSPARENT
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.P) {
+            window.navigationBarDividerColor = Color.TRANSPARENT
+        }
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.Q) {
+            // 关闭三键/手势导航栏为了保证可读性自动添加的黑色对比度遮罩。
+            // 预测性返回临时显示手势提示线时也继续保持真正的透明 edge-to-edge。
+            window.isNavigationBarContrastEnforced = false
+            window.isStatusBarContrastEnforced = false
+        }
+    }
+
+    private fun enableHighRefreshRate() {
+        if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.M) {
+            return
+        }
+        try {
+            val display = windowManager.defaultDisplay
+            val modes = display.supportedModes
+            if (modes.isEmpty()) {
+                return
+            }
+
+            val currentMode = display.mode
+            val bestMode = modes
+                .filter { it.physicalWidth == currentMode.physicalWidth && it.physicalHeight == currentMode.physicalHeight }
+                .maxByOrNull { it.refreshRate }
+                ?: modes.maxByOrNull { it.refreshRate }
+                ?: return
+
+            val attrs = window.attributes
+            if (attrs.preferredDisplayModeId != bestMode.modeId) {
+                attrs.preferredDisplayModeId = bestMode.modeId
+                window.attributes = attrs
+            }
+        } catch (e: Exception) {
+            Log.w("xxread", "enableHighRefreshRate failed: ${e.message}")
+        }
+    }
+
+    private fun setKeepScreenOn(enabled: Boolean) {
+        if (enabled) {
+            window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
+        } else {
+            window.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
+        }
+    }
+
+    private fun readBatteryStatus(): Map<String, Any>? {
+        val status = registerReceiver(null, IntentFilter(Intent.ACTION_BATTERY_CHANGED))
+            ?: return null
+        val level = status.getIntExtra(BatteryManager.EXTRA_LEVEL, -1)
+        val scale = status.getIntExtra(BatteryManager.EXTRA_SCALE, -1)
+        if (level < 0 || scale <= 0) return null
+        val batteryStatus = status.getIntExtra(BatteryManager.EXTRA_STATUS, -1)
+        val charging = batteryStatus == BatteryManager.BATTERY_STATUS_CHARGING ||
+            batteryStatus == BatteryManager.BATTERY_STATUS_FULL
+        return mapOf(
+            "level" to ((level * 100f) / scale).toInt().coerceIn(0, 100),
+            "charging" to charging,
+        )
+    }
+}

@@ -1,0 +1,46 @@
+<div align="center">
+  <img src="assets/images/app_icon.png" width="112" alt="Open Reading 아이콘">
+  <h1>Open Reading</h1>
+  <p>로컬 우선, 크로스 플랫폼, 공개 도서 소스를 지원하는 전자책 리더</p>
+  <p><a href="README.en.md">English</a> · <a href="README.md">简体中文</a> · <a href="README.zh-TW.md">繁體中文</a> · <a href="README.ja.md">日本語</a> · <strong>한국어</strong> · <a href="README.es.md">Español</a></p>
+</div>
+
+Open Reading은 Flutter로 만든 오픈 소스 전자책 리더입니다. 도서, 진행 상황, 북마크와
+메모를 기본적으로 사용자 기기에 보관하면서 조판, TTS, 하이라이트, 독서 통계, 선택적 AI
+도구 및 확장 가능한 도서 소스를 제공합니다.
+
+## WebView 래퍼가 아닌 Flutter 네이티브 엔진
+
+핵심 읽기 화면은 자체 개발한 **Flutter 네이티브 읽기 엔진**을 사용합니다. 장 파싱,
+`TextPainter` 기반 실제 크기 측정, 이진 탐색 페이지 분할, 이미지 혼합 배치, 캐시와
+문자 오프셋 읽기 앵커를 Flutter 렌더링 체계 안에서 처리하며 핵심 읽기 경로는 WebView에
+의존하지 않습니다.
+
+## 주요 기능
+
+- EPUB, PDF, TXT, ZIP 가져오기와 로컬 서재 관리
+- Flutter 네이티브 조판, 정밀 페이지 분할, 장 캐시와 위치 복원
+- 글꼴 크기, 줄 간격, 여백, 테마와 페이지 캐시
+- 북마크, 하이라이트, 메모, 기록과 통계
+- 시스템 TTS 및 설정 가능한 AI 서비스
+- Android, iOS, Windows, macOS, Linux, Web 프로젝트
+
+## 공개 도서 소스
+
+온라인 소스는 **Open Reading Source Protocol(ORSP)** 로 연결됩니다. 검색, 도서 정보,
+목차와 본문을 공통 HTTP API로 정의합니다.
+
+**[ORSP 명세, OpenAPI 및 참조 서버 보기](https://github.com/miloquinn/open-reading-source-protocol)**
+
+ORSP는 창작물, 퍼블릭 도메인 및 정식 허가를 받은 콘텐츠를 위한 것입니다.
+
+## 개발
+
+```bash
+git clone https://github.com/miloquinn/open-reading.git
+cd open-reading
+flutter pub get
+flutter run
+```
+
+라이선스: [GNU AGPL-3.0](LICENSE). 수정 버전을 배포하거나 네트워크 서비스로 제공할 경우 AGPL-3.0에 따라 해당 소스 코드를 제공해야 합니다. `v1.0.0` 이하 버전에는 기존 [MIT 라이선스](LICENSE-MIT-LEGACY)가 계속 적용됩니다. 자세한 내용은 [LICENSING.md](LICENSING.md)를 참조하세요. Issue, Pull Request와 번역을 환영합니다.
